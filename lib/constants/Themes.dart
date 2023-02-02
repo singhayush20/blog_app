@@ -86,13 +86,21 @@ ThemeData lightThemeData = ThemeData(
   ),
 );
 
-const Color appBarColor = Color.fromARGB(255, 74, 20, 140);
-const Color scaffoldColor = Color(0xFFF3E5F5);
+const Color appBarColor = Color.fromARGB(255, 197, 58, 19);
+const Color scaffoldColor = Color.fromARGB(255, 246, 233, 233);
 const Color appBarItemColor = Colors.white;
 BoxDecoration boxDecoration = BoxDecoration(
   border: Border.all(color: Colors.black, width: 0.5, style: BorderStyle.solid),
   borderRadius: BorderRadius.all(
     Radius.circular(20),
   ),
-  color: Color(0xFF9C27B0),
+  gradient: LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color.fromARGB(255, 39, 80, 176),
+      Colors.lightBlue,
+    ],
+  ),
+  color: Color.fromARGB(255, 39, 80, 176),
 );

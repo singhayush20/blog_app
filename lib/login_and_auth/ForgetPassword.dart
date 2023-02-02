@@ -57,10 +57,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                   Container(
                     height: height * 0.1,
+                    alignment: Alignment.centerLeft,
                     child: Text(
                       'Reset your password by verifying your registered email',
                       style: TextStyle(
                         color: Colors.black,
+                        fontWeight: FontWeight.w600,
                         fontSize: 18.sp,
                       ),
                     ),

@@ -47,10 +47,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: height * 0.05,
+                  height: height * 0.1,
                 ),
                 Container(
                   height: height * 0.1,
+                  alignment: Alignment.center,
                   child: Text(
                     'Enter the email address you want to use for your account',
                     style: TextStyle(
@@ -60,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: height * 0.1,
+                  height: height * 0.05,
                 ),
                 Container(
                   height: height * 0.2,
