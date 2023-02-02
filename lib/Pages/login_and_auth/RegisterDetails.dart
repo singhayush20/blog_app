@@ -1,10 +1,11 @@
+import 'package:blog_app/Service/UserService.dart';
 import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/app_constants.dart';
-import 'package:blog_app/login_and_auth/LoginPage.dart';
+import 'package:blog_app/Pages/login_and_auth/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:loading_indicator/loading_indicator.dart';
+import 'package:get/get.dart';
 
 class RegisterDetails extends StatefulWidget {
   String? email;
@@ -20,10 +21,10 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _phoneController = TextEditingController();
+  final _aboutController = TextEditingController();
   bool isPasswordVisible = true;
 
   String? userRole;
@@ -137,7 +138,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                               ],
                             ),
                           ),
-                          //====USERNAME====
+                          //====EMAIL====
                           Container(
                             height: constraints.maxHeight * 0.2,
                             alignment: Alignment.center,
@@ -147,20 +148,20 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
-                                    controller: _usernameController,
+                                    controller: _emailController,
                                     obscureText: false,
                                     cursorColor: Colors.white,
                                     style: TextStyle(color: Colors.white),
-                                    keyboardType: TextInputType.text,
+                                    keyboardType: TextInputType.emailAddress,
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return 'Username cannot be empty';
+                                        return 'Email cannot be empty';
                                       } else {
                                         return null;
                                       }
                                     },
                                     decoration: const InputDecoration(
-                                      hintText: "Username",
+                                      hintText: "Email",
                                       prefixIcon: Icon(
                                         FontAwesomeIcons.circleUser,
                                         color: Colors.white,
@@ -168,83 +169,83 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Container(
-                                          alignment: Alignment.bottomLeft,
-                                          child: Text(
-                                            'Account Type',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                alignment: Alignment.bottomLeft,
-                                                child: RadioListTile(
-                                                  selectedTileColor:
-                                                      Colors.white,
-                                                  tileColor: Colors.white,
-                                                  title: Text(
-                                                    "Admin",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                  value: "ADMIN",
-                                                  groupValue: userRole,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      userRole =
-                                                          value.toString();
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Container(
-                                                alignment: Alignment.bottomLeft,
-                                                child: RadioListTile(
-                                                  selectedTileColor:
-                                                      Colors.white,
-                                                  tileColor: Colors.white,
-                                                  title: Text(
-                                                    "Student",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                  value: "STUDENT",
-                                                  groupValue: userRole,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      userRole =
-                                                          value.toString();
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
+                                // SizedBox(
+                                //   width: 20,
+                                // ),
+                                // Expanded(
+                                //   child: Column(
+                                //     crossAxisAlignment:
+                                //         CrossAxisAlignment.center,
+                                //     children: [
+                                //       Expanded(
+                                //         flex: 1,
+                                //         child: Container(
+                                //           alignment: Alignment.bottomLeft,
+                                //           child: Text(
+                                //             'Account Type',
+                                //             style:
+                                //                 TextStyle(color: Colors.white),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Expanded(
+                                //         flex: 2,
+                                //         child: Column(
+                                //           children: [
+                                //             Expanded(
+                                //               child: Container(
+                                //                 alignment: Alignment.bottomLeft,
+                                //                 child: RadioListTile(
+                                //                   selectedTileColor:
+                                //                       Colors.white,
+                                //                   tileColor: Colors.white,
+                                //                   title: Text(
+                                //                     "Admin",
+                                //                     style: TextStyle(
+                                //                       color: Colors.white,
+                                //                     ),
+                                //                   ),
+                                //                   value: "ADMIN",
+                                //                   groupValue: userRole,
+                                //                   onChanged: (value) {
+                                //                     setState(() {
+                                //                       userRole =
+                                //                           value.toString();
+                                //                     });
+                                //                   },
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //             Expanded(
+                                //               child: Container(
+                                //                 alignment: Alignment.bottomLeft,
+                                //                 child: RadioListTile(
+                                //                   selectedTileColor:
+                                //                       Colors.white,
+                                //                   tileColor: Colors.white,
+                                //                   title: Text(
+                                //                     "Student",
+                                //                     style: TextStyle(
+                                //                       color: Colors.white,
+                                //                     ),
+                                //                   ),
+                                //                   value: "STUDENT",
+                                //                   groupValue: userRole,
+                                //                   onChanged: (value) {
+                                //                     setState(() {
+                                //                       userRole =
+                                //                           value.toString();
+                                //                     });
+                                //                   },
+                                //                 ),
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // )
                               ],
                             ),
                           ),
@@ -329,28 +330,28 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                               ),
                             ),
                           ),
-                          //====PHONE NUMBER====
+                          //====About====
                           Container(
                             height: constraints.maxHeight * 0.2,
                             alignment: Alignment.center,
                             child: TextFormField(
-                              controller: _phoneController,
+                              controller: _aboutController,
                               obscureText: false,
                               cursorColor: Colors.white,
                               style: TextStyle(
                                 color: Colors.white,
                               ),
-                              keyboardType: TextInputType.phone,
+                              keyboardType: TextInputType.text,
                               validator: (value) {
-                                if (value!.length < 10) {
-                                  return "Invalid phone number";
+                                if (value == null || value.isEmpty) {
+                                  return "Please describe yourself";
                                 }
                                 return null;
                               },
                               decoration: const InputDecoration(
-                                hintText: "Phone Number",
+                                hintText: "Describe yourself",
                                 prefixIcon: Icon(
-                                  FontAwesomeIcons.phone,
+                                  FontAwesomeIcons.user,
                                   color: Colors.white,
                                 ),
                               ),
@@ -370,49 +371,33 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                 width: width * 0.5,
                 child: ElevatedButton(
                   onPressed: () async {
-                    //save the details to the database
-                    // if (_formKey.currentState!.validate() && userRole != null) {
-                    //   final UserService userService = UserService();
-                    //   context.loaderOverlay.show();
-                    //   Map<String, dynamic> result = await userService.saveUser(
-                    //     _firstNameController.text,
-                    //     _lastNameController.text,
-                    //     widget.email!,
-                    //     _passwordController.text,
-                    //     _phoneController.text,
-                    //     _usernameController.text,
-                    //     userRole!,
-                    //   );
-                    //   context.loaderOverlay.hide();
+                    // save the details to the database
+                    if (_formKey.currentState!.validate() && userRole != null) {
+                      final UserService userService = UserService();
+                      context.loaderOverlay.show();
+                      String code = await userService.registerUser(
+                          password: _passwordController.text,
+                          email: _emailController.text,
+                          about: _aboutController.text,
+                          firstName: _firstNameController.text,
+                          lastName: _lastNameController.text);
+                      context.loaderOverlay.hide();
 
-                    //   String code = result['code'];
-                    //   if (code == "2000") {
-                    //     ScaffoldMessenger.of(context).showSnackBar(
-                    //       SnackBar(
-                    //         content: Text('Registration Successful!'),
-                    //       ),
-                    //     );
-                    //     Navigator.popUntil(context, (route) => false);
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => LoginPage(),
-                    //       ),
-                    //     );
-                    //   } else if (code == '2002') {
-                    //     ScaffoldMessenger.of(context).showSnackBar(
-                    //       SnackBar(
-                    //         content: Text('${result['message']}'),
-                    //       ),
-                    //     );
-                    //   }
-                    // } else if (userRole == null) {
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     SnackBar(
-                    //       content: Text('Select the account type!'),
-                    //     ),
-                    //   );
-                    // }
+                      if (code == "2000") {
+                        Get.snackbar("Successful",
+                            "You have been registered successfully");
+                        Get.offAll(const LoginPage());
+                      } else {
+                        Get.snackbar(
+                            "Failed", "Registration was not successful!");
+                      }
+                    } else if (userRole == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Select the account type!'),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     'Submit Details',

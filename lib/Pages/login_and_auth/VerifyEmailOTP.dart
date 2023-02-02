@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:blog_app/Pages/login_and_auth/RegisterDetails.dart';
 import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/network_util/API.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:sizer/sizer.dart';
+import 'package:get/get.dart';
 
 class VerifyEmailOTP extends StatefulWidget {
   String? email;
@@ -110,31 +112,28 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                       ),
                     ),
                     onPressed: () async {
-                      // if (_formKey.currentState!.validate()) {
-                      //   context.loaderOverlay.show();
-                      //   Map<String, dynamic> result =
-                      //       await api.verifyEmailVerificationOTP(
-                      //           email: widget.email, otp: _otpController.text);
-                      //   log('email otp verification result: $result');
-                      //   String? code = result['code'];
-                      //   context.loaderOverlay.hide();
-                      //   if (code == '2000') {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //         builder: (context) => RegisterDetails(
-                      //           email: widget.email!,
-                      //         ),
-                      //       ),
-                      //     );
-                      //   } else if (code == '2001') {
-                      //     ScaffoldMessenger.of(context).showSnackBar(
-                      //       const SnackBar(
-                      //         content: Text('Verification Failed!'),
-                      //       ),
-                      //     );
-                      //   }
-                      // }
+                      if (_formKey.currentState!.validate()) {
+                        context.loaderOverlay.show();
+                        Map<String, dynamic> result =
+                            await api.verifyEmailVerificationOTP(
+                                email: widget.email ?? 'null',
+                                otp: _otpController.text);
+                        log('email otp verification result: $result');
+                        String? code = result['code'];
+                        context.loaderOverlay.hide();
+                        if (code == '2000') {
+                          Get.to(
+                            RegisterDetails(email: widget.email!),
+                            transition: Transition.leftToRight,
+                            duration: const Duration(
+                              microseconds: 1000,
+                            ),
+                            fullscreenDialog: true,
+                          );
+                        } else if (code == '2001') {
+                          Get.snackbar("Failed", "Verification failed!");
+                        }
+                      }
                     },
                   ),
                 ),
@@ -154,24 +153,16 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                     ),
                     onPressed: () async {
                       context.loaderOverlay.show();
-                      // Map<String, dynamic> result = await api
-                      //     .sendEmailVerificationOTP(email: widget.email!);
-                      // context.loaderOverlay.hide();
-                      // log('email otp sent again: $result');
-                      // String? code = result['code'];
-                      // if (code == '2000') {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(
-                      //       content: Text('OTP Sent!'),
-                      //     ),
-                      //   );
-                      // } else if (code == '2001') {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(
-                      //       content: Text('Verification Failed!'),
-                      //     ),
-                      //   );
-                      // }
+                      Map<String, dynamic> result = await api
+                          .sendEmailVerificationOTP(email: widget.email!);
+                      context.loaderOverlay.hide();
+                      log('email otp sent again: $result');
+                      String? code = result['code'];
+                      if (code == '2000') {
+                        Get.snackbar("OTP", "OTP resent");
+                      } else {
+                        Get.snackbar("Error", "OTP could not be sent!");
+                      }
                     },
                   ),
                 ),

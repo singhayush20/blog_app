@@ -1,4 +1,4 @@
-const baseUrl = "baseUrl";
+const baseUrl = "https://44f9-14-139-240-85.in.ngrok.io";
 
 const loginUrl = baseUrl + "/blog/auth/login";
 

@@ -84,23 +84,9 @@ class API {
   }
 
   //6.
-  Future<Map<String, dynamic>> register(
-      {required String username,
-      required String email,
-      required String password,
-      required String about,
-      required String firstName,
-      required String lastName}) async {
-    Map<String, dynamic> data = {
-      "username": username,
-      "email": email,
-      "password": password,
-      "about": about,
-      "firstName": firstName,
-      "lastName": lastName
-    };
-    log('Logging in user for: $data');
-    Response response = await _dio.post(loginUrl, data: data);
+  Future<Map<String, dynamic>> register({required userData}) async {
+    log('Logging in user for: $userData');
+    Response response = await _dio.post(loginUrl, data: userData);
     log('login user response: $response');
     return response.data;
   }

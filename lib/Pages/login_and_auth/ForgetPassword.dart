@@ -4,6 +4,7 @@ import 'package:blog_app/network_util/API.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:sizer/sizer.dart';
 
@@ -117,30 +118,32 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                     height: constraints.maxHeight * 0.1,
                                     child: TextButton(
                                       onPressed: () async {
-                                        // if (EmailValidator.validate(
-                                        //     _emailController.text)) {
-                                        //   context.loaderOverlay.show();
-                                        //   Map<String, dynamic> result = await api
-                                        //       .sendForgotPasswordVerificationOTP(
-                                        //           email: _emailController.text);
-                                        //   context.loaderOverlay.hide();
-                                        //   String code = result['code'];
-                                        //   if (code == '2000') {
-                                        //     if (!isOTPSent) {
-                                        //       setState(() {
-                                        //         isOTPSent = true;
-                                        //       });
-                                        //     }
-                                        //   } else {
-                                        //     ScaffoldMessenger.of(context)
-                                        //         .showSnackBar(
-                                        //       SnackBar(
-                                        //         content: Text(
-                                        //             '${result['message']}'),
-                                        //       ),
-                                        //     );
-                                        //   }
-                                        // }
+                                        if (EmailValidator.validate(
+                                            _emailController.text)) {
+                                          context.loaderOverlay.show();
+                                          Map<String, dynamic> result =
+                                              await api.sendResetPasswordOTP(
+                                                  email: _emailController.text);
+                                          context.loaderOverlay.hide();
+                                          String code = result[CODE];
+                                          if (code == '2000') {
+                                            if (!isOTPSent) {
+                                              setState(() {
+                                                isOTPSent = true;
+                                              });
+                                            }
+                                          } else {
+                                            // ScaffoldMessenger.of(context)
+                                            //     .showSnackBar(
+                                            //   SnackBar(
+                                            //     content: Text(
+                                            //         '${result['message']}'),
+                                            //   ),
+                                            // );
+                                            Get.snackbar("Error",
+                                                "OTP could not be sent");
+                                          }
+                                        }
                                       },
                                       child: FittedBox(
                                         alignment: Alignment.center,
@@ -161,52 +164,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                   ),
                                   SizedBox(
                                     width: 30,
-                                  ),
-                                  SizedBox(
-                                    height: constraints.maxHeight * 0.1,
-                                    child: TextButton(
-                                      onPressed: () async {
-                                        // if (EmailValidator.validate(
-                                        //     _emailController.text)) {
-                                        //   context.loaderOverlay.show();
-                                        //   Map<String, dynamic> result = await api
-                                        //       .sendForgotPasswordVerificationOTP(
-                                        //           email: _emailController.text);
-                                        //   context.loaderOverlay.hide();
-                                        //   String code = result['code'];
-                                        //   if (code == '2000') {
-                                        //     if (!isOTPSent) {
-                                        //       setState(() {
-                                        //         isOTPSent = true;
-                                        //       });
-                                        //     }
-                                        //   } else {
-                                        //     ScaffoldMessenger.of(context)
-                                        //         .showSnackBar(
-                                        //       SnackBar(
-                                        //         content: Text(
-                                        //             '${result['message']}'),
-                                        //       ),
-                                        //     );
-                                        //   }
-                                        // }
-                                      },
-                                      child: FittedBox(
-                                        alignment: Alignment.center,
-                                        fit: BoxFit.fitWidth,
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 2,
-                                          ),
-                                          child: Text(
-                                            'Resend OTP',
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                   ),
                                 ],
                               ),
@@ -337,30 +294,22 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     height: height * 0.05,
                     child: ElevatedButton(
                       onPressed: () async {
-                        // if (_formKey.currentState!.validate()) {
-                        //   context.loaderOverlay.show();
-                        //   Map<String, dynamic> result =
-                        //       await api.resetPasswordAndVerifyOTP(
-                        //           email: _emailController.text,
-                        //           password: _passwordController.text,
-                        //           otp: int.parse(_otpController.text));
-                        //   context.loaderOverlay.hide();
-                        //   String code = result['code'];
-                        //   if (code == '2000') {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(
-                        //         content: Text("Passwor Reset Successfully"),
-                        //       ),
-                        //     );
-                        //     Navigator.pop(context);
-                        //   } else {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(
-                        //         content: Text("${result['message']}"),
-                        //       ),
-                        //     );
-                        //   }
-                        // }
+                        if (_formKey.currentState!.validate()) {
+                          context.loaderOverlay.show();
+                          Map<String, dynamic> result = await api.resetPassword(
+                              email: _emailController.text,
+                              otp: _otpController.text,
+                              password: _passwordController.text);
+                          context.loaderOverlay.hide();
+                          String code = result[CODE];
+                          if (code == '2000') {
+                            Get.snackbar("Successful",
+                                "Password has been reset successfully");
+                            Navigator.pop(context);
+                          } else {
+                            Get.snackbar("Failed", "Password reset failed");
+                          }
+                        }
                       },
                       child: FittedBox(
                         alignment: Alignment.center,

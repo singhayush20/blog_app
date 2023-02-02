@@ -1,11 +1,13 @@
 import 'dart:developer';
 
+import 'package:blog_app/Pages/login_and_auth/RegisterDetails.dart';
 import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/network_util/API.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:sizer/sizer.dart';
 
@@ -125,34 +127,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   "Send OTP",
                                 ),
                                 onPressed: () async {
-                                  //   if (_formKey.currentState!.validate()) {
-                                  //     context.loaderOverlay.show();
+                                  if (_formKey.currentState!.validate()) {
+                                    context.loaderOverlay.show();
 
-                                  //     String email = _emailController.text;
-                                  //     Map<String, dynamic> result = await api
-                                  //         .sendEmailVerificationOTP(email: email);
-                                  //     log('result from fetching email otp: $result');
-                                  //     context.loaderOverlay.hide();
-                                  //     String? code = result['code'];
-                                  //     if (code == '2000') {
-                                  //       Navigator.push(
-                                  //         context,
-                                  //         MaterialPageRoute(
-                                  //           builder: (context) => VerifyEmailOTP(
-                                  //             email: email,
-                                  //           ),
-                                  //         ),
-                                  //       );
-                                  //     } else if (code == '2001') {
-                                  //       ScaffoldMessenger.of(context)
-                                  //           .showSnackBar(
-                                  //         const SnackBar(
-                                  //           content:
-                                  //               Text('OTP could not be sent!'),
-                                  //         ),
-                                  //       );
-                                  //     }
-                                  //   }
+                                    String email = _emailController.text;
+                                    Map<String, dynamic> result = await api
+                                        .sendEmailVerificationOTP(email: email);
+
+                                    log('result from fetching email otp: $result');
+                                    context.loaderOverlay.hide();
+                                    String? code = result[CODE];
+                                    if (code == '2000') {
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => VerifyEmailOTP(
+                                      //       email: email,
+                                      //     ),
+                                      //   ),
+                                      // );
+                                      Get.to(
+                                        RegisterDetails(email: email),
+                                        fullscreenDialog: true,
+                                        transition: Transition.fadeIn,
+                                        duration: Duration(milliseconds: 4000),
+                                      );
+                                      Get.snackbar(
+                                        "${result[STATUS]}",
+                                        "${result[MESSAGE]}",
+                                        snackPosition: SnackPosition.BOTTOM,
+                                      );
+                                    } else if (code == '2001') {
+                                      Get.snackbar(
+                                        "${result[STATUS]}",
+                                        "${result[MESSAGE]}",
+                                      );
+                                    }
+                                  }
                                 },
                               ),
                             ),
