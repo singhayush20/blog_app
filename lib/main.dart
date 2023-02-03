@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:blog_app/Pages/Home/HomePage.dart';
 import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/Pages/login_and_auth/LoginPage.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             theme: lightThemeData,
-            home: (isLoggedIn == false) ? LoginPage() : LoginPage(),
+            home: (isLoggedIn == false) ? LoginPage() : HomePage(),
           );
         }),
       ),

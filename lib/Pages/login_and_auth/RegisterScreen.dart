@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:blog_app/Pages/login_and_auth/RegisterDetails.dart';
+import 'package:blog_app/Pages/login_and_auth/VerifyEmailOTP.dart';
 import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/network_util/API.dart';
@@ -138,26 +139,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     context.loaderOverlay.hide();
                                     String? code = result[CODE];
                                     if (code == '2000') {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) => VerifyEmailOTP(
-                                      //       email: email,
-                                      //     ),
-                                      //   ),
-                                      // );
                                       Get.to(
-                                        RegisterDetails(email: email),
+                                        VerifyEmailOTP(email: email),
                                         fullscreenDialog: true,
                                         transition: Transition.fadeIn,
-                                        duration: Duration(milliseconds: 4000),
+                                        duration: Duration(milliseconds: 800),
                                       );
                                       Get.snackbar(
-                                        "${result[STATUS]}",
-                                        "${result[MESSAGE]}",
+                                        "Successful",
+                                        "OTP has been sent successfully!",
                                         snackPosition: SnackPosition.BOTTOM,
                                       );
-                                    } else if (code == '2001') {
+                                    } else {
                                       Get.snackbar(
                                         "${result[STATUS]}",
                                         "${result[MESSAGE]}",

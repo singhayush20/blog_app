@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 class RegisterDetails extends StatefulWidget {
   String? email;
@@ -27,7 +28,14 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   final _aboutController = TextEditingController();
   bool isPasswordVisible = true;
 
-  String? userRole;
+  @override
+  void initState() {
+    super.initState();
+    setState() {
+      _emailController.text = widget.email ?? '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -35,6 +43,11 @@ class _RegisterDetailsState extends State<RegisterDetails> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Text(
+          'Registration Details',
+        ),
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(
           horizontal: width * 0.05,
@@ -51,16 +64,15 @@ class _RegisterDetailsState extends State<RegisterDetails> {
           child: Column(
             children: [
               Container(
-                height: height * 0.2,
-                child: FittedBox(
-                  child: Text(
-                    "User Details",
-                    style: TextStyle(color: Colors.black),
-                  ),
+                height: height * 0.1,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Fill out your details and then register",
+                  style: TextStyle(color: Colors.black, fontSize: 20.sp),
                 ),
               ),
               Container(
-                height: height * 0.5,
+                height: height * 0.4,
                 padding: EdgeInsets.symmetric(
                   horizontal: 10,
                 ),
@@ -148,6 +160,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
+                                    enabled: false,
                                     controller: _emailController,
                                     obscureText: false,
                                     cursorColor: Colors.white,
@@ -262,8 +275,8 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Password cannot be empty';
-                                } else if (value.length < 8) {
-                                  return "Password must be atleast 8 characters long";
+                                } else if (value.length < 6) {
+                                  return "Password must be atleast 6 characters long";
                                 } else {
                                   return null;
                                 }
@@ -372,7 +385,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                 child: ElevatedButton(
                   onPressed: () async {
                     // save the details to the database
-                    if (_formKey.currentState!.validate() && userRole != null) {
+                    if (_formKey.currentState!.validate()) {
                       final UserService userService = UserService();
                       context.loaderOverlay.show();
                       String code = await userService.registerUser(
@@ -385,18 +398,14 @@ class _RegisterDetailsState extends State<RegisterDetails> {
 
                       if (code == "2000") {
                         Get.snackbar("Successful",
-                            "You have been registered successfully");
+                            "You have been registered successfully",
+                            snackPosition: SnackPosition.BOTTOM);
                         Get.offAll(const LoginPage());
                       } else {
                         Get.snackbar(
-                            "Failed", "Registration was not successful!");
+                            "Failed", "Registration was not successful!",
+                            snackPosition: SnackPosition.BOTTOM);
                       }
-                    } else if (userRole == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Select the account type!'),
-                        ),
-                      );
                     }
                   },
                   child: Text(

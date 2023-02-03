@@ -231,22 +231,16 @@ class _LoginPageState extends State<LoginPage> {
                           context.loaderOverlay.hide();
                           String code = result[CODE];
                           if (code == '2000') {
-                            String token = result['token'];
+                            String token = result['data']['token'];
                             token = Bearer + token;
                             log('Saving token and setting login status to true $token');
                             _sharedPreferences.setString(BEARER_TOKEN, token);
                             _sharedPreferences.setString(
                                 EMAIL, _emailController.text.trim());
                             _sharedPreferences.setBool(IS_LOGGED_IN, true);
-                            // Navigator.pushReplacement(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => BottomNavigation(),
-                            //   ),
-                            // );
+
                             Get.to(
                               HomePage(),
-                              fullscreenDialog: true,
                               transition: Transition.fade,
                               duration: const Duration(milliseconds: 800),
                             );
@@ -255,19 +249,7 @@ class _LoginPageState extends State<LoginPage> {
                               "You have been logged in successfully",
                               snackPosition: SnackPosition.BOTTOM,
                             );
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   SnackBar(
-                            //     content: Text('Login Successful!'),
-                            //   ),
-                            // );
                           } else {
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   SnackBar(
-                            //     content: Text(
-                            //         "Login Failed: ${result['errorMessage']}"),
-                            //   ),
-                            // );
-
                             Get.snackbar(
                               "${result[STATUS]}",
                               "Login has failed",
@@ -330,7 +312,7 @@ class _LoginPageState extends State<LoginPage> {
                                     RegisterScreen(),
                                     transition: Transition.rightToLeft,
                                     duration: Duration(
-                                      milliseconds: 800,
+                                      milliseconds: 600,
                                     ),
                                   );
                                 },

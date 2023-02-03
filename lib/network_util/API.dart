@@ -20,7 +20,7 @@ class API {
   Future<Map<String, dynamic>> sendEmailVerificationOTP(
       {required String email}) async {
     Map<String, String> data = {"email": email};
-    log('Sending otp for email verification: $data');
+    log('Sending otp for email verification: $data  and url: $sendEmailVerificationOTPUrl');
     Response response =
         await _dio.post(sendEmailVerificationOTPUrl, queryParameters: data);
     log('email otp response: $response');
@@ -85,9 +85,9 @@ class API {
 
   //6.
   Future<Map<String, dynamic>> register({required userData}) async {
-    log('Logging in user for: $userData');
-    Response response = await _dio.post(loginUrl, data: userData);
-    log('login user response: $response');
+    log(' Registering user for: $userData');
+    Response response = await _dio.post(registerUrl, data: userData);
+    log('register user response: $response');
     return response.data;
   }
 }

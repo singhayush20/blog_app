@@ -1,17 +1,13 @@
-const baseUrl = "https://44f9-14-139-240-85.in.ngrok.io";
+import 'package:blog_app/constants/app_constants.dart';
 
-const loginUrl = baseUrl + "/blog/auth/login";
+const loginUrl = domain + "/blog/auth/login";
 
-const register = baseUrl + "/blog/auth/register";
+const registerUrl = domain + "/blog/auth/register";
 
-const sendEmailVerificationOTPUrl =
-    baseUrl + "/blog/authenticate/verifyemail/sendotp";
+const sendEmailVerificationOTPUrl = domain + "/blog/auth/sendotp";
 
-const verifyEmailVerificationOTPUrl =
-    baseUrl + "/blog/authenticate/verifyemail/verify-otp";
+const verifyEmailVerificationOTPUrl = domain + "/blog/auth/verify-otp";
 
-const sendResetPasswordOTPUrl =
-    baseUrl + "/blog/authenticate/verifyemail/reset-password-otp";
+const sendResetPasswordOTPUrl = domain + "/blog/auth/reset-password-otp";
 
-const resetPasswordUrl =
-    baseUrl + "/blog/authenticate/verifyemail/reset-password";
+const resetPasswordUrl = domain + "/blog/auth/reset-password";

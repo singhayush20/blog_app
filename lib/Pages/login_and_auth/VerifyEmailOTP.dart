@@ -126,12 +126,14 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                             RegisterDetails(email: widget.email!),
                             transition: Transition.leftToRight,
                             duration: const Duration(
-                              microseconds: 1000,
+                              microseconds: 800,
                             ),
-                            fullscreenDialog: true,
                           );
+                          Get.snackbar("Success", "OTP Verified!",
+                              snackPosition: SnackPosition.BOTTOM);
                         } else if (code == '2001') {
-                          Get.snackbar("Failed", "Verification failed!");
+                          Get.snackbar("Failed", "Verification failed!",
+                              snackPosition: SnackPosition.BOTTOM);
                         }
                       }
                     },
