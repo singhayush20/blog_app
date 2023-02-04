@@ -11,3 +11,7 @@ const verifyEmailVerificationOTPUrl = domain + "/blog/auth/verify-otp";
 const sendResetPasswordOTPUrl = domain + "/blog/auth/reset-password-otp";
 
 const resetPasswordUrl = domain + "/blog/auth/reset-password";
+
+const getUserDetailsUrl = domain + "/blog/users/get-user-by-email";
+
+const updateUserProfileUrl = domain + "/blog/users/update-user";

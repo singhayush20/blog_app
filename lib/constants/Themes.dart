@@ -49,7 +49,10 @@ ThemeData lightThemeData = ThemeData(
   //====BOTTOM NAVIGATION Theme
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: appBarColor,
-    selectedItemColor: Colors.white,
+    selectedLabelStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+    ),
+    selectedItemColor: Color.fromARGB(255, 23, 34, 241),
     unselectedItemColor: scaffoldColor,
     showSelectedLabels: true,
     showUnselectedLabels: true,

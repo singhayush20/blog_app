@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:blog_app/constants/urls.dart';
 import 'package:dio/dio.dart';
@@ -88,6 +89,51 @@ class API {
     log(' Registering user for: $userData');
     Response response = await _dio.post(registerUrl, data: userData);
     log('register user response: $response');
+    return response.data;
+  }
+
+  //User profile data on profile page
+  Future<Map<String, dynamic>> getUserProfileData(
+      {String? email, String? token}) async {
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+
+    Map<String, dynamic> queryParam = {"email": email};
+    log('Fetching user details for: $queryParam  $getUserDetailsUrl');
+    Response response = await _dio.get(getUserDetailsUrl,
+        queryParameters: queryParam, options: options);
+
+    log('fetch user detail response: $response');
+    return response.data;
+  }
+
+  //update user details from dialog
+  Future<Map<String, dynamic>> updateUserProfile(
+      {required int userid,
+      required String firstName,
+      required String lastName,
+      required String about,
+      required String? token}) async {
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+
+    Map<String, dynamic> data = {
+      "about": about,
+      "firstName": firstName,
+      "lastName": lastName,
+    };
+    Map<String, dynamic> queryParam = {"userid": userid};
+    log('update user details for: $data $queryParam $updateUserProfileUrl');
+    Response response = await _dio.put(updateUserProfileUrl,
+        data: data, options: options, queryParameters: queryParam);
+
+    log('update user detail response: $response');
     return response.data;
   }
 }

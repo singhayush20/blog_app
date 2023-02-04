@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences _sharedPreferences;
 bool isLoggedIn = false;
-Future<void> initializePrefs() async {
+Future<void> _initializePrefs() async {
   log("Loading Shared Preferences");
   _sharedPreferences = await SharedPreferences.getInstance();
   log('Shared Preferences loaded');
@@ -26,7 +26,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  await initializePrefs();
+  await _initializePrefs();
   runApp(const MyApp());
 }
 
