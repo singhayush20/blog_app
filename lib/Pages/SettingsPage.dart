@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:blog_app/Pages/login_and_auth/LoginPage.dart';
-import 'package:blog_app/main.dart';
+import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,7 +35,7 @@ class _SettingsPageState extends State<SettingsPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
+    final categoryProvider = Provider.of<CategoryProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Settings"),
@@ -52,6 +52,7 @@ class _SettingsPageState extends State<SettingsPage>
                 leading: Icon(FontAwesomeIcons.arrowRightFromBracket),
                 onPressed: (BuildContext context) {
                   _sharedPreferences.clear();
+                  categoryProvider.clear();
                   //set it to not started, so that if the user logs out and re-login using
                   //some other id without closing the app, again the same flow can be followed
                   // widget.provider.loadingStatus = LoadingStatus.NOT_STARTED;

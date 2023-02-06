@@ -3,6 +3,7 @@ import 'package:blog_app/Pages/Home/HomePage.dart';
 import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/Pages/login_and_auth/LoginPage.dart';
+import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:blog_app/provider/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => UserProvider.initialze(_sharedPreferences),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CategoryProvider.initialze(_sharedPreferences),
         ),
       ],
       child: Sizer(

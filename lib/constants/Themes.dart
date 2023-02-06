@@ -58,6 +58,7 @@ ThemeData lightThemeData = ThemeData(
     showUnselectedLabels: true,
     type: BottomNavigationBarType.fixed,
   ),
+
   inputDecorationTheme: InputDecorationTheme(
     enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(

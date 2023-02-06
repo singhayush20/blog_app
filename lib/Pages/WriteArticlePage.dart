@@ -1,12 +1,18 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:blog_app/Service/Category.dart';
+import 'package:blog_app/Service/CategoryService.dart';
 import 'package:blog_app/Service/ImageController.dart';
 import 'package:blog_app/constants/app_constants.dart';
+import 'package:blog_app/constants/widgets.dart';
+import 'package:blog_app/network_util/API.dart';
+import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 // import 'package:flutter_quill/flutter_quill.dart' as qt hide Text;
@@ -24,6 +30,9 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
   );
   // qt.QuillController _textEditorController = qt.QuillController.basic();
   SharedPreferences? _sharedPreferences;
+  final _titleController = TextEditingController();
+  final _contentController = TextEditingController();
+  Category? _selectedCategory;
   @override
   void initState() {
     super.initState();
@@ -38,6 +47,8 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
 
   @override
   Widget build(BuildContext context) {
+    final categoryProvider = Provider.of<CategoryProvider>(context);
+
     //Inject image controller
     Get.lazyPut(() => ImageController());
     final height = MediaQuery.of(context).size.height -
@@ -48,84 +59,216 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: _appBar,
-      body: GetBuilder<ImageController>(builder: (imageController) {
-        return LoaderOverlay(
-          overlayWidget: Center(
-            child: Container(
-              alignment: Alignment.center,
-              height: 100,
-              width: 100,
-              child: CustomLoadingIndicator(),
-            ),
-          ),
-          child: Column(
-            children: [
-              // qt.QuillToolbar.basic(controller: _textEditorController),
-              // Expanded(
-              //   child: Container(
-              //     child: qt.QuillEditor.basic(
-              //       controller: _textEditorController,
-              //       readOnly: false, // true for view only mode
-              //     ),
-              //   ),
-              // ),
-              Center(
-                child: TextButton(
-                  child: Text('Select an Image'),
-                  onPressed: () {
-                    imageController.pickImage();
-                  },
-                ),
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Container(
+      body: GetBuilder<ImageController>(
+        builder: (imageController) {
+          return LoaderOverlay(
+            overlayWidget: Center(
+              child: Container(
                 alignment: Alignment.center,
-                // width: double.infinity,
-                height: height * 0.3,
-                color: Colors.grey[300],
-                child: imageController.pickedFile != null
-                    ? Image.file(
-                        File(imageController.pickedFile!.path),
-                        fit: BoxFit.cover,
-                      )
-                    : Text(
-                        'Select an Image',
+                height: 100,
+                width: 100,
+                child: CustomLoadingIndicator(),
+              ),
+            ),
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: width * 0.02,
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: height * 0.05,
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        'Choose a category',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.sp,
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                            style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color.fromARGB(255, 166, 243, 243),
+                      ),
+                      child: DropdownButton<Category>(
+                        value: _selectedCategory,
+                        hint: Text(
+                          'Select Category',
+                        ),
+                        items: categoryProvider.allCategories!
+                            .map<DropdownMenuItem<Category>>((Category value) {
+                          return DropdownMenuItem<Category>(
+                            value: value,
+                            child: Text(
+                              value.categoryName,
+                              style: TextStyle(
+                                fontSize: 15.sp,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedCategory = value;
+                          });
+                        },
+                        isExpanded:
+                            true, //make true to take width of parent widget
+                        underline: Container(), //empty line
+                        style: TextStyle(fontSize: 18.sp, color: Colors.black),
+                        dropdownColor: Color.fromARGB(255, 98, 201, 230),
+                        iconEnabledColor: Colors.black,
+                        menuMaxHeight: 100,
+                        //Icon color
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal: width * 0.02,
+                      ),
+                      alignment: Alignment.center,
+                      color: Colors.grey[300],
+                      child: imageController.pickedFile != null
+                          ? Image.file(
+                              File(imageController.pickedFile!.path),
+                              fit: BoxFit.cover,
+                            )
+                          : Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    top: 4,
+                                  ),
+                                  height: height * 0.2,
+                                  child: Image.asset(
+                                    'images/category_default.jpg',
+                                  ),
+                                ),
+                                Text(
+                                  'Your image appears here',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: TextButton(
+                        child: Text(
+                          'Select an Image',
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        onPressed: () {
+                          imageController.pickImage();
+                        },
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.02,
+                      ),
+                      child: PostTextField(
+                        textController: _titleController,
+                        hintText: "Enter your title here...",
+                        labelText: "Title",
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.02,
+                      ),
+                      child: PostTextField(
+                        textController: _contentController,
+                        hintText: "Enter your content here...",
+                        labelText: "Content",
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.05,
+                    ),
+                    ElevatedButton(
+                      onPressed: (_sharedPreferences != null)
+                          ? () async {
+                              context.loaderOverlay.show();
+                              final _api = API();
+                              Map<String, dynamic> postResult = await _api
+                                  .createPost(
+                                      userid:
+                                          _sharedPreferences!.getInt(USER_ID)!,
+                                      categoryid: _selectedCategory!.categoryId,
+                                      token: _sharedPreferences!
+                                          .getString(BEARER_TOKEN)!,
+                                      post: {
+                                    "title": _titleController.text,
+                                    "content": _contentController.text
+                                  });
+                              if (postResult[CODE] == '2000' &&
+                                  imageController.pickedFile != null) {
+                                bool result = await imageController.uploadImage(
+                                    postid: postResult['data']['postId'],
+                                    token: _sharedPreferences!
+                                        .getString(BEARER_TOKEN)!,
+                                    isUpdatingPost: false);
+                                if (result) {
+                                  Get.snackbar(
+                                      'Success', 'Post created successfully!',
+                                      snackPosition: SnackPosition.BOTTOM);
+                                }
+                              } else if (postResult[CODE] == '2000') {
+                                Get.snackbar(
+                                    'Success', 'Post created successfully!',
+                                    snackPosition: SnackPosition.BOTTOM);
+                              } else {
+                                Get.snackbar('Failure', 'Post not created!',
+                                    snackPosition: SnackPosition.BOTTOM);
+                              }
+                              context.loaderOverlay.hide();
+                            }
+                          : null,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
+                        child: Text(
+                          'Save post',
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              ElevatedButton(
-                  onPressed: (_sharedPreferences != null)
-                      ? () async {
-                          context.loaderOverlay.show();
-                          bool result = await imageController.uploadImage(
-                              postid: 52,
-                              token:
-                                  _sharedPreferences!.getString(BEARER_TOKEN)!,
-                              isUpdatingPost: true);
-                          context.loaderOverlay.hide();
-                          if (result) {
-                            Get.snackbar(
-                                'Success', 'Image uploaded successfully!',
-                                snackPosition: SnackPosition.BOTTOM);
-                          } else {
-                            Get.snackbar('Failure', 'Image upload failed!',
-                                snackPosition: SnackPosition.BOTTOM);
-                          }
-                        }
-                      : null,
-                  child: Text('Save post')),
-            ],
-          ),
-        );
-      }),
+            ),
+          );
+        },
+      ),
     );
   }
 }

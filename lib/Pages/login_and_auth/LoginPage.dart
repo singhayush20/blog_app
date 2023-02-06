@@ -238,9 +238,10 @@ class _LoginPageState extends State<LoginPage> {
                             _sharedPreferences.setString(
                                 EMAIL, _emailController.text.trim());
                             _sharedPreferences.setBool(IS_LOGGED_IN, true);
-
+                            _sharedPreferences.setInt(
+                                USER_ID, result['data']['userId']);
                             Get.off(
-                              ()=>HomePage(),
+                              () => HomePage(),
                               transition: Transition.fade,
                               duration: const Duration(milliseconds: 800),
                             );

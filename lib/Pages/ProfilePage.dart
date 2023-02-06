@@ -229,24 +229,29 @@ class _ProfilePageState extends State<ProfilePage>
                     ),
                   );
                 } else {
-                  return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
+                  return RefreshIndicator(
+                    onRefresh: _refreshUserData,
+                    key: _refreshIndicatorKey,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              height: 100,
+                              child:
+                                  Image.asset('images/category_default.jpg')),
+                          Container(
                             height: 100,
-                            child: Image.asset('images/category_default.jpg')),
-                        Container(
-                          height: 100,
-                          alignment: Alignment.center,
-                          child: Text(
-                            'No Data',
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w700,
+                            alignment: Alignment.center,
+                            child: Text(
+                              'No Data',
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                        ),
-                      ]);
+                        ]),
+                  );
                 }
               }
           }

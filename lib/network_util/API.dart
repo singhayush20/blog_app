@@ -168,4 +168,39 @@ class API {
     log('Image upload response: $response');
     return response;
   }
+
+  Future<Map<String, dynamic>> createPost(
+      {required int userid,
+      required int categoryid,
+      required String token,
+      required Map<String, String> post}) async {
+    Map<String, dynamic> queryParam = {
+      "userid": userid,
+      "categoryid": categoryid
+    };
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+
+    log('Creating post for: $queryParam');
+    Response response = await _dio.post(createPostUrl,
+        queryParameters: queryParam, options: options, data: post);
+
+    log('Create post response: $response');
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> getAllCategories({required String token}) async {
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+    log('Fetching all categories');
+    Response response = await _dio.get(getAllCategoriesUrl, options: options);
+    log('All categories response: $response');
+    return response.data;
+  }
 }
