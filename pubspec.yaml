@@ -49,6 +49,7 @@ dependencies:
   font_awesome_flutter: ^10.3.0
   email_validator: ^2.1.17
   settings_ui: ^2.0.2
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

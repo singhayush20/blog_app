@@ -31,7 +31,7 @@ class _MyArticlesPageState extends State<MyArticlesPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Text("Write Article"),
+        child: Text("My Articles"),
       ),
     );
   }

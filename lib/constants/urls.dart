@@ -15,3 +15,6 @@ const resetPasswordUrl = domain + "/blog/auth/reset-password";
 const getUserDetailsUrl = domain + "/blog/users/get-user-by-email";
 
 const updateUserProfileUrl = domain + "/blog/users/update-user";
+
+const uploadArticleImageUrl =
+    "/blog/posts/upload";  //domain will be added separately

@@ -1,8 +1,12 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/constants/urls.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get_utils/src/platform/platform.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class API {
   final Dio _dio = Dio();
@@ -135,5 +139,33 @@ class API {
 
     log('update user detail response: $response');
     return response.data;
+  }
+
+  Future<http.StreamedResponse> uploadImage(
+      {XFile? data,
+      required String token,
+      required int postid,
+      required bool isUpdatingPost}) async {
+    // Map<String, dynamic> queryParams = {
+    //   "postid": postid,
+    //   "isUpdatingPost": isUpdatingPost
+    // };
+    final uri = Uri.https(domain2, uploadArticleImageUrl, {
+      "postid": postid.toString(),
+      "isUpdatingPost": isUpdatingPost.toString()
+    });
+    log('Uploading image to: ${uri.toString()}');
+    http.MultipartRequest request = http.MultipartRequest('POST', uri);
+    request.headers.addAll(<String, String>{'Authorization': token});
+
+    if (GetPlatform.isMobile && data != null) {
+      File file = File(data.path);
+      request.files.add(http.MultipartFile(
+          'file', file.readAsBytes().asStream(), file.lengthSync(),
+          filename: file.path.split('/').last));
+    }
+    http.StreamedResponse response = await request.send();
+    log('Image upload response: $response');
+    return response;
   }
 }
