@@ -206,4 +206,48 @@ class API {
     log('All categories response: $response');
     return response.data;
   }
+
+  //get all posts by user
+  Future<Map<String, dynamic>> getAllPostsByUser(
+      {required String token, required int userid}) async {
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+    Map<String, dynamic> queryParam = {"userid": userid};
+    log('Fetching posts for $queryParam');
+    Response response = await _dio.get(getAllPostsByUserUrl,
+        options: options, queryParameters: queryParam);
+    log('User articles fetch response: $response');
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> getAllCommentsForPost(
+      {required String token, required int postid}) async {
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+    log('Fetching comments for $postid');
+    Response response = await _dio.get(getAllCommentsByPostUrl,
+        options: options, queryParameters: {"postid": postid});
+    log('Comments for post response: $response');
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> deletePost(
+      {required String token, required int postid}) async {
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+    log('Deleting post: $postid');
+    Response response = await _dio.delete(deletePostUrl,
+        options: options, queryParameters: {"postid": postid});
+    log('Delete post response: $response');
+    return response.data;
+  }
 }

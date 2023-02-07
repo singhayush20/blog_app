@@ -31,7 +31,7 @@ ThemeData lightThemeData = ThemeData(
     titleTextStyle: TextStyle(
       color: appBarItemColor,
       fontWeight: FontWeight.w900,
-      fontSize: 30,
+      fontSize: 15.sp,
     ),
     iconTheme: IconThemeData(
       color: appBarItemColor,
@@ -146,3 +146,23 @@ InputDecoration fieldDecoration(
     ),
   );
 }
+
+BoxDecoration listTileDecoration = BoxDecoration(
+  border: Border.all(
+      color: Color.fromARGB(255, 60, 4, 78),
+      width: 2,
+      style: BorderStyle.solid),
+  borderRadius: const BorderRadius.all(
+    Radius.circular(20),
+  ),
+  gradient: const LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color.fromARGB(255, 243, 240, 244),
+      Color.fromARGB(255, 249, 246, 177),
+      Color.fromARGB(255, 199, 221, 54),
+    ],
+    stops: [0.2, 0.5, 1],
+  ),
+);

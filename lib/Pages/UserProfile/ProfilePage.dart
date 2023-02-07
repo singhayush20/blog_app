@@ -1,4 +1,6 @@
+import 'package:blog_app/Model/User.dart';
 import 'package:blog_app/Pages/UserProfile/MyArticlesPage.dart';
+import 'package:blog_app/Service/UserService.dart';
 import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:blog_app/constants/Widgets/ItemTile.dart';
@@ -27,28 +29,29 @@ class _ProfilePageState extends State<ProfilePage>
   final _lastNameController = TextEditingController();
   final _aboutController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late final UserService _userService;
   late final API _api;
-  GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  Map<String, dynamic>? _userDetails;
+  User? _user;
   late Future<void> _initialData;
   Future<void> _initUserData() async {
     _sharedPreferences = await SharedPreferences.getInstance();
 
-    final result = await _api.getUserProfileData(
-        email: _sharedPreferences!.getString(EMAIL),
-        token: _sharedPreferences!.getString(BEARER_TOKEN));
+    final result = await _userService.getUserDetails(
+        email: _sharedPreferences!.getString(EMAIL) ?? 'null',
+        token: _sharedPreferences!.getString(BEARER_TOKEN) ?? '0');
     setState(() {
-      _userDetails = result;
+      _user = result;
     });
   }
 
   Future<void> _refreshUserData() async {
-    final result = await _api.getUserProfileData(
-        email: _sharedPreferences!.getString(EMAIL),
-        token: _sharedPreferences!.getString(BEARER_TOKEN));
+    final result = await _userService.getUserDetails(
+        email: _sharedPreferences!.getString(EMAIL) ?? 'null',
+        token: _sharedPreferences!.getString(BEARER_TOKEN) ?? '0');
     setState(() {
-      _userDetails = result;
+      _user = result;
     });
   }
 
@@ -60,6 +63,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   void _initializePrefs() async {
     _api = API();
+    _userService = UserService();
     _initialData = _initUserData();
   }
 
@@ -95,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage>
               }
             case ConnectionState.done:
               {
-                if (_userDetails != null && _userDetails!['code'] == '2000') {
+                if (_user != null) {
                   return RefreshIndicator(
                     onRefresh: _refreshUserData,
                     key: _refreshIndicatorKey,
@@ -131,8 +135,7 @@ class _ProfilePageState extends State<ProfilePage>
                               height: height * 0.05,
                             ),
                             //Top user details
-                            TopUserDetails(
-                                height: height, userDetails: _userDetails),
+                            TopUserDetails(height: height, userDetails: _user),
                             //Details
                             SizedBox(
                               height: height * 0.02,
@@ -205,21 +208,21 @@ class _ProfilePageState extends State<ProfilePage>
                                 ItemTile(
                                   title: "Name",
                                   subtitle:
-                                      '${_userDetails!['data']['firstName']} ${_userDetails!['data']['lastName']}',
+                                      '${_user!.firstName} ${_user!.lastName}',
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
                                 ItemTile(
                                   title: "About",
-                                  subtitle: '${_userDetails!['data']['about']}',
+                                  subtitle: _user!.about,
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
                                 ItemTile(
                                   title: "Email",
-                                  subtitle: '${_userDetails!['data']['email']}',
+                                  subtitle: _user!.email,
                                 ),
                               ],
                             )
@@ -265,9 +268,9 @@ class _ProfilePageState extends State<ProfilePage>
   bool get wantKeepAlive => true;
 
   Widget _updateProfileBottomSheet() {
-    _firstNameController.text = _userDetails!['data']['firstName'];
-    _lastNameController.text = _userDetails!['data']['lastName'];
-    _aboutController.text = _userDetails!['data']['about'];
+    _firstNameController.text = _user!.firstName;
+    _lastNameController.text = _user!.lastName;
+    _aboutController.text = _user!.about;
     return LoaderOverlay(
       overlayWidget: Center(
         child: Container(
@@ -365,7 +368,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 context.loaderOverlay.show();
                                 Map<String, dynamic> result =
                                     await _api.updateUserProfile(
-                                        userid: _userDetails!['data']['id'],
+                                        userid: _user!.id,
                                         firstName: _firstNameController.text,
                                         lastName: _lastNameController.text,
                                         about: _aboutController.text,

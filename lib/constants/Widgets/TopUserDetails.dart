@@ -1,3 +1,4 @@
+import 'package:blog_app/Model/User.dart';
 import 'package:blog_app/Pages/UserProfile/WriteArticlePage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,12 +9,12 @@ class TopUserDetails extends StatelessWidget {
   const TopUserDetails({
     Key? key,
     required this.height,
-    required Map<String, dynamic>? userDetails,
+    required User? userDetails,
   })  : _userDetails = userDetails,
         super(key: key);
 
   final double height;
-  final Map<String, dynamic>? _userDetails;
+  final User? _userDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +82,7 @@ class TopUserDetails extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: Text(
-                        '${_userDetails!['data']['id']}',
+                        '${_userDetails!.id}',
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w700,

@@ -22,3 +22,9 @@ const uploadArticleImageUrl =
 const createPostUrl = domain + "/blog/posts/create";
 
 const getAllCategoriesUrl = domain + "/blog/categories/get-all";
+
+const getAllPostsByUserUrl = domain + "/blog/posts/get-post-by-user";
+
+const getAllCommentsByPostUrl = domain + "/blog/comments/get-comments-by-post";
+
+const deletePostUrl = domain + "/blog/posts/delete";
