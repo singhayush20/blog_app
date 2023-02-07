@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:blog_app/network_util/API.dart';
-
 List<Category> categoryFromJson(List<dynamic> str) {
   return List<Category>.from(str.map((x) {
     return Category.fromJson(x);

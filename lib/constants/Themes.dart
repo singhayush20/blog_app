@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sizer/sizer.dart';
 
 ThemeData lightThemeData = ThemeData(
   floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -108,3 +109,40 @@ BoxDecoration boxDecoration = BoxDecoration(
   ),
   color: Color.fromARGB(255, 39, 80, 176),
 );
+
+InputDecoration fieldDecoration(
+    {required String label, required IconData icon}) {
+  return InputDecoration(
+    labelText: label,
+    labelStyle: TextStyle(
+      fontWeight: FontWeight.w700,
+      color: Colors.black,
+      fontSize: 10.sp,
+    ),
+    prefixIcon: Icon(
+      icon,
+      color: Colors.black,
+    ),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.black,
+        width: 2,
+      ),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.black,
+        width: 2,
+      ),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    filled: false,
+    border: UnderlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+      borderSide: BorderSide(
+        color: Colors.black,
+      ),
+    ),
+  );
+}

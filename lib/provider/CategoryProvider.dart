@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:blog_app/Service/Category.dart';
+import 'package:blog_app/Model/Category.dart';
 import 'package:blog_app/Service/CategoryService.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:flutter/material.dart';

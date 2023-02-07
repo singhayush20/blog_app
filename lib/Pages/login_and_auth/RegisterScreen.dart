@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:blog_app/Pages/login_and_auth/RegisterDetails.dart';
 import 'package:blog_app/Pages/login_and_auth/VerifyEmailOTP.dart';
 import 'package:blog_app/constants/Themes.dart';
+import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/network_util/API.dart';
 import 'package:flutter/material.dart';

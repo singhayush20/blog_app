@@ -1,7 +1,7 @@
 import 'package:blog_app/Service/UserService.dart';
 import 'package:blog_app/constants/Themes.dart';
-import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/Pages/login_and_auth/LoginPage.dart';
+import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -73,7 +73,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
               ),
               Container(
                 height: height * 0.4,
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                 ),
                 decoration: boxDecoration,
@@ -116,7 +116,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Expanded(
@@ -127,7 +127,8 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                                       controller: _lastNameController,
                                       obscureText: false,
                                       cursorColor: Colors.white,
-                                      style: TextStyle(color: Colors.white),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                       keyboardType: TextInputType.name,
                                       validator: (value) {
                                         // if (value!.isEmpty) {
@@ -182,83 +183,6 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                                     ),
                                   ),
                                 ),
-                                // SizedBox(
-                                //   width: 20,
-                                // ),
-                                // Expanded(
-                                //   child: Column(
-                                //     crossAxisAlignment:
-                                //         CrossAxisAlignment.center,
-                                //     children: [
-                                //       Expanded(
-                                //         flex: 1,
-                                //         child: Container(
-                                //           alignment: Alignment.bottomLeft,
-                                //           child: Text(
-                                //             'Account Type',
-                                //             style:
-                                //                 TextStyle(color: Colors.white),
-                                //           ),
-                                //         ),
-                                //       ),
-                                //       Expanded(
-                                //         flex: 2,
-                                //         child: Column(
-                                //           children: [
-                                //             Expanded(
-                                //               child: Container(
-                                //                 alignment: Alignment.bottomLeft,
-                                //                 child: RadioListTile(
-                                //                   selectedTileColor:
-                                //                       Colors.white,
-                                //                   tileColor: Colors.white,
-                                //                   title: Text(
-                                //                     "Admin",
-                                //                     style: TextStyle(
-                                //                       color: Colors.white,
-                                //                     ),
-                                //                   ),
-                                //                   value: "ADMIN",
-                                //                   groupValue: userRole,
-                                //                   onChanged: (value) {
-                                //                     setState(() {
-                                //                       userRole =
-                                //                           value.toString();
-                                //                     });
-                                //                   },
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //             Expanded(
-                                //               child: Container(
-                                //                 alignment: Alignment.bottomLeft,
-                                //                 child: RadioListTile(
-                                //                   selectedTileColor:
-                                //                       Colors.white,
-                                //                   tileColor: Colors.white,
-                                //                   title: Text(
-                                //                     "Student",
-                                //                     style: TextStyle(
-                                //                       color: Colors.white,
-                                //                     ),
-                                //                   ),
-                                //                   value: "STUDENT",
-                                //                   groupValue: userRole,
-                                //                   onChanged: (value) {
-                                //                     setState(() {
-                                //                       userRole =
-                                //                           value.toString();
-                                //                     });
-                                //                   },
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //           ],
-                                //         ),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // )
                               ],
                             ),
                           ),
@@ -283,7 +207,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                               },
                               decoration: InputDecoration(
                                 hintText: "Password",
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   FontAwesomeIcons.lock,
                                   color: Colors.white,
                                 ),

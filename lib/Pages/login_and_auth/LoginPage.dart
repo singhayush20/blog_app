@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:blog_app/Pages/Home/HomePage.dart';
 import 'package:blog_app/constants/Themes.dart';
+import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/Pages/login_and_auth/ForgetPassword.dart';
 import 'package:blog_app/Pages/login_and_auth/RegisterScreen.dart';
@@ -65,7 +66,9 @@ class _LoginPageState extends State<LoginPage> {
             useDefaultLoading: false,
             overlayWidget: Center(
               child: Container(
-                  height: 100, width: 100, child: CustomLoadingIndicator()),
+                  height: 100,
+                  width: 100,
+                  child: const CustomLoadingIndicator()),
             ),
             child: Container(
               margin: EdgeInsets.symmetric(
@@ -111,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                     Container(
                         height: height * 0.2,
                         decoration: boxDecoration.copyWith(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             stops: [0.3, 0.8, 1],
@@ -143,7 +146,8 @@ class _LoginPageState extends State<LoginPage> {
                                     child: TextFormField(
                                       controller: _emailController,
                                       obscureText: false,
-                                      style: TextStyle(color: Colors.white),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                       cursorColor: Colors.white,
                                       keyboardType: TextInputType.emailAddress,
                                       validator: (value) {
@@ -173,7 +177,8 @@ class _LoginPageState extends State<LoginPage> {
                                       controller: _passwordController,
                                       obscureText: !isPasswordVisible,
                                       cursorColor: Colors.white,
-                                      style: TextStyle(color: Colors.white),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                       keyboardType: TextInputType.text,
                                       validator: (value) {
                                         if (value!.isEmpty) {
@@ -186,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
                                       },
                                       decoration: InputDecoration(
                                         hintText: "Password",
-                                        prefixIcon: Icon(
+                                        prefixIcon: const Icon(
                                           FontAwesomeIcons.lock,
                                           color: Colors.white,
                                         ),
@@ -241,7 +246,7 @@ class _LoginPageState extends State<LoginPage> {
                             _sharedPreferences.setInt(
                                 USER_ID, result['data']['userId']);
                             Get.off(
-                              () => HomePage(),
+                              () => const HomePage(),
                               transition: Transition.fade,
                               duration: const Duration(milliseconds: 800),
                             );
@@ -259,7 +264,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             vertical: 2,
                           ),
                           child: Text(
@@ -287,7 +292,8 @@ class _LoginPageState extends State<LoginPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ForgetPassword(),
+                                      builder: (context) =>
+                                          const ForgetPassword(),
                                     ),
                                   );
                                 },
@@ -302,7 +308,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Expanded(
@@ -310,9 +316,9 @@ class _LoginPageState extends State<LoginPage> {
                               child: TextButton(
                                 onPressed: () {
                                   Get.to(
-                                    RegisterScreen(),
+                                    const RegisterScreen(),
                                     transition: Transition.rightToLeft,
-                                    duration: Duration(
+                                    duration: const Duration(
                                       milliseconds: 600,
                                     ),
                                   );

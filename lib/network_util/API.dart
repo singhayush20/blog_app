@@ -141,6 +141,7 @@ class API {
     return response.data;
   }
 
+  //upload image for creating or updating post
   Future<http.StreamedResponse> uploadImage(
       {XFile? data,
       required String token,
@@ -169,6 +170,7 @@ class API {
     return response;
   }
 
+  //create a new post
   Future<Map<String, dynamic>> createPost(
       {required int userid,
       required int categoryid,
@@ -192,6 +194,7 @@ class API {
     return response.data;
   }
 
+  //get all the categories
   Future<Map<String, dynamic>> getAllCategories({required String token}) async {
     Options options = Options(
         validateStatus: (_) => true,

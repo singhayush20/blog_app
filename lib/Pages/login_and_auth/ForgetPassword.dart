@@ -1,4 +1,5 @@
 import 'package:blog_app/constants/Themes.dart';
+import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/network_util/API.dart';
 import 'package:email_validator/email_validator.dart';
@@ -145,7 +146,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                           }
                                         }
                                       },
-                                      child: FittedBox(
+                                      child: const FittedBox(
                                         alignment: Alignment.center,
                                         fit: BoxFit.fitWidth,
                                         child: Padding(
@@ -162,7 +163,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 30,
                                   ),
                                 ],
@@ -184,7 +185,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                       return null;
                                     }
                                   },
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     hintText: "OTP",
                                     prefixIcon: Icon(
                                       FontAwesomeIcons.key,
@@ -202,7 +203,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                   controller: _passwordController,
                                   obscureText: isPasswordVisible,
                                   cursorColor: Colors.white,
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                   keyboardType: TextInputType.text,
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -311,7 +312,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           }
                         }
                       },
-                      child: FittedBox(
+                      child: const FittedBox(
                         alignment: Alignment.center,
                         fit: BoxFit.fitWidth,
                         child: Padding(

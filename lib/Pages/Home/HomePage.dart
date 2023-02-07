@@ -1,14 +1,15 @@
 import 'dart:developer';
 
-import 'package:blog_app/Pages/ExplorePage.dart';
-import 'package:blog_app/Pages/PersonalFeedPage.dart';
-import 'package:blog_app/Pages/ProfilePage.dart';
-import 'package:blog_app/Pages/SettingsPage.dart';
+import 'package:blog_app/Pages/Explore/ExplorePage.dart';
+import 'package:blog_app/Pages/PersonalFeed/PersonalFeedPage.dart';
+import 'package:blog_app/Pages/Settings/SettingsPage.dart';
+import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:blog_app/Pages/UserProfile/ProfilePage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

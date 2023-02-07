@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:blog_app/network_util/API.dart';
 import 'package:get/get.dart';

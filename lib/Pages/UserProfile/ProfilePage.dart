@@ -1,12 +1,12 @@
-import 'package:blog_app/Pages/MyArticlesPage.dart';
-import 'package:blog_app/Pages/WriteArticlePage.dart';
+import 'package:blog_app/Pages/UserProfile/MyArticlesPage.dart';
 import 'package:blog_app/constants/Themes.dart';
+import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
+import 'package:blog_app/constants/Widgets/ItemTile.dart';
+import 'package:blog_app/constants/Widgets/TopUserDetails.dart';
 import 'package:blog_app/constants/app_constants.dart';
-import 'package:blog_app/constants/widgets.dart';
 import 'package:blog_app/network_util/API.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -308,7 +308,7 @@ class _ProfilePageState extends State<ProfilePage>
                                   return null;
                                 }
                               },
-                              decoration: _fieldDecoration(
+                              decoration: fieldDecoration(
                                   label: "First Name",
                                   icon: FontAwesomeIcons.user),
                             ),
@@ -329,7 +329,7 @@ class _ProfilePageState extends State<ProfilePage>
                                   return null;
                                 }
                               },
-                              decoration: _fieldDecoration(
+                              decoration: fieldDecoration(
                                   label: "Last Name",
                                   icon: FontAwesomeIcons.user),
                             ),
@@ -351,7 +351,7 @@ class _ProfilePageState extends State<ProfilePage>
                                   return null;
                                 }
                               },
-                              decoration: _fieldDecoration(
+                              decoration: fieldDecoration(
                                   label: "Description",
                                   icon: FontAwesomeIcons.addressCard),
                             ),
@@ -402,43 +402,6 @@ class _ProfilePageState extends State<ProfilePage>
             }),
           );
         },
-      ),
-    );
-  }
-
-  InputDecoration _fieldDecoration(
-      {required String label, required IconData icon}) {
-    return InputDecoration(
-      labelText: label,
-      labelStyle: TextStyle(
-        fontWeight: FontWeight.w700,
-        color: Colors.black,
-        fontSize: 10.sp,
-      ),
-      prefixIcon: Icon(
-        icon,
-        color: Colors.black,
-      ),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.black,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.black,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      filled: false,
-      border: UnderlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(
-          color: Colors.black,
-        ),
       ),
     );
   }

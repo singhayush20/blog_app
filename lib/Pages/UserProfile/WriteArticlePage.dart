@@ -1,11 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:blog_app/Service/Category.dart';
-import 'package:blog_app/Service/CategoryService.dart';
-import 'package:blog_app/Service/ImageController.dart';
+import 'package:blog_app/Model/Category.dart';
+import 'package:blog_app/GetController/ImageController.dart';
+import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:blog_app/constants/app_constants.dart';
-import 'package:blog_app/constants/widgets.dart';
+import 'package:blog_app/constants/Widgets/PostTextField.dart';
 import 'package:blog_app/network_util/API.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class WriteArticlePage extends StatefulWidget {
 
 class _WriteArticlePageState extends State<WriteArticlePage> {
   final AppBar _appBar = AppBar(
-    title: Text('Write a new Article'),
+    title: const Text('Write a new Article'),
   );
   // qt.QuillController _textEditorController = qt.QuillController.basic();
   SharedPreferences? _sharedPreferences;
@@ -67,11 +67,11 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                 alignment: Alignment.center,
                 height: 100,
                 width: 100,
-                child: CustomLoadingIndicator(),
+                child: const CustomLoadingIndicator(),
               ),
             ),
             child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: width * 0.02,
