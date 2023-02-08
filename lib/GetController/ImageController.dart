@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:blog_app/Model/Post.dart';
+import 'package:blog_app/Service/PostService.dart';
 import 'package:blog_app/network_util/API.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,6 +18,11 @@ class ImageController extends GetxController {
     //getImage method is deprecated for ImagePicker
     _pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     // _image = File(_pickedFile!.path);
+    update();
+  }
+
+  removeImage() {
+    _pickedFile = null;
     update();
   }
 
@@ -44,5 +51,18 @@ class ImageController extends GetxController {
     }
     update();
     return success;
+  }
+
+  List<Post> _userArticles = [];
+  List<Post> get userArticles => _userArticles;
+  final PostService _postService = PostService();
+  //Articles
+  Future<void> loadUserArticles(
+      {required String token, required int userid}) async {
+    log('loading user articles');
+    final result =
+        await _postService.getAllPostsForUser(token: token, userid: userid);
+    _userArticles = result;
+    update();
   }
 }

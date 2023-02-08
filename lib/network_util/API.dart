@@ -250,4 +250,22 @@ class API {
     log('Delete post response: $response');
     return response.data;
   }
+
+  Future<Map<String, dynamic>> updatePostContent(
+      {required String token,
+      required String content,
+      required String title,
+      required int postid}) async {
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+    Map<String, dynamic> data = {"title": title, "content": content};
+    log('Updating post: $postid');
+    Response response = await _dio.put(updatePostUrl,
+        options: options, data: data, queryParameters: {"postid": postid});
+    log('Post update response: $response');
+    return response.data;
+  }
 }

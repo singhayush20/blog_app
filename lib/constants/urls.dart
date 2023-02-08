@@ -28,3 +28,5 @@ const getAllPostsByUserUrl = domain + "/blog/posts/get-post-by-user";
 const getAllCommentsByPostUrl = domain + "/blog/comments/get-comments-by-post";
 
 const deletePostUrl = domain + "/blog/posts/delete";
+
+const updatePostUrl = domain + "/blog/posts/update";
