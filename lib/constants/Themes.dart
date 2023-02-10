@@ -26,6 +26,23 @@ ThemeData lightThemeData = ThemeData(
       foregroundColor: appBarColor,
     ),
   ),
+  //==== OUTLINED BUTTON THEME====
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      foregroundColor: Colors.white,
+      backgroundColor: Colors.teal,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      textStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w800,
+      ),
+    ),
+  ),
   //====APP BAR Theme
   appBarTheme: AppBarTheme(
     titleTextStyle: TextStyle(
@@ -165,4 +182,21 @@ BoxDecoration listTileDecoration = BoxDecoration(
     ],
     stops: [0.2, 0.5, 1],
   ),
+);
+
+BoxDecoration categoryTopDecoration = BoxDecoration(
+  border: Border.all(color: Colors.black, width: 0.5, style: BorderStyle.solid),
+  borderRadius: BorderRadius.only(
+    bottomLeft: Radius.circular(20),
+    bottomRight: Radius.circular(20),
+  ),
+  gradient: LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color.fromARGB(255, 39, 80, 176),
+      Colors.lightBlue,
+    ],
+  ),
+  color: Color.fromARGB(255, 39, 80, 176),
 );

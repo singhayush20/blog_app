@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:blog_app/GetController/SubscribedCategoriesController.dart';
 import 'package:blog_app/Pages/Explore/ExplorePage.dart';
+import 'package:blog_app/Pages/PersonalFeed/PersnalFeed.dart';
 import 'package:blog_app/Pages/PersonalFeed/PersonalFeedPage.dart';
 import 'package:blog_app/Pages/Settings/SettingsPage.dart';
 import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
@@ -8,6 +10,7 @@ import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:blog_app/Pages/UserProfile/ProfilePage.dart';
 
@@ -20,16 +23,55 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
-    PersonalFeedPage(),
+    PersonalFeed(),
     ExplorePage(),
     ProfilePage(),
     SettingsPage(),
+  ];
+  final List<Widget> _pages2 = [
+    ExplorePage(),
+    ProfilePage(),
+    SettingsPage(),
+  ];
+  final List<BottomNavigationBarItem> _items = [
+    const BottomNavigationBarItem(
+      label: "Feed",
+      icon: Icon(FontAwesomeIcons.rss),
+    ),
+    const BottomNavigationBarItem(
+      label: "Explore",
+      icon: Icon(FontAwesomeIcons.borderAll),
+    ),
+    const BottomNavigationBarItem(
+      label: "Profile",
+      icon: Icon(FontAwesomeIcons.user),
+    ),
+    const BottomNavigationBarItem(
+      label: "Settings",
+      icon: Icon(FontAwesomeIcons.gears),
+    ),
+  ];
+  final List<BottomNavigationBarItem> _items2 = [
+    const BottomNavigationBarItem(
+      label: "Explore",
+      icon: Icon(FontAwesomeIcons.borderAll),
+    ),
+    const BottomNavigationBarItem(
+      label: "Profile",
+      icon: Icon(FontAwesomeIcons.user),
+    ),
+    const BottomNavigationBarItem(
+      label: "Settings",
+      icon: Icon(FontAwesomeIcons.gears),
+    )
   ];
   late PageController _pageController;
   int _selectedIndex = 0;
   @override
   void initState() {
     super.initState();
+    Get.lazyPut(() => SubscribedCategoriesController());
+
     _pageController = PageController();
   }
 
@@ -56,13 +98,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final categoryProvider = Provider.of<CategoryProvider>(context);
     if (categoryProvider.loadingStatus == LoadingStatus.NOT_STARTED) {
-      // log('Bottom Navigation: loading user for email: ${userProvider.sharedPreferences!.getString(EMAIL)} ');
       log("Bottom Navigation: fetching all categories");
       categoryProvider.fetchAllCategories();
     }
     return Scaffold(
       body: (!(categoryProvider.loadingStatus == LoadingStatus.LOADING ||
               categoryProvider.loadingStatus == LoadingStatus.NOT_STARTED))
+          /*
+      Wrap PageView in GetBuilder and fetch the subscribed categories
+      If the subscribed categories list is not empty then ask the user to subscribe
+      by presenting a list else direct to the PageView
+       */
           ? PageView(
               children: _pages,
               controller: _pageController,
@@ -81,24 +127,7 @@ class _HomePageState extends State<HomePage> {
               ? BottomNavigationBar(
                   currentIndex: _selectedIndex,
                   onTap: _onTapped,
-                  items: [
-                    const BottomNavigationBarItem(
-                      label: "Feed",
-                      icon: Icon(FontAwesomeIcons.rss),
-                    ),
-                    const BottomNavigationBarItem(
-                      label: "Explore",
-                      icon: Icon(FontAwesomeIcons.borderAll),
-                    ),
-                    const BottomNavigationBarItem(
-                      label: "Profile",
-                      icon: Icon(FontAwesomeIcons.user),
-                    ),
-                    const BottomNavigationBarItem(
-                      label: "Settings",
-                      icon: Icon(FontAwesomeIcons.gears),
-                    ),
-                  ],
+                  items: _items,
                 )
               : null,
     );

@@ -27,6 +27,16 @@ const getAllPostsByUserUrl = domain + "/blog/posts/get-post-by-user";
 
 const getAllCommentsByPostUrl = domain + "/blog/comments/get-comments-by-post";
 
+const writeCommentUrl = domain + "/blog/comments/create";
+
 const deletePostUrl = domain + "/blog/posts/delete";
 
 const updatePostUrl = domain + "/blog/posts/update";
+
+const getSubscribedCategoriesUrl = domain + "/blog/topics/subscribed";
+
+const subscribeToCategoryUrl = domain + "/blog/topics/subscribe";
+
+const unsubscribeFromCategoryUrl = domain + "/blog/topics/unsubscribe";
+
+const loadArticlesByCategoryUrl = domain + "/blog/posts/get-post-by-category";

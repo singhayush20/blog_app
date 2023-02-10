@@ -15,7 +15,6 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
-// import 'package:flutter_quill/flutter_quill.dart' as qt hide Text;
 
 class WriteArticlePage extends StatefulWidget {
   const WriteArticlePage({super.key});
@@ -28,7 +27,6 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
   final AppBar _appBar = AppBar(
     title: const Text('Write a new Article'),
   );
-  // qt.QuillController _textEditorController = qt.QuillController.basic();
   SharedPreferences? _sharedPreferences;
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();

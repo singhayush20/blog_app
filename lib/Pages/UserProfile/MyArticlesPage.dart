@@ -33,7 +33,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
   Future<void>? _initialData;
   // List<Post> _userArticles = [];
   Future<void> _loadUserArticles(ImageController postController) async {
-    _sharedPreferences = await SharedPreferences.getInstance();
+    _sharedPreferences ??= await SharedPreferences.getInstance();
     await postController.loadUserArticles(
         token: _sharedPreferences!.getString(BEARER_TOKEN)!,
         userid: _sharedPreferences!.getInt(USER_ID)!);
@@ -191,8 +191,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                                               .userArticles[
                                                                   index]
                                                               .postId);
-                                                  if (result['code'] ==
-                                                      '2000') {
+                                                  if (result[CODE] == '2000') {
                                                     // await _reloadUserArticles();
                                                     await _loadUserArticles(
                                                         postController);

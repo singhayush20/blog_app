@@ -1,4 +1,6 @@
 import 'package:blog_app/Model/Post.dart';
+import 'package:blog_app/Model/Post2.dart';
+import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/network_util/API.dart';
 
 class PostService {
@@ -21,10 +23,21 @@ class PostService {
     Map<String, dynamic> result =
         await _api.getAllPostsByUser(token: token, userid: userid);
     List<Post> posts = [];
-    if (result['code'] == '2000') {
+    if (result[CODE] == '2000') {
       posts = postFromJson(result['data']);
     }
 
+    return posts;
+  }
+
+  Future<List<Post2>> getAllPostsForCategory(
+      {required String token, required int categoryid}) async {
+    List<Post2> posts = [];
+    Map<String, dynamic> result =
+        await _api.loadArticles(token: token, categoryid: categoryid);
+    if (result[CODE] == '2000') {
+      posts = post2FromJson(result['data']);
+    }
     return posts;
   }
 }
