@@ -185,18 +185,18 @@ BoxDecoration listTileDecoration = BoxDecoration(
 );
 
 BoxDecoration categoryTopDecoration = BoxDecoration(
-  border: Border.all(color: Colors.black, width: 0.5, style: BorderStyle.solid),
+  border: Border.all(color: appBarColor, width: 0.5, style: BorderStyle.solid),
   borderRadius: BorderRadius.only(
     bottomLeft: Radius.circular(20),
     bottomRight: Radius.circular(20),
   ),
-  gradient: LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [
-      Color.fromARGB(255, 39, 80, 176),
-      Colors.lightBlue,
-    ],
-  ),
-  color: Color.fromARGB(255, 39, 80, 176),
+  // gradient: LinearGradient(
+  //   begin: Alignment.topCenter,
+  //   end: Alignment.bottomRight,
+  //   colors: [
+  //     appBarColor,
+  //     Colors.lightBlue,
+  //   ],
+  // ),
+  color: appBarColor,
 );

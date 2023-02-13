@@ -40,8 +40,8 @@ class _PersonalFeedPageState extends State<PersonalFeedPage>
   List<Post2> _posts = [];
   Future<void> _loadArticles(
       {required int categoryid, required String token}) async {
-    _posts = await _postService.getAllPostsForCategory(
-        token: token, categoryid: categoryid);
+    // _posts = await _postService.getAllPostsForCategory(
+    //     token: token, categoryid: categoryid, pageKey: );
     setState(() {});
   }
 

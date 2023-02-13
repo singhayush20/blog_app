@@ -51,6 +51,13 @@ dependencies:
   settings_ui: ^2.0.2
   http: ^0.13.5
   intl: ^0.18.0
+  infinite_scroll_pagination: ^3.2.0
+  pull_to_refresh: ^2.0.0
+  firebase_messaging: ^14.2.2
+  firebase_core: ^2.5.0
+  firebase_analytics: ^10.1.1
+  flutter_local_notifications: ^8.2.0
+  material_floating_search_bar: ^0.3.7
 
 dev_dependencies:
   flutter_test:

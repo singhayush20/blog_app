@@ -40,3 +40,5 @@ const subscribeToCategoryUrl = domain + "/blog/topics/subscribe";
 const unsubscribeFromCategoryUrl = domain + "/blog/topics/unsubscribe";
 
 const loadArticlesByCategoryUrl = domain + "/blog/posts/get-post-by-category";
+
+const searchArticlesByKeywordUrl = domain + "/blog/posts/findbyquery";

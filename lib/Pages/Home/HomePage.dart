@@ -28,11 +28,7 @@ class _HomePageState extends State<HomePage> {
     ProfilePage(),
     SettingsPage(),
   ];
-  final List<Widget> _pages2 = [
-    ExplorePage(),
-    ProfilePage(),
-    SettingsPage(),
-  ];
+
   final List<BottomNavigationBarItem> _items = [
     const BottomNavigationBarItem(
       label: "Feed",
@@ -51,27 +47,12 @@ class _HomePageState extends State<HomePage> {
       icon: Icon(FontAwesomeIcons.gears),
     ),
   ];
-  final List<BottomNavigationBarItem> _items2 = [
-    const BottomNavigationBarItem(
-      label: "Explore",
-      icon: Icon(FontAwesomeIcons.borderAll),
-    ),
-    const BottomNavigationBarItem(
-      label: "Profile",
-      icon: Icon(FontAwesomeIcons.user),
-    ),
-    const BottomNavigationBarItem(
-      label: "Settings",
-      icon: Icon(FontAwesomeIcons.gears),
-    )
-  ];
+
   late PageController _pageController;
   int _selectedIndex = 0;
   @override
   void initState() {
     super.initState();
-    Get.lazyPut(() => SubscribedCategoriesController());
-
     _pageController = PageController();
   }
 

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:blog_app/GetController/ImageController.dart';
-import 'package:blog_app/Model/Post.dart';
 import 'package:blog_app/Pages/UserProfile/UpdateArticlePage.dart';
 import 'package:blog_app/Pages/UserProfile/ViewArticle.dart';
 import 'package:blog_app/constants/Themes.dart';
@@ -40,15 +39,6 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
     // _userArticles = postController.userArticles;
   }
 
-  // Future<void> _reloadUserArticles() async {
-  //   // final result = await _postService.getAllPostsForUser(
-  //   //     token: _sharedPreferences!.getString(BEARER_TOKEN)!,
-  //   //     userid: _sharedPreferences!.getInt(USER_ID)!);
-  //   // setState(() {
-  //   //   _userArticles = result;
-  //   // });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -58,8 +48,6 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
   void _initializePrefs() async {
     _api = API();
     Get.lazyPut(() => ImageController());
-
-    // _postService = PostService();
   }
 
   final AppBar _appBar = AppBar(
@@ -266,36 +254,43 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                         ),
                       );
                     } else {
-                      return RefreshIndicator(
-                        // onRefresh: _reloadUserArticles,
-                        onRefresh: () async {
-                          await postController.loadUserArticles(
-                              token: _sharedPreferences!
-                                      .getString('BEARER_TOKEN') ??
-                                  'null',
-                              userid: _sharedPreferences!.getInt(USER_ID) ?? 0);
-                        },
-                        key: _refreshIndicatorKey,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                  height: 100,
-                                  child: Image.asset(
-                                      'images/category_default.jpg')),
-                              Container(
+                      return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
                                 height: 100,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'No Data',
-                                  style: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                child:
+                                    Image.asset('images/category_default.jpg')),
+                            Container(
+                              height: 100,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'No Data',
+                                style: TextStyle(
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
-                            ]),
-                      );
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await postController.loadUserArticles(
+                                    token: _sharedPreferences!
+                                            .getString('BEARER_TOKEN') ??
+                                        'null',
+                                    userid:
+                                        _sharedPreferences!.getInt(USER_ID) ??
+                                            0);
+                              },
+                              child: Text(
+                                'Try Again',
+                                style: TextStyle(
+                                    fontSize: 10.sp,
+                                    fontWeight: FontWeight.w700,
+                                    decoration: TextDecoration.underline),
+                              ),
+                            )
+                          ]);
                     }
                   }
               }

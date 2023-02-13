@@ -286,16 +286,21 @@ class API {
   Future<Map<String, dynamic>> subscribeToCategory(
       {required String token,
       required int userid,
-      required int categoryid}) async {
+      required int categoryid,
+      required String fcmToken}) async {
     Options options = Options(
         validateStatus: (_) => true,
         contentType: Headers.jsonContentType,
         responseType: ResponseType.json,
         headers: {HttpHeaders.authorizationHeader: token});
-    log('Subscribing to category: userid: $userid, categoryid: $categoryid');
+    log('Subscribing to category: userid: $userid, categoryid: $categoryid, fcmToken: $fcmToken');
     Response response = await _dio.put(subscribeToCategoryUrl,
         options: options,
-        queryParameters: {"userid": userid, "categoryid": categoryid});
+        queryParameters: {
+          "userid": userid,
+          "categoryid": categoryid,
+          "fcmtoken": fcmToken
+        });
     log('Subscribe response: $response');
     return response.data;
   }
@@ -303,30 +308,44 @@ class API {
   Future<Map<String, dynamic>> unsubscribeFromCategory(
       {required String token,
       required int userid,
-      required int categoryid}) async {
+      required int categoryid,
+      required String fcmToken}) async {
     Options options = Options(
         validateStatus: (_) => true,
         contentType: Headers.jsonContentType,
         responseType: ResponseType.json,
         headers: {HttpHeaders.authorizationHeader: token});
-    log('Unsubscribing from category: userid: $userid, categoryid: $categoryid');
+    log('Unsubscribing from category: userid: $userid, categoryid: $categoryid, fcmToken: $fcmToken');
     Response response = await _dio.delete(unsubscribeFromCategoryUrl,
         options: options,
-        queryParameters: {"userid": userid, "categoryid": categoryid});
+        queryParameters: {
+          "userid": userid,
+          "categoryid": categoryid,
+          "fcmtoken": fcmToken
+        });
     log('Unsubscribe response: $response');
     return response.data;
   }
 
   Future<Map<String, dynamic>> loadArticles(
-      {required String token, required int categoryid}) async {
+      {required String token,
+      required int categoryid,
+      required int pageNumber,
+      required int pageSize}) async {
     Options options = Options(
         validateStatus: (_) => true,
         contentType: Headers.jsonContentType,
         responseType: ResponseType.json,
         headers: {HttpHeaders.authorizationHeader: token});
-    log('Loading articles: $categoryid and url: $loadArticlesByCategoryUrl');
+    Map<String, dynamic> queryParam = {
+      "categoryid": categoryid,
+      "pageNumber": pageNumber,
+      "pageSize": pageSize
+    };
+    log('Loading articles: $categoryid and url: $loadArticlesByCategoryUrl $queryParam');
     Response response = await _dio.get(loadArticlesByCategoryUrl,
-        options: options, queryParameters: {"categoryid": categoryid});
+        options: options, queryParameters: queryParam);
+
     log('Load articles response: $response');
     return response.data;
   }
@@ -347,6 +366,20 @@ class API {
     Response response = await _dio.post(writeCommentUrl,
         options: options, data: data, queryParameters: queryParam);
     log('Comment post response: $response');
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> fetchSearchQueryPosts(
+      {required String token, required String keyword}) async {
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+    log('searching articles for $keyword');
+    Response response = await _dio.get(searchArticlesByKeywordUrl,
+        options: options, queryParameters: {"keyword": keyword});
+    log('search response: $response');
     return response.data;
   }
 }

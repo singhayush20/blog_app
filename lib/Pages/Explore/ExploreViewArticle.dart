@@ -201,6 +201,7 @@ class _ExploreViewArticleState extends State<ExploreViewArticle> {
                       ),
                       ListView.separated(
                         shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         itemBuilder: ((context, index) {
                           return Container(
                             margin: EdgeInsets.symmetric(

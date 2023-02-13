@@ -23,27 +23,27 @@ class SubscribedCategoriesController extends GetxController {
     update();
   }
 
-  Future<bool> subscribeToCategory(
-      {required String token, required int userid, required categoryid}) async {
-    bool res = false;
-    Map<String, dynamic> result = await _api.subscribeToCategory(
-        token: token, userid: userid, categoryid: categoryid);
-    if (result[CODE] == '2000') {
-      res = true;
-      await loadSubscribedCategories(token: token, userid: userid);
-    }
-    return res;
-  }
-
-  Future<bool> unsubscribeFromCategory(
-      {required String token, required int userid, required categoryid}) async {
-    bool res = false;
-    Map<String, dynamic> result = await _api.unsubscribeFromCategory(
-        token: token, userid: userid, categoryid: categoryid);
-    if (result[CODE] == '2000') {
-      res = true;
-      await loadSubscribedCategories(token: token, userid: userid);
-    }
-    return res;
-  }
+  // Future<bool> subscribeToCategory(
+  //     {required String token, required int userid, required categoryid}) async {
+  //   bool res = false;
+  //   Map<String, dynamic> result = await _api.subscribeToCategory(
+  //       token: token, userid: userid, categoryid: categoryid);
+  //   if (result[CODE] == '2000') {
+  //     res = true;
+  //     await loadSubscribedCategories(token: token, userid: userid);
+  //   }
+  //   return res;
+  // }
+  //
+  // Future<bool> unsubscribeFromCategory(
+  //     {required String token, required int userid, required categoryid}) async {
+  //   bool res = false;
+  //   Map<String, dynamic> result = await _api.unsubscribeFromCategory(
+  //       token: token, userid: userid, categoryid: categoryid);
+  //   if (result[CODE] == '2000') {
+  //     res = true;
+  //     await loadSubscribedCategories(token: token, userid: userid);
+  //   }
+  //   return res;
+  // }
 }

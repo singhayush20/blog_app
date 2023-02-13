@@ -211,8 +211,17 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                     ElevatedButton(
                       onPressed: (_sharedPreferences != null)
                           ? () async {
-                              context.loaderOverlay.show();
                               final _api = API();
+                              if (imageController.pickedFile == null) {
+                                Get.snackbar(
+                                  'Image required!',
+                                  "Please upload an image for the article",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                );
+                                return;
+                              }
+                              context.loaderOverlay.show();
+
                               Map<String, dynamic> postResult = await _api
                                   .createPost(
                                       userid:
@@ -231,20 +240,24 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                                     token: _sharedPreferences!
                                         .getString(BEARER_TOKEN)!,
                                     isUpdatingPost: false);
+
                                 if (result) {
                                   Get.snackbar(
                                       'Success', 'Post created successfully!',
                                       snackPosition: SnackPosition.BOTTOM);
+                                  context.loaderOverlay.hide();
+                                  Get.back();
                                 }
                               } else if (postResult[CODE] == '2000') {
                                 Get.snackbar(
                                     'Success', 'Post created successfully!',
                                     snackPosition: SnackPosition.BOTTOM);
+                                context.loaderOverlay.hide();
                               } else {
                                 Get.snackbar('Failure', 'Post not created!',
                                     snackPosition: SnackPosition.BOTTOM);
+                                context.loaderOverlay.hide();
                               }
-                              context.loaderOverlay.hide();
                             }
                           : null,
                       child: Padding(

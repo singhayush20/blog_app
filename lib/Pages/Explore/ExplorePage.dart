@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:blog_app/Pages/Explore/CategoryArticlePage.dart';
+import 'package:blog_app/Pages/Explore/ArticlesPage.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,7 +62,7 @@ class _ExplorePageState extends State<ExplorePage>
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                Get.to(() => CategoryArticlePage(
+                                Get.to(() => ArticlesPage(
                                     category: categoryProvider
                                         .allCategories![index]));
                               },
@@ -114,6 +114,5 @@ class _ExplorePageState extends State<ExplorePage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

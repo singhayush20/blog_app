@@ -30,14 +30,31 @@ class PostService {
     return posts;
   }
 
-  Future<List<Post2>> getAllPostsForCategory(
-      {required String token, required int categoryid}) async {
+  Future<Map<String, dynamic>> getAllPostsForCategory(
+      {required String token,
+      required int categoryid,
+      required int pageKey,
+      required int pageSize}) async {
     List<Post2> posts = [];
-    Map<String, dynamic> result =
-        await _api.loadArticles(token: token, categoryid: categoryid);
+    Map<String, dynamic> result = await _api.loadArticles(
+        token: token,
+        categoryid: categoryid,
+        pageNumber: pageKey,
+        pageSize: pageSize);
     if (result[CODE] == '2000') {
-      posts = post2FromJson(result['data']);
+      posts = post2FromJson(result['data']['content']);
+      Map<String, dynamic> res = {
+        "pageNumber": result['data']['pageNumber'],
+        "totalElements": result['data']['totalElements'],
+        "totalPages": result['data']['totalPages'],
+        "pageSize": result['data']['pageSize'],
+        "lastPage": result['data']['lastPage'],
+        "currentPageSize": result['data']['currentPageSize'],
+        "posts": posts
+      };
+      return res;
     }
-    return posts;
+
+    return {};
   }
 }
