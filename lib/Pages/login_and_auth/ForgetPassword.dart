@@ -62,11 +62,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Reset your password by verifying your registered email',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.sp,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                   SizedBox(
@@ -74,7 +70,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                   Container(
                     height: height * 0.4,
-                    decoration: boxDecoration,
+                    decoration: formFieldBoxDecoration,
                     padding: EdgeInsets.symmetric(
                       horizontal: 10,
                     ),
@@ -101,11 +97,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                       return null;
                                     }
                                   },
-                                  decoration: const InputDecoration(
+                                  decoration: formFieldDecoration.copyWith(
                                     hintText: "Email",
                                     prefixIcon: Icon(
                                       FontAwesomeIcons.envelope,
-                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -134,19 +129,19 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                               });
                                             }
                                           } else {
-                                            // ScaffoldMessenger.of(context)
-                                            //     .showSnackBar(
-                                            //   SnackBar(
-                                            //     content: Text(
-                                            //         '${result['message']}'),
-                                            //   ),
-                                            // );
-                                            Get.snackbar("Error",
-                                                "OTP could not be sent");
+                                            Get.snackbar(
+                                              "Error",
+                                              "OTP could not be sent",
+                                              snackPosition: SnackPosition.TOP,
+                                              backgroundColor:
+                                                  snackbarBackgroundColor,
+                                              colorText: snackbarColorText,
+                                              snackStyle: SnackStyle.FLOATING,
+                                            );
                                           }
                                         }
                                       },
-                                      child: const FittedBox(
+                                      child: FittedBox(
                                         alignment: Alignment.center,
                                         fit: BoxFit.fitWidth,
                                         child: Padding(
@@ -156,7 +151,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                           child: Text(
                                             'Send OTP',
                                             style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 10.sp,
                                             ),
                                           ),
                                         ),
@@ -185,11 +180,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                       return null;
                                     }
                                   },
-                                  decoration: const InputDecoration(
+                                  decoration: formFieldDecoration.copyWith(
                                     hintText: "OTP",
                                     prefixIcon: Icon(
                                       FontAwesomeIcons.key,
-                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -208,17 +202,16 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Password cannot be empty';
-                                    } else if (value.length < 8) {
-                                      return "Password must be atleast 8 characters long";
+                                    } else if (value.length < 6) {
+                                      return "Password must be atleast 6 characters long";
                                     } else {
                                       return null;
                                     }
                                   },
-                                  decoration: InputDecoration(
+                                  decoration: formFieldDecoration.copyWith(
                                     hintText: "Password",
                                     prefixIcon: Icon(
                                       FontAwesomeIcons.lock,
-                                      color: Colors.white,
                                     ),
                                     suffixIcon: IconButton(
                                       icon: Icon(
@@ -245,7 +238,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                   obscureText: isPasswordVisible,
                                   cursorColor: Colors.white,
                                   style: TextStyle(color: Colors.white),
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.text,
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Password cannot be empty";
@@ -255,11 +248,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                     }
                                     return null;
                                   },
-                                  decoration: InputDecoration(
+                                  decoration: formFieldDecoration.copyWith(
                                     hintText: "Confirm Password",
                                     prefixIcon: Icon(
                                       FontAwesomeIcons.lock,
-                                      color: Colors.white,
                                     ),
                                     suffixIcon: IconButton(
                                       icon: Icon(
@@ -304,11 +296,24 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           context.loaderOverlay.hide();
                           String code = result[CODE];
                           if (code == '2000') {
-                            Get.snackbar("Successful",
-                                "Password has been reset successfully");
-                            Navigator.pop(context);
+                            Get.snackbar(
+                              "Successful",
+                              "Password has been reset successfully",
+                              snackPosition: SnackPosition.BOTTOM,
+                              snackStyle: SnackStyle.FLOATING,
+                              backgroundColor: snackbarBackgroundColor,
+                              colorText: snackbarColorText,
+                            );
+                            Get.back();
                           } else {
-                            Get.snackbar("Failed", "Password reset failed");
+                            Get.snackbar(
+                              "Failed",
+                              "Password reset failed",
+                              snackPosition: SnackPosition.BOTTOM,
+                              snackStyle: SnackStyle.FLOATING,
+                              backgroundColor: snackbarBackgroundColor,
+                              colorText: snackbarColorText,
+                            );
                           }
                         }
                       },

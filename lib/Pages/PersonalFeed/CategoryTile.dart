@@ -34,7 +34,12 @@ class _CategoryTileState extends State<CategoryTile> {
             onTap: () {
               log('Opening category ${widget.subscribedCategory.categoryName} ');
               Get.to(
-                  () => FeedArticlesPage(category: widget.subscribedCategory));
+                () => FeedArticlesPage(category: widget.subscribedCategory),
+                transition: Transition.fade,
+                duration: Duration(
+                  milliseconds: 800,
+                ),
+              );
             },
             child: Material(
               borderRadius: BorderRadius.all(
@@ -44,13 +49,11 @@ class _CategoryTileState extends State<CategoryTile> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: Colors.black,
-                      width: 0.5,
-                      style: BorderStyle.solid),
+                      color: Colors.white, width: 1, style: BorderStyle.solid),
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  color: Color.fromARGB(255, 219, 139, 49),
+                  color: Color.fromARGB(255, 160, 30, 30),
                 ),
                 alignment: Alignment.center,
                 child: LayoutBuilder(
@@ -70,7 +73,7 @@ class _CategoryTileState extends State<CategoryTile> {
                                   20,
                                 ),
                               ),
-                              color: Color.fromARGB(255, 237, 147, 44),
+                              color: Color.fromARGB(255, 218, 237, 44),
                             ),
                             child: ClipRRect(
                               borderRadius: const BorderRadius.only(
@@ -94,10 +97,12 @@ class _CategoryTileState extends State<CategoryTile> {
                             horizontal: 5,
                           ),
                           height: size.maxHeight * 0.3,
-                          child: Text(
-                            '${widget.subscribedCategory.categoryName}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                          child: FittedBox(
+                            child: Text(
+                              '${widget.subscribedCategory.categoryName}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

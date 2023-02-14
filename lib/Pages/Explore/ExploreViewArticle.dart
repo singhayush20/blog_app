@@ -87,10 +87,7 @@ class _ExploreViewArticleState extends State<ExploreViewArticle> {
               Container(
                 child: Text(
                   widget.post.title,
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               GestureDetector(
@@ -108,7 +105,7 @@ class _ExploreViewArticleState extends State<ExploreViewArticle> {
                   tag: 'imageHero',
                   child: Container(
                     height: height * 0.4,
-                    color: Color.fromARGB(255, 190, 236, 227),
+                    color: Colors.black,
                     child: CachedNetworkImage(
                       imageUrl:
                           'https://imagedbspringboot.blob.core.windows.net/imagecontainer/${widget.post.image}',
@@ -127,18 +124,18 @@ class _ExploreViewArticleState extends State<ExploreViewArticle> {
                 ),
               ),
               Container(
-                color: Color.fromARGB(255, 97, 137, 224),
+                color: Color.fromARGB(255, 118, 118, 115),
                 child: Text(
                   'Added on: ${_dateFormatter.format(widget.post.addDate)}',
                   style: TextStyle(
                     fontWeight: FontWeight.w800,
-                    color: Colors.white70,
+                    color: Color.fromARGB(219, 242, 239, 239),
                     fontSize: 12.sp,
                   ),
                 ),
               ),
               Container(
-                color: Color.fromARGB(255, 227, 246, 243),
+                decoration: articleBoxDecoration,
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.symmetric(
                   horizontal: 4,

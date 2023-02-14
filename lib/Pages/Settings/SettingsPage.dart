@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:blog_app/Pages/login_and_auth/LoginPage.dart';
+import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -37,19 +39,45 @@ class _SettingsPageState extends State<SettingsPage>
     super.build(context);
     final categoryProvider = Provider.of<CategoryProvider>(context);
     return Scaffold(
+      backgroundColor: scaffoldColor,
       appBar: AppBar(
         title: Text("Settings"),
       ),
       body: SettingsList(
+        lightTheme: SettingsThemeData(
+          settingsListBackground: scaffoldColor,
+          settingsSectionBackground: Color.fromARGB(255, 52, 52, 52),
+          dividerColor: Colors.white,
+          titleTextColor: Colors.white,
+          settingsTileTextColor: Colors.yellow,
+          tileDescriptionTextColor: Colors.amberAccent,
+          leadingIconsColor: Colors.orangeAccent,
+        ),
         sections: [
           SettingsSection(
             // titlePadding: EdgeInsets.all(20),
-            title: Text('App Settings'),
+            title: Text(
+              'App Settings',
+              style: TextStyle(),
+            ),
             tiles: [
               SettingsTile(
-                title: Text('Logout'),
-                description: Text('Sign out from your account'),
-                leading: Icon(FontAwesomeIcons.arrowRightFromBracket),
+                title: Text(
+                  'Logout',
+                  style: TextStyle(
+                      // color: Colors.white,
+                      ),
+                ),
+                description: Text(
+                  'Sign out from the application',
+                  style: TextStyle(
+                      // color: Colors.white70,
+                      ),
+                ),
+                leading: Icon(
+                  FontAwesomeIcons.arrowRightFromBracket,
+                  // color: Colors.white,
+                ),
                 onPressed: (BuildContext context) {
                   _sharedPreferences.clear();
                   categoryProvider.clear();
@@ -73,24 +101,6 @@ class _SettingsPageState extends State<SettingsPage>
               // ),
             ],
           ),
-          // SettingsSection(
-          //   // titlePadding: EdgeInsets.all(20),
-          //   title: Text('Section 2'),
-          //   tiles: [
-          //     SettingsTile(
-          //       title: Text('Security'),
-          //       description: Text('Fingerprint'),
-          //       leading: Icon(Icons.lock),
-          //       onPressed: (BuildContext context) {},
-          //     ),
-          //     SettingsTile.switchTile(
-          //       title: Text('Use fingerprint'),
-          //       leading: Icon(Icons.fingerprint),
-          //       initialValue: true,
-          //       onToggle: (value) {},
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );

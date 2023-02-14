@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:blog_app/Pages/PersonalFeed/CategoryTile.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,7 +13,6 @@ class PersonalFeed extends StatefulWidget {
 }
 
 class _PersonalFeedState extends State<PersonalFeed> {
-  List<Tab> _tabs = [];
   @override
   void initState() {
     super.initState();
@@ -52,7 +49,6 @@ class _PersonalFeedState extends State<PersonalFeed> {
                   child: Column(
                     children: [
                       Container(
-                        height: height * 0.8,
                         child: Container(
                           margin: EdgeInsets.symmetric(
                             horizontal: width * 0.05,
@@ -60,21 +56,22 @@ class _PersonalFeedState extends State<PersonalFeed> {
                           child: Column(
                             children: [
                               Container(
+                                height: height * 0.1,
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'Today,',
-                                  style: TextStyle(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  '${DateFormat("EEEEE, dd, yyyy").format(DateTime.now())}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(fontSize: 25.sp),
                                 ),
                               ),
                               (categoryProvider.subscribedCategories != null &&
                                       categoryProvider
                                           .subscribedCategories.isNotEmpty)
                                   ? GridView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
                                       itemCount: categoryProvider
                                           .subscribedCategories.length,
                                       itemBuilder: (context, index) =>
@@ -120,65 +117,4 @@ class _PersonalFeedState extends State<PersonalFeed> {
           },
         ));
   }
-
-  List<Widget> _tabsList() {
-    _tabs = [];
-    // for (var category in subscribedCategories) {
-    //   _tabs.add(Tab(text: category.categoryName));
-    // }
-    List<Tab> tabs = [];
-    Tab fullFeedPage = const Tab(text: 'All');
-    Tab personalized = const Tab(text: 'Subscribed');
-    _tabs.add(fullFeedPage);
-    _tabs.add(personalized);
-    return _tabs;
-  }
 }
-
-//  Container(
-//                         height: height * 0.2,
-//                         child: FloatingSearchBar(
-//                           hint: 'Search...',
-//                           scrollPadding:
-//                               const EdgeInsets.only(top: 16, bottom: 56),
-//                           transitionDuration: const Duration(milliseconds: 800),
-//                           transitionCurve: Curves.easeInOut,
-//                           physics: const BouncingScrollPhysics(),
-//                           openAxisAlignment: 0.0,
-//                           debounceDelay: const Duration(milliseconds: 500),
-//                           onQueryChanged: (query) {
-//                             if (query.trim().length > 5) {
-//                               categoryProvider.searchForPosts(keyword: query);
-//                             }
-//                           },
-//                           // Specify a custom transition to be used for
-//                           // animating between opened and closed stated.
-//                           transition: CircularFloatingSearchBarTransition(),
-//                           actions: [
-//                             FloatingSearchBarAction(
-//                               showIfOpened: true,
-//                               child: CircularButton(
-//                                 icon: const Icon(Icons.search),
-//                                 onPressed: () {
-//                                   log('Search pressed');
-//                                 },
-//                               ),
-//                             ),
-//                             // FloatingSearchBarAction.searchToClear(
-//                             //   showIfClosed: false,
-//                             // ),
-//                           ],
-//                           builder: (context, transition) {
-//                             return ClipRRect(
-//                               borderRadius: BorderRadius.circular(8),
-//                               child: Material(
-//                                 color: Colors.white,
-//                                 elevation: 4.0,
-//                                 child: Column(
-//                                     mainAxisSize: MainAxisSize.min,
-//                                     children: categoryProvider.searchedPosts),
-//                               ),
-//                             );
-//                           },
-//                         ),
-//                       ),

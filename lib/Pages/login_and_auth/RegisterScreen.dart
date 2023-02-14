@@ -57,10 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   alignment: Alignment.center,
                   child: Text(
                     'Enter the email address you want to use for your account',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 SizedBox(
@@ -68,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Container(
                   height: height * 0.2,
-                  decoration: boxDecoration,
+                  decoration: formFieldBoxDecoration,
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       return Container(
@@ -85,9 +82,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: Form(
                                 key: _formKey,
                                 child: TextFormField(
-                                  style: TextStyle(color: Colors.white),
+                                  // style: TextStyle(color: Colors.white),
                                   maxLines: 2,
                                   controller: _emailController,
+                                  style: const TextStyle(color: Colors.white),
                                   obscureText: false,
                                   cursorColor: Colors.white,
                                   keyboardType: TextInputType.emailAddress,
@@ -102,18 +100,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       }
                                     }
                                   },
-                                  decoration: InputDecoration(
+
+                                  decoration: formFieldDecoration.copyWith(
                                     hintText: "Email",
-                                    hintStyle: Theme.of(context)
-                                        .inputDecorationTheme
-                                        .hintStyle,
                                     prefixIcon: Icon(
                                       FontAwesomeIcons.envelope,
-                                      color: Colors.white,
                                     ),
-                                    focusedBorder: Theme.of(context)
-                                        .inputDecorationTheme
-                                        .focusedBorder,
                                   ),
                                 ),
                               ),
@@ -141,14 +133,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     if (code == '2000') {
                                       Get.to(
                                         VerifyEmailOTP(email: email),
-                                        fullscreenDialog: true,
-                                        transition: Transition.fadeIn,
+                                        transition: Transition.rightToLeft,
                                         duration: Duration(milliseconds: 800),
                                       );
                                       Get.snackbar(
                                         "Successful",
                                         "OTP has been sent successfully!",
                                         snackPosition: SnackPosition.BOTTOM,
+                                        snackStyle: SnackStyle.FLOATING,
+                                        backgroundColor:
+                                            snackbarBackgroundColor,
+                                        colorText: snackbarColorText,
                                       );
                                     } else {
                                       Get.snackbar(

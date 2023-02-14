@@ -156,6 +156,7 @@ class MyApp extends StatelessWidget {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             theme: lightThemeData,
+            darkTheme: lightThemeData,
             home: (isLoggedIn == false) ? LoginPage() : HomePage(),
           );
         }),

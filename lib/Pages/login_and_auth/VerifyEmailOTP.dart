@@ -39,10 +39,7 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
         useDefaultLoading: false,
         overlayWidget: Center(
           child: Container(
-            height: 100,
-            width: 100,
-            child: const CustomLoadingIndicator(),
-          ),
+              height: 100, width: 100, child: const CustomLoadingIndicator()),
         ),
         child: Container(
           margin: EdgeInsets.symmetric(
@@ -58,11 +55,7 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                   height: height * 0.1,
                   child: Text(
                     'You must have received an OTP on the email you just entered. Enter it here and click verify',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 Container(
@@ -71,14 +64,14 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                   padding: EdgeInsets.symmetric(
                     horizontal: 20,
                   ),
-                  decoration: boxDecoration,
+                  decoration: formFieldBoxDecoration,
                   child: Form(
                     key: _formKey,
                     child: TextFormField(
                       controller: _otpController,
                       obscureText: false,
                       cursorColor: Colors.white,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -87,11 +80,16 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                           return null;
                         }
                       },
-                      decoration: const InputDecoration(
+                      // decoration: const InputDecoration(
+                      //   hintText: "OTP",
+                      //   prefixIcon: Icon(
+                      //     FontAwesomeIcons.key,
+                      //   ),
+                      // ),
+                      decoration: formFieldDecoration.copyWith(
                         hintText: "OTP",
                         prefixIcon: Icon(
                           FontAwesomeIcons.key,
-                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -124,16 +122,26 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                         if (code == '2000') {
                           Get.to(
                             RegisterDetails(email: widget.email!),
-                            transition: Transition.leftToRight,
+                            transition: Transition.rightToLeft,
                             duration: const Duration(
                               microseconds: 800,
                             ),
                           );
-                          Get.snackbar("Success", "OTP Verified!",
-                              snackPosition: SnackPosition.BOTTOM);
+                          Get.snackbar(
+                            "Success",
+                            "OTP Verified!",
+                            snackPosition: SnackPosition.BOTTOM,
+                            colorText: snackbarColorText,
+                            backgroundColor: snackbarBackgroundColor,
+                          );
                         } else if (code == '2001') {
-                          Get.snackbar("Failed", "Verification failed!",
-                              snackPosition: SnackPosition.BOTTOM);
+                          Get.snackbar(
+                            "Failed",
+                            "Verification failed!",
+                            snackPosition: SnackPosition.BOTTOM,
+                            colorText: snackbarColorText,
+                            backgroundColor: snackbarBackgroundColor,
+                          );
                         }
                       }
                     },
@@ -161,9 +169,21 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                       log('email otp sent again: $result');
                       String? code = result['code'];
                       if (code == '2000') {
-                        Get.snackbar("OTP", "OTP resent");
+                        Get.snackbar(
+                          "OTP",
+                          "OTP resent",
+                          snackPosition: SnackPosition.BOTTOM,
+                          colorText: snackbarColorText,
+                          backgroundColor: snackbarBackgroundColor,
+                        );
                       } else {
-                        Get.snackbar("Error", "OTP could not be sent!");
+                        Get.snackbar(
+                          "Error",
+                          "OTP could not be sent!",
+                          snackPosition: SnackPosition.BOTTOM,
+                          colorText: snackbarColorText,
+                          backgroundColor: snackbarBackgroundColor,
+                        );
                       }
                     },
                   ),

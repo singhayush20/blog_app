@@ -47,14 +47,14 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.1, 0.4, 0.7, 0.9],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [0.2, 0.4, 0.6, 0.8],
           colors: [
-            Color.fromARGB(255, 245, 233, 165),
-            Color.fromARGB(255, 153, 238, 253),
-            Color.fromARGB(255, 214, 255, 167),
-            Color.fromARGB(255, 250, 242, 169),
+            Color.fromARGB(255, 7, 7, 7),
+            Color.fromARGB(255, 33, 33, 33),
+            Color.fromARGB(255, 49, 49, 49),
+            Color.fromARGB(255, 64, 64, 64),
           ],
         ),
       ),
@@ -87,11 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                       alignment: Alignment.center,
                       child: Text(
                         'SFBlog',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 50.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                     ),
                     SizedBox(
@@ -103,32 +99,13 @@ class _LoginPageState extends State<LoginPage> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Login',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
                     ),
                     Container(
                         height: height * 0.2,
-                        decoration: boxDecoration.copyWith(
-                          gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: [0.3, 0.8, 1],
-                            colors: [
-                              Color.fromARGB(255, 39, 80, 176),
-                              Colors.lightBlue,
-                              Colors.lightBlueAccent,
-                            ],
-                          ),
-                          border: Border.all(
-                              color: Colors.black,
-                              width: 1,
-                              style: BorderStyle.solid),
-                        ),
+                        decoration: formFieldBoxDecoration,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
                         ),
@@ -157,11 +134,10 @@ class _LoginPageState extends State<LoginPage> {
                                           return null;
                                         }
                                       },
-                                      decoration: const InputDecoration(
+                                      decoration: formFieldDecoration.copyWith(
                                         hintText: "Email",
                                         prefixIcon: Icon(
                                           FontAwesomeIcons.circleUser,
-                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -189,11 +165,10 @@ class _LoginPageState extends State<LoginPage> {
                                           return null;
                                         }
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: formFieldDecoration.copyWith(
                                         hintText: "Password",
                                         prefixIcon: const Icon(
                                           FontAwesomeIcons.lock,
-                                          color: Colors.white,
                                         ),
                                         suffixIcon: IconButton(
                                           icon: Icon(
@@ -254,6 +229,9 @@ class _LoginPageState extends State<LoginPage> {
                               "Logged In",
                               "You have been logged in successfully",
                               snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: snackbarBackgroundColor,
+                              colorText: snackbarColorText,
+                              snackStyle: SnackStyle.FLOATING,
                             );
                           } else {
                             Get.snackbar(
@@ -289,11 +267,11 @@ class _LoginPageState extends State<LoginPage> {
                               flex: 3,
                               child: TextButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ForgetPassword(),
+                                  Get.to(
+                                    const ForgetPassword(),
+                                    transition: Transition.leftToRight,
+                                    duration: const Duration(
+                                      milliseconds: 800,
                                     ),
                                   );
                                 },
@@ -319,7 +297,7 @@ class _LoginPageState extends State<LoginPage> {
                                     const RegisterScreen(),
                                     transition: Transition.rightToLeft,
                                     duration: const Duration(
-                                      milliseconds: 600,
+                                      milliseconds: 800,
                                     ),
                                   );
                                 },

@@ -22,7 +22,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-  final _emailController = TextEditingController();
+  late final _emailController;
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _aboutController = TextEditingController();
@@ -31,9 +31,8 @@ class _RegisterDetailsState extends State<RegisterDetails> {
   @override
   void initState() {
     super.initState();
-    setState() {
-      _emailController.text = widget.email ?? '';
-    }
+
+    _emailController = TextEditingController(text: widget.email);
   }
 
   @override
@@ -68,7 +67,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Fill out your details and then register",
-                  style: TextStyle(color: Colors.black, fontSize: 20.sp),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               Container(
@@ -76,7 +75,7 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                 ),
-                decoration: boxDecoration,
+                decoration: formFieldBoxDecoration,
                 child: Form(
                   key: _formKey,
                   child: LayoutBuilder(
@@ -106,11 +105,10 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                                           return null;
                                         }
                                       },
-                                      decoration: const InputDecoration(
+                                      decoration: formFieldDecoration.copyWith(
                                         hintText: "First Name",
                                         prefixIcon: Icon(
                                           FontAwesomeIcons.person,
-                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -130,19 +128,11 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                                       style:
                                           const TextStyle(color: Colors.white),
                                       keyboardType: TextInputType.name,
-                                      validator: (value) {
-                                        // if (value!.isEmpty) {
-                                        //   return 'Last Name cannot be empty';
-                                        // } else {
-                                        //   return null;
-                                        // }
-                                        //last name can be empty
-                                      },
-                                      decoration: const InputDecoration(
+                                      validator: (value) {},
+                                      decoration: formFieldDecoration.copyWith(
                                         hintText: "Last Name",
                                         prefixIcon: Icon(
                                           FontAwesomeIcons.person,
-                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -174,11 +164,10 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                                         return null;
                                       }
                                     },
-                                    decoration: const InputDecoration(
+                                    decoration: formFieldDecoration.copyWith(
                                       hintText: "Email",
                                       prefixIcon: Icon(
                                         FontAwesomeIcons.circleUser,
-                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -191,40 +180,38 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                             height: constraints.maxHeight * 0.2,
                             alignment: Alignment.center,
                             child: TextFormField(
-                              controller: _passwordController,
-                              obscureText: isPasswordVisible,
-                              cursorColor: Colors.white,
-                              keyboardType: TextInputType.text,
-                              style: TextStyle(color: Colors.white),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Password cannot be empty';
-                                } else if (value.length < 6) {
-                                  return "Password must be atleast 6 characters long";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              decoration: InputDecoration(
-                                hintText: "Password",
-                                prefixIcon: const Icon(
-                                  FontAwesomeIcons.lock,
-                                  color: Colors.white,
-                                ),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    (!isPasswordVisible)
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                controller: _passwordController,
+                                obscureText: isPasswordVisible,
+                                cursorColor: Colors.white,
+                                keyboardType: TextInputType.text,
+                                style: TextStyle(color: Colors.white),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Password cannot be empty';
+                                  } else if (value.length < 6) {
+                                    return "Password must be atleast 6 characters long";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                decoration: formFieldDecoration.copyWith(
+                                  hintText: "Password",
+                                  prefixIcon: const Icon(
+                                    FontAwesomeIcons.lock,
                                   ),
-                                  onPressed: () {
-                                    setState(() {
-                                      isPasswordVisible = !isPasswordVisible;
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      (!isPasswordVisible)
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        isPasswordVisible = !isPasswordVisible;
+                                      });
+                                    },
+                                  ),
+                                )),
                           ),
                           //====CONFIRM PASSWORD====
                           Container(
@@ -244,11 +231,10 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                                 }
                                 return null;
                               },
-                              decoration: InputDecoration(
+                              decoration: formFieldDecoration.copyWith(
                                 hintText: "Confirm Password",
                                 prefixIcon: Icon(
                                   FontAwesomeIcons.lock,
-                                  color: Colors.white,
                                 ),
                                 suffixIcon: IconButton(
                                   icon: Icon(
@@ -285,11 +271,10 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                                 }
                                 return null;
                               },
-                              decoration: const InputDecoration(
+                              decoration: formFieldDecoration.copyWith(
                                 hintText: "Describe yourself",
                                 prefixIcon: Icon(
                                   FontAwesomeIcons.user,
-                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -321,14 +306,30 @@ class _RegisterDetailsState extends State<RegisterDetails> {
                       context.loaderOverlay.hide();
 
                       if (code == "2000") {
-                        Get.snackbar("Successful",
-                            "You have been registered successfully",
-                            snackPosition: SnackPosition.BOTTOM);
-                        Get.offAll(const LoginPage());
+                        Get.snackbar(
+                          "Successful",
+                          "You have been registered successfully",
+                          snackPosition: SnackPosition.BOTTOM,
+                          colorText: snackbarColorText,
+                          snackStyle: SnackStyle.FLOATING,
+                          backgroundColor: snackbarBackgroundColor,
+                        );
+                        Get.offAll(
+                          const LoginPage(),
+                          transition: Transition.fadeIn,
+                          duration: Duration(
+                            milliseconds: 800,
+                          ),
+                        );
                       } else {
                         Get.snackbar(
-                            "Failed", "Registration was not successful!",
-                            snackPosition: SnackPosition.BOTTOM);
+                          "Failed",
+                          "Registration was not successful!",
+                          snackPosition: SnackPosition.BOTTOM,
+                          colorText: snackbarColorText,
+                          snackStyle: SnackStyle.FLOATING,
+                          backgroundColor: snackbarBackgroundColor,
+                        );
                       }
                     }
                   },

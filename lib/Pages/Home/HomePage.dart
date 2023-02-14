@@ -1,16 +1,13 @@
 import 'dart:developer';
 
-import 'package:blog_app/GetController/SubscribedCategoriesController.dart';
 import 'package:blog_app/Pages/Explore/ExplorePage.dart';
 import 'package:blog_app/Pages/PersonalFeed/PersnalFeed.dart';
-import 'package:blog_app/Pages/PersonalFeed/PersonalFeedPage.dart';
 import 'package:blog_app/Pages/Settings/SettingsPage.dart';
 import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:blog_app/Pages/UserProfile/ProfilePage.dart';
 

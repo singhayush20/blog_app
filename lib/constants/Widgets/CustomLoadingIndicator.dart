@@ -13,9 +13,7 @@ class CustomLoadingIndicator extends StatelessWidget {
       child: LoadingIndicator(
         strokeWidth: 0.5,
         indicatorType: Indicator.ballPulse,
-        colors: [
-          appBarColor,
-        ],
+        colors: customIndicatorColors,
       ),
     );
   }

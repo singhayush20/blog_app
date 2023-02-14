@@ -118,8 +118,8 @@ class _ArticlesPageState extends State<ArticlesPage> {
               onRefresh: _onRefresh,
               onLoading: _onLoading,
               header: WaterDropMaterialHeader(
-                color: Colors.blueAccent,
-                backgroundColor: Colors.white,
+                color: Colors.black,
+                backgroundColor: Colors.yellow,
               ),
               footer: CustomFooter(
                 builder: (context, mode) {
@@ -273,10 +273,16 @@ class _ArticlesPageState extends State<ArticlesPage> {
                                         ),
                                         child: GestureDetector(
                                           onTap: () {
-                                            Get.to(() => ExploreViewArticle(
-                                                post: _posts[index],
-                                                sharedPreferences:
-                                                    _sharedPreferences!));
+                                            Get.to(
+                                              () => ExploreViewArticle(
+                                                  post: _posts[index],
+                                                  sharedPreferences:
+                                                      _sharedPreferences!),
+                                              transition: Transition.downToUp,
+                                              duration: Duration(
+                                                milliseconds: 800,
+                                              ),
+                                            );
                                           },
                                           child: ListTile(
                                             leading: SizedBox(
@@ -311,7 +317,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
                                     },
                                     separatorBuilder: (context, index) {
                                       return Container(
-                                        height: 2,
+                                        height: 0.5,
                                         color: Colors.black,
                                       );
                                     },

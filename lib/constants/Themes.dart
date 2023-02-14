@@ -3,6 +3,33 @@ import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 
 ThemeData lightThemeData = ThemeData(
+  textTheme: TextTheme(
+    displayLarge: TextStyle(
+      color: Colors.white,
+      fontSize: 50.sp,
+      fontWeight: FontWeight.bold,
+    ),
+    titleLarge: TextStyle(
+      color: Colors.white,
+      fontSize: 20.sp,
+      fontWeight: FontWeight.w700,
+    ),
+    titleMedium: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    ),
+    bodyLarge: TextStyle(
+      fontSize: 18.sp,
+      fontWeight: FontWeight.w800,
+      color: Colors.white,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 18.sp,
+      fontWeight: FontWeight.bold,
+      color: Colors.white70,
+    ),
+  ),
+
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: appBarColor,
     shape: RoundedRectangleBorder(
@@ -18,12 +45,12 @@ ThemeData lightThemeData = ThemeData(
         fontWeight: FontWeight.w500,
         color: Colors.white,
       ),
-      backgroundColor: appBarColor,
+      backgroundColor: elevatedButtonColor,
     ),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      foregroundColor: appBarColor,
+      foregroundColor: textButtonTextColor,
     ),
   ),
   //==== OUTLINED BUTTON THEME====
@@ -63,17 +90,19 @@ ThemeData lightThemeData = ThemeData(
     ),
   ),
   //==Scaffold==
+
   scaffoldBackgroundColor: scaffoldColor,
   //====BOTTOM NAVIGATION Theme
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    backgroundColor: appBarColor,
+    elevation: 4,
+    backgroundColor: Color.fromARGB(255, 37, 37, 37),
     selectedLabelStyle: TextStyle(
       fontWeight: FontWeight.bold,
     ),
-    selectedItemColor: Color.fromARGB(255, 23, 34, 241),
-    unselectedItemColor: scaffoldColor,
-    showSelectedLabels: true,
+    selectedItemColor: Colors.white,
+    unselectedItemColor: Color.fromARGB(255, 132, 131, 131),
     showUnselectedLabels: true,
+    showSelectedLabels: false,
     type: BottomNavigationBarType.fixed,
   ),
 
@@ -93,11 +122,16 @@ ThemeData lightThemeData = ThemeData(
       borderRadius: BorderRadius.circular(20),
     ),
     filled: false,
-    suffixIconColor: Colors.white,
+    prefixIconColor: Colors.green,
+    suffixIconColor: Colors.greenAccent,
     hintStyle: TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.w800,
       fontSize: 20,
+    ),
+    errorStyle: TextStyle(
+      color: Colors.amberAccent,
+      fontWeight: FontWeight.w500,
     ),
     border: UnderlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
@@ -105,13 +139,21 @@ ThemeData lightThemeData = ThemeData(
         color: Colors.white70,
       ),
     ),
+    errorBorder: UnderlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+      borderSide: BorderSide(
+        color: Colors.amberAccent,
+      ),
+    ),
   ),
 );
 
-const Color appBarColor = Color.fromARGB(255, 197, 58, 19);
-const Color scaffoldColor = Color.fromARGB(255, 246, 233, 233);
+const Color appBarColor = Color.fromARGB(255, 7, 7, 7);
+const Color elevatedButtonColor = Color.fromARGB(255, 177, 69, 69);
+const Color scaffoldColor = Color.fromARGB(255, 0, 0, 0);
 const Color appBarItemColor = Colors.white;
-BoxDecoration boxDecoration = BoxDecoration(
+const Color textButtonTextColor = Colors.white;
+BoxDecoration articleBoxDecoration = BoxDecoration(
   border: Border.all(color: Colors.black, width: 0.5, style: BorderStyle.solid),
   borderRadius: BorderRadius.all(
     Radius.circular(20),
@@ -120,11 +162,11 @@ BoxDecoration boxDecoration = BoxDecoration(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color.fromARGB(255, 39, 80, 176),
-      Colors.lightBlue,
+      Colors.black,
+      Colors.black45,
+      Colors.black26,
     ],
   ),
-  color: Color.fromARGB(255, 39, 80, 176),
 );
 
 InputDecoration fieldDecoration(
@@ -185,18 +227,78 @@ BoxDecoration listTileDecoration = BoxDecoration(
 );
 
 BoxDecoration categoryTopDecoration = BoxDecoration(
-  border: Border.all(color: appBarColor, width: 0.5, style: BorderStyle.solid),
+  border:
+      Border.all(color: Colors.white70, width: 0.5, style: BorderStyle.solid),
   borderRadius: BorderRadius.only(
     bottomLeft: Radius.circular(20),
     bottomRight: Radius.circular(20),
   ),
-  // gradient: LinearGradient(
-  //   begin: Alignment.topCenter,
-  //   end: Alignment.bottomRight,
-  //   colors: [
-  //     appBarColor,
-  //     Colors.lightBlue,
-  //   ],
-  // ),
   color: appBarColor,
+);
+
+const snackbarBackgroundColor = Colors.white;
+const snackbarColorText = Colors.black;
+const customIndicatorColors = [
+  Colors.blueAccent,
+  Colors.greenAccent,
+  Colors.yellowAccent
+];
+
+//applied to auth pages form fields
+InputDecoration formFieldDecoration = InputDecoration(
+  enabledBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.white,
+      width: 2,
+    ),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  focusedBorder: UnderlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.white,
+      width: 2,
+    ),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  filled: false,
+  prefixIconColor: Colors.green,
+  suffixIconColor: Colors.greenAccent,
+  hintStyle: TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w800,
+    fontSize: 20,
+  ),
+  errorStyle: TextStyle(
+    color: Colors.amberAccent,
+    fontWeight: FontWeight.w500,
+  ),
+  border: UnderlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: BorderSide(
+      color: Colors.white70,
+    ),
+  ),
+  errorBorder: UnderlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: BorderSide(
+      color: Colors.amberAccent,
+    ),
+  ),
+);
+//applied to auth pages form fields containers
+BoxDecoration formFieldBoxDecoration = BoxDecoration(
+  gradient: const LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    stops: [0.3, 0.8, 1],
+    colors: [
+      Color.fromARGB(179, 75, 75, 75),
+      Color.fromARGB(179, 75, 75, 75),
+      Color.fromARGB(179, 75, 75, 75),
+    ],
+  ),
+  border: Border.all(color: Colors.white, width: 1, style: BorderStyle.solid),
+  borderRadius: BorderRadius.all(
+    Radius.circular(20),
+  ),
 );

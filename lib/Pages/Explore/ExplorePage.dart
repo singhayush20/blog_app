@@ -16,16 +16,22 @@ class ExplorePage extends StatefulWidget {
 
 class _ExplorePageState extends State<ExplorePage>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+  final _appBar = AppBar(
+    title: Text(
+      'Explore',
+    ),
+  );
   @override
   Widget build(BuildContext context) {
     super.build(context);
     final height = MediaQuery.of(context).size.height -
-        // _appBar.preferredSize.height -
+        _appBar.preferredSize.height -
         MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom;
+        MediaQuery.of(context).padding.bottom -
+        kBottomNavigationBarHeight;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      // appBar: _appBar,
+      appBar: _appBar,
       body: SafeArea(
         child: Consumer<CategoryProvider>(
           builder: ((context, categoryProvider, child) {
@@ -38,18 +44,15 @@ class _ExplorePageState extends State<ExplorePage>
                 child: Column(
                   children: [
                     Container(
+                      height: height * 0.1,
                       margin: EdgeInsets.only(
                         left: 10,
                         top: 10,
                       ),
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Explore',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                        'Find more interesting articles and subscribe/unsubscribe to topics',
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     Padding(
@@ -62,22 +65,28 @@ class _ExplorePageState extends State<ExplorePage>
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                Get.to(() => ArticlesPage(
-                                    category: categoryProvider
-                                        .allCategories![index]));
+                                Get.to(
+                                  () => ArticlesPage(
+                                      category: categoryProvider
+                                          .allCategories![index]),
+                                  transition: Transition.fadeIn,
+                                  duration: Duration(
+                                    milliseconds: 800,
+                                  ),
+                                );
                               },
                               child: ListTile(
                                 leading: Text(
                                   '${index + 1}.',
                                   style: TextStyle(
-                                      color: Colors.black, fontSize: 15.sp),
+                                      color: Colors.white60, fontSize: 15.sp),
                                 ),
                                 title: Text(
                                   categoryProvider
                                       .allCategories![index].categoryName,
                                   style: TextStyle(
                                     fontSize: 18.sp,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -87,7 +96,7 @@ class _ExplorePageState extends State<ExplorePage>
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: TextStyle(
-                                    color: Colors.black54,
+                                    color: Colors.white60,
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -98,7 +107,7 @@ class _ExplorePageState extends State<ExplorePage>
                           separatorBuilder: (context, index) {
                             return Container(
                               height: 2,
-                              color: Colors.black,
+                              color: Colors.white54,
                             );
                           },
                           itemCount: categoryProvider.allCategories!.length),
