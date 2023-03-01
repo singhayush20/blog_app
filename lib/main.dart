@@ -25,6 +25,10 @@ Future<void> _initializePrefs() async {
   isLoggedIn = _sharedPreferences.getBool(IS_LOGGED_IN) ?? false;
 }
 
+/// Initialize the [FlutterLocalNotificationsPlugin] package.
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -32,7 +36,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   showFlutterNotification(message);
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  print('Handling a background message ${message.messageId}');
+  log('Handling a background message ${message.messageId}');
 }
 
 /// Create a [AndroidNotificationChannel] for heads up notifications
@@ -109,7 +113,6 @@ _configureForegroundMessaging() {
             android: AndroidNotificationDetails(
               channel.id,
               channel.name,
-              // channel.description,
               icon: 'launch_background',
               // other properties...
             ),
@@ -117,9 +120,6 @@ _configureForegroundMessaging() {
     }
   });
 }
-
-/// Initialize the [FlutterLocalNotificationsPlugin] package.
-late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
