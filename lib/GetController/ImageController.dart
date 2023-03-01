@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:blog_app/Model/Post.dart';
 import 'package:blog_app/Service/PostService.dart';
+import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/network_util/API.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,9 +38,11 @@ class ImageController extends GetxController {
         token: token,
         postid: postid,
         isUpdatingPost: isUpdatingPost);
+    log('image upload response status code: ${response.statusCode}');
     if (response.statusCode == 200) {
       Map map = jsonDecode(await response.stream.bytesToString());
-      if (map['code'] == '2000') {
+      log('image upload response: $map');
+      if (map[CODE] == '2000') {
         String message = map["data"];
         success = true;
         log("Image upload message: $message");

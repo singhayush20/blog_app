@@ -274,6 +274,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                                   backgroundColor: snackbarBackgroundColor,
                                 );
                                 context.loaderOverlay.hide();
+                                Get.back();
                               } else {
                                 Get.snackbar(
                                   'Failure',
