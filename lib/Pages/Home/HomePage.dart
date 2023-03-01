@@ -88,6 +88,7 @@ class _HomePageState extends State<HomePage> {
       by presenting a list else direct to the PageView
        */
           ? PageView(
+              physics: BouncingScrollPhysics(),
               children: _pages,
               controller: _pageController,
               onPageChanged: onPageChanged,

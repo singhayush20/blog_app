@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:blog_app/Model/Category.dart';
 import 'package:blog_app/GetController/ImageController.dart';
+import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/constants/Widgets/PostTextField.dart';
@@ -98,12 +99,15 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                             width: 2,
                             style: BorderStyle.solid),
                         borderRadius: BorderRadius.circular(5),
-                        color: Color.fromARGB(255, 166, 243, 243),
+                        color: Color.fromARGB(255, 32, 124, 124),
                       ),
                       child: DropdownButton<Category>(
                         value: _selectedCategory,
                         hint: Text(
                           'Select Category',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                         items: categoryProvider.allCategories!
                             .map<DropdownMenuItem<Category>>((Category value) {
@@ -125,9 +129,12 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                         isExpanded:
                             true, //make true to take width of parent widget
                         underline: Container(), //empty line
-                        style: TextStyle(fontSize: 18.sp, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          color: Colors.white,
+                        ),
                         dropdownColor: Color.fromARGB(255, 98, 201, 230),
-                        iconEnabledColor: Colors.black,
+                        iconEnabledColor: Colors.white,
                         menuMaxHeight: 100,
                         //Icon color
                       ),
@@ -140,7 +147,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                         horizontal: width * 0.02,
                       ),
                       alignment: Alignment.center,
-                      color: Colors.grey[300],
+                      color: Colors.black,
                       child: imageController.pickedFile != null
                           ? Image.file(
                               File(imageController.pickedFile!.path),
@@ -212,11 +219,15 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                       onPressed: (_sharedPreferences != null)
                           ? () async {
                               final _api = API();
-                              if (imageController.pickedFile == null) {
+                              if (imageController.pickedFile == null ||
+                                  _selectedCategory == null) {
                                 Get.snackbar(
-                                  'Image required!',
-                                  "Please upload an image for the article",
+                                  'Image/Category required!',
+                                  "Choose image and category",
                                   snackPosition: SnackPosition.BOTTOM,
+                                  snackStyle: SnackStyle.FLOATING,
+                                  colorText: snackbarColorText,
+                                  backgroundColor: snackbarBackgroundColor,
                                 );
                                 return;
                               }
@@ -243,19 +254,35 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
 
                                 if (result) {
                                   Get.snackbar(
-                                      'Success', 'Post created successfully!',
-                                      snackPosition: SnackPosition.BOTTOM);
+                                    'Success',
+                                    'Post created successfully!',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    snackStyle: SnackStyle.FLOATING,
+                                    colorText: snackbarColorText,
+                                    backgroundColor: snackbarBackgroundColor,
+                                  );
                                   context.loaderOverlay.hide();
                                   Get.back();
                                 }
                               } else if (postResult[CODE] == '2000') {
                                 Get.snackbar(
-                                    'Success', 'Post created successfully!',
-                                    snackPosition: SnackPosition.BOTTOM);
+                                  'Success',
+                                  'Post created successfully!',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  snackStyle: SnackStyle.FLOATING,
+                                  colorText: snackbarColorText,
+                                  backgroundColor: snackbarBackgroundColor,
+                                );
                                 context.loaderOverlay.hide();
                               } else {
-                                Get.snackbar('Failure', 'Post not created!',
-                                    snackPosition: SnackPosition.BOTTOM);
+                                Get.snackbar(
+                                  'Failure',
+                                  'Post not created!',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  snackStyle: SnackStyle.FLOATING,
+                                  colorText: snackbarColorText,
+                                  backgroundColor: snackbarBackgroundColor,
+                                );
                                 context.loaderOverlay.hide();
                               }
                             }

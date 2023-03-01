@@ -157,6 +157,10 @@ class _ProfilePageState extends State<ProfilePage>
                                     onPressed: () {
                                       Get.to(
                                         MyArticlesPage(),
+                                        transition: Transition.fadeIn,
+                                        duration: Duration(
+                                          milliseconds: 800,
+                                        ),
                                       );
                                     },
                                   ),
@@ -164,13 +168,14 @@ class _ProfilePageState extends State<ProfilePage>
                                     children: [
                                       Icon(
                                         FontAwesomeIcons.userPen,
-                                        size: 12.sp,
+                                        size: 15.sp,
+                                        color: Colors.white,
                                       ),
                                       TextButton(
                                         child: Text(
                                           'Update profile',
                                           style: TextStyle(
-                                            fontSize: 12.sp,
+                                            fontSize: 15.sp,
                                             fontWeight: FontWeight.w800,
                                             decoration:
                                                 TextDecoration.underline,
@@ -264,7 +269,6 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 
   Widget _updateProfileBottomSheet() {

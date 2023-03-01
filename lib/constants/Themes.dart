@@ -28,6 +28,13 @@ ThemeData lightThemeData = ThemeData(
       fontWeight: FontWeight.bold,
       color: Colors.white70,
     ),
+    //for article content
+
+    bodySmall: TextStyle(
+      fontSize: 15.sp,
+      color: Colors.amber,
+      fontWeight: FontWeight.w500,
+    ),
   ),
 
   floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -156,14 +163,13 @@ const Color textButtonTextColor = Colors.white;
 BoxDecoration articleBoxDecoration = BoxDecoration(
   border: Border.all(color: Colors.black, width: 0.5, style: BorderStyle.solid),
   borderRadius: BorderRadius.all(
-    Radius.circular(20),
+    Radius.circular(5),
   ),
   gradient: LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Colors.black,
-      Colors.black45,
+      Colors.black26,
       Colors.black26,
     ],
   ),
@@ -207,23 +213,20 @@ InputDecoration fieldDecoration(
 }
 
 BoxDecoration listTileDecoration = BoxDecoration(
-  border: Border.all(
-      color: Color.fromARGB(255, 60, 4, 78),
-      width: 2,
-      style: BorderStyle.solid),
+  border: Border.all(color: Colors.white70, width: 2, style: BorderStyle.solid),
   borderRadius: const BorderRadius.all(
     Radius.circular(20),
   ),
-  gradient: const LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [
-      Color.fromARGB(255, 243, 240, 244),
-      Color.fromARGB(255, 249, 246, 177),
-      Color.fromARGB(255, 199, 221, 54),
-    ],
-    stops: [0.2, 0.5, 1],
-  ),
+  // gradient: const LinearGradient(
+  //   begin: Alignment.topLeft,
+  //   end: Alignment.bottomRight,
+  //   colors: [
+  //     Colors.black12,
+  //     Colors.black12,
+  //   ],
+  //   stops: [0.]
+  // ),
+  color: Colors.black12,
 );
 
 BoxDecoration categoryTopDecoration = BoxDecoration(
@@ -235,7 +238,21 @@ BoxDecoration categoryTopDecoration = BoxDecoration(
   ),
   color: appBarColor,
 );
-
+BoxDecoration profileBox1Decoration = BoxDecoration(
+  border:
+      Border.all(color: Colors.blueAccent, width: 2, style: BorderStyle.solid),
+  borderRadius: const BorderRadius.all(
+    Radius.circular(10),
+  ),
+  gradient: const LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color.fromARGB(255, 8, 66, 194),
+      Color.fromARGB(255, 14, 118, 156),
+    ],
+  ),
+);
 const snackbarBackgroundColor = Colors.white;
 const snackbarColorText = Colors.black;
 const customIndicatorColors = [

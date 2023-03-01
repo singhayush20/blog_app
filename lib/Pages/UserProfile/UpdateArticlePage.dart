@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:blog_app/GetController/ImageController.dart';
 import 'package:blog_app/Model/Post.dart';
+import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/Widgets/CustomLoadingIndicator.dart';
 import 'package:blog_app/constants/Widgets/DataLoadingIndicator.dart';
 import 'package:blog_app/constants/Widgets/PhotoPreview.dart';
@@ -80,7 +81,7 @@ class _UpdateArticlePageState extends State<UpdateArticlePage> {
                       Container(
                         height: height * 0.4,
                         width: width,
-                        color: Color.fromARGB(255, 190, 236, 227),
+                        color: Colors.black,
                         child: Stack(
                           children: [
                             (_uploadButtonClicked == true)
@@ -179,12 +180,15 @@ class _UpdateArticlePageState extends State<UpdateArticlePage> {
                                       ? FontAwesomeIcons.xmark
                                       : FontAwesomeIcons.upload,
                                   size: 15.sp,
-                                  color: Color.fromARGB(208, 0, 0, 0),
+                                  color: Colors.yellowAccent,
                                 ),
                               ),
                             ),
                           ],
                         ),
+                      ),
+                      Divider(
+                        color: Colors.white,
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -258,15 +262,33 @@ class _UpdateArticlePageState extends State<UpdateArticlePage> {
           token: widget.token,
           isUpdatingPost: true);
       if (result) {
-        Get.snackbar('Success', 'Post updated successfully!',
-            snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar(
+          'Success',
+          'Post updated successfully!',
+          snackPosition: SnackPosition.BOTTOM,
+          snackStyle: SnackStyle.FLOATING,
+          colorText: snackbarColorText,
+          backgroundColor: snackbarBackgroundColor,
+        );
       }
     } else if (postResult[CODE] == '2000') {
-      Get.snackbar('Success', 'Post updated successfully!',
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar(
+        'Success',
+        'Post updated successfully!',
+        snackPosition: SnackPosition.BOTTOM,
+        snackStyle: SnackStyle.FLOATING,
+        colorText: snackbarColorText,
+        backgroundColor: snackbarBackgroundColor,
+      );
     } else {
-      Get.snackbar('Failure', 'Post not updated!',
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar(
+        'Failure',
+        'Post not updated!',
+        snackPosition: SnackPosition.BOTTOM,
+        snackStyle: SnackStyle.FLOATING,
+        colorText: snackbarColorText,
+        backgroundColor: snackbarBackgroundColor,
+      );
     }
     await imageController.loadUserArticles(
         token: widget.token, userid: widget.userid);

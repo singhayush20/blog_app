@@ -21,8 +21,8 @@ class ItemTile extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color.fromARGB(255, 183, 241, 210),
-              Color.fromARGB(255, 160, 234, 164),
+              Color.fromARGB(255, 148, 75, 75),
+              Color.fromARGB(255, 95, 4, 4),
             ],
           ),
         ),

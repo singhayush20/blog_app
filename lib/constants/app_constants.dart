@@ -1,5 +1,5 @@
-const String domain = "https://539a-14-139-240-85.in.ngrok.io";
-const String domain2 = "539a-14-139-240-85.in.ngrok.io";
+const String domain = "https://1b3a-14-139-240-85.in.ngrok.io";
+const String domain2 = "1b3a-14-139-240-85.in.ngrok.io";
 const BEARER_TOKEN = "BEARER TOKEN";
 const IS_LOGGED_IN = "isLoggedIn";
 const Bearer = "Bearer ";

@@ -51,7 +51,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
   }
 
   final AppBar _appBar = AppBar(
-    title: const Text("Profile"),
+    title: const Text("Your Articles"),
   );
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                           onRefresh: () async {
                             await postController.loadUserArticles(
                                 token: _sharedPreferences!
-                                        .getString('BEARER_TOKEN') ??
+                                        .getString(BEARER_TOKEN) ??
                                     'null',
                                 userid:
                                     _sharedPreferences!.getInt(USER_ID) ?? 0);
@@ -152,17 +152,26 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             trailing: PopupMenuButton(
+                                              color: Colors.blueAccent,
                                               // add icon, by default "3 dot" icon
                                               // icon: Icon(Icons.book)
                                               itemBuilder: (context) {
                                                 return [
                                                   const PopupMenuItem<int>(
                                                     value: 0,
-                                                    child: Text("Delete"),
+                                                    child: Text(
+                                                      "Delete",
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
                                                   ),
                                                   const PopupMenuItem<int>(
                                                     value: 1,
-                                                    child: Text("Update"),
+                                                    child: Text(
+                                                      "Update",
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
                                                   ),
                                                 ];
                                               },
@@ -190,6 +199,12 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                                       "Article deleted successfully!",
                                                       snackPosition:
                                                           SnackPosition.BOTTOM,
+                                                      snackStyle:
+                                                          SnackStyle.FLOATING,
+                                                      colorText:
+                                                          snackbarColorText,
+                                                      backgroundColor:
+                                                          snackbarBackgroundColor,
                                                     );
                                                   } else {
                                                     Get.snackbar(
@@ -197,6 +212,12 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                                       "Failed to delete article!",
                                                       snackPosition:
                                                           SnackPosition.BOTTOM,
+                                                      snackStyle:
+                                                          SnackStyle.FLOATING,
+                                                      colorText:
+                                                          snackbarColorText,
+                                                      backgroundColor:
+                                                          snackbarBackgroundColor,
                                                     );
                                                   }
                                                 } else if (value == 1) {
@@ -223,7 +244,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                               },
                                               icon: Icon(
                                                 FontAwesomeIcons.bars,
-                                                color: Colors.black,
+                                                color: Colors.yellow,
                                                 size: 15.sp,
                                               ),
                                             ),
@@ -231,7 +252,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                               '${index + 1}.',
                                               style: TextStyle(
                                                 fontSize: 15.sp,
-                                                color: Colors.black,
+                                                color: Colors.white,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
@@ -245,7 +266,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                           horizontal: width * 0.3,
                                         ),
                                         height: 2,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                       );
                                     }),
                                     itemCount:
@@ -269,6 +290,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                 style: TextStyle(
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w700,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -287,6 +309,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                 style: TextStyle(
                                     fontSize: 10.sp,
                                     fontWeight: FontWeight.w700,
+                                    color: Colors.white,
                                     decoration: TextDecoration.underline),
                               ),
                             )

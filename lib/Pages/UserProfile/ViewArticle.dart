@@ -69,10 +69,7 @@ class _ViewArticleState extends State<ViewArticle> {
               Container(
                 child: Text(
                   widget.post.title,
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               GestureDetector(
@@ -94,7 +91,7 @@ class _ViewArticleState extends State<ViewArticle> {
                   // ),
                   child: Container(
                     height: height * 0.4,
-                    color: Color.fromARGB(255, 190, 236, 227),
+                    color: Colors.black,
                     child: CachedNetworkImage(
                       imageUrl:
                           'https://imagedbspringboot.blob.core.windows.net/imagecontainer/${widget.post.image}',
@@ -113,18 +110,18 @@ class _ViewArticleState extends State<ViewArticle> {
                 ),
               ),
               Container(
-                color: Color.fromARGB(255, 97, 137, 224),
+                color: Color.fromARGB(255, 8, 66, 194),
                 child: Text(
                   'Added on: ${_dateFormatter.format(widget.post.addDate)}',
                   style: TextStyle(
                     fontWeight: FontWeight.w800,
-                    color: Colors.white70,
+                    color: Color.fromARGB(219, 242, 239, 239),
                     fontSize: 12.sp,
                   ),
                 ),
               ),
               Container(
-                color: Color.fromARGB(255, 227, 246, 243),
+                decoration: articleBoxDecoration,
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.symmetric(
                   horizontal: 4,
@@ -132,17 +129,21 @@ class _ViewArticleState extends State<ViewArticle> {
                 ),
                 child: Text(
                   widget.post.content,
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
               Container(
                 height: height * 0.05,
                 alignment: Alignment.center,
                 child: TextButton(
-                  child: Text('Load Comments'),
+                  child: Text(
+                    'Load Comments',
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w700,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                   onPressed: () async {
                     setState(() {
                       _loadingStatus = LoadingStatus.LOADING;
@@ -187,6 +188,7 @@ class _ViewArticleState extends State<ViewArticle> {
                                 style: TextStyle(
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.blueAccent,
                                 ),
                               ),
                               subtitle: Text(
@@ -196,14 +198,15 @@ class _ViewArticleState extends State<ViewArticle> {
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.green,
                                 ),
                               ),
                               leading: Text(
                                 '${index + 1}.',
                                 style: TextStyle(
                                   fontSize: 15.sp,
-                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -215,7 +218,7 @@ class _ViewArticleState extends State<ViewArticle> {
                               horizontal: width * 0.3,
                             ),
                             height: 2,
-                            color: Colors.black,
+                            color: Colors.white,
                           );
                         },
                         itemCount: _comments!.length,

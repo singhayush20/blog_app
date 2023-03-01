@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: height * 0.1,
                       alignment: Alignment.center,
                       child: Text(
-                        'SFBlog',
+                        'Connect',
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
                     ),

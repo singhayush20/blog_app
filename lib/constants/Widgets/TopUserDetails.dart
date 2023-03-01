@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import '../Themes.dart';
+
 class TopUserDetails extends StatelessWidget {
   const TopUserDetails({
     Key? key,
@@ -20,22 +22,7 @@ class TopUserDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.black, width: 0.5, style: BorderStyle.solid),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10),
-          ),
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color.fromARGB(255, 184, 231, 237),
-              Color.fromARGB(255, 169, 218, 241),
-            ],
-          ),
-          color: Color.fromARGB(255, 39, 80, 176),
-        ),
+        decoration: profileBox1Decoration,
         height: height * 0.1,
         child: Row(
           children: [
@@ -45,6 +32,7 @@ class TopUserDetails extends StatelessWidget {
                   Icon(
                     FontAwesomeIcons.penToSquare,
                     size: 12.sp,
+                    color: Colors.white,
                   ),
                   TextButton(
                     child: Text(
@@ -74,8 +62,9 @@ class TopUserDetails extends StatelessWidget {
                       child: Text(
                         'User ID',
                         style: TextStyle(
-                          fontSize: 15.sp,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w700,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -86,6 +75,7 @@ class TopUserDetails extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w700,
+                          color: Colors.white,
                         ),
                       ),
                     )

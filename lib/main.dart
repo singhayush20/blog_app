@@ -25,10 +25,6 @@ Future<void> _initializePrefs() async {
   isLoggedIn = _sharedPreferences.getBool(IS_LOGGED_IN) ?? false;
 }
 
-Future<void> _messageHandler(RemoteMessage message) async {
-  print('background message ${message.notification!.body}');
-}
-
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -51,7 +47,7 @@ Future<void> setupFlutterNotifications() async {
   channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
-    'This channel is used for important notifications.', // description
+    // 'This channel is used for important notifications.', // description
     importance: Importance.high,
   );
 
@@ -88,7 +84,6 @@ void showFlutterNotification(RemoteMessage message) {
         android: AndroidNotificationDetails(
           channel.id,
           channel.name,
-          channel.description,
           icon: 'launch_background',
         ),
       ),
@@ -96,24 +91,16 @@ void showFlutterNotification(RemoteMessage message) {
   }
 }
 
-/// Initialize the [FlutterLocalNotificationsPlugin] package.
-late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  // Set the background messaging handler early on, as a named top-level function
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  if (!kIsWeb) {
-    await setupFlutterNotifications();
-  }
+_configureForegroundMessaging() {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     log('new notificaiton: ${message.data}');
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android!;
 
-    // If `onMessage` is triggered with a notification, construct our own
-    // local notification to show to users using the created channel.
+//     // If `onMessage` is triggered with a notification, construct our own
+//     // local notification to show to users using the created channel.
     if (notification != null && android != null) {
+      log('Notification hascode: ${notification.hashCode} and notification title: ${notification.title} and notification body: ${notification.body}');
       flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification.title,
@@ -122,13 +109,28 @@ void main() async {
             android: AndroidNotificationDetails(
               channel.id,
               channel.name,
-              channel.description,
-              icon: android.smallIcon,
+              // channel.description,
+              icon: 'launch_background',
               // other properties...
             ),
           ));
     }
   });
+}
+
+/// Initialize the [FlutterLocalNotificationsPlugin] package.
+late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  // Set the background messaging handler early on, as a named top-level function
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  if (!kIsWeb) {
+    await setupFlutterNotifications();
+  }
+  _configureForegroundMessaging();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
