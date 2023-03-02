@@ -11,15 +11,13 @@ import 'package:image_picker/image_picker.dart';
 class API {
   final Dio _dio = Dio();
 
-  /**
-   * ---Login and Authentication---
-   * 1. Send Email Verification OTP
-   * 2. Verify Email Verification OTP
-   * 3. Send Password Reset OTP
-   * 4. Reset Password
-   * 5. Login
-   * 6. Register
-   */
+  /// ---Login and Authentication---
+  /// 1. Send Email Verification OTP
+  /// 2. Verify Email Verification OTP
+  /// 3. Send Password Reset OTP
+  /// 4. Reset Password
+  /// 5. Login
+  /// 6. Register
 
   //1.
   Future<Map<String, dynamic>> sendEmailVerificationOTP(
@@ -77,13 +75,17 @@ class API {
 
   //5.
   Future<Map<String, dynamic>> login(
-      {required String email, required String password}) async {
+      {required String email,
+      required String password,
+      required String deviceToken}) async {
     Map<String, dynamic> data = {
       "username": email,
       "password": password,
     };
+
     log('Logging in user for: $data');
-    Response response = await _dio.post(loginUrl, data: data);
+    Response response = await _dio.post(loginUrl,
+        data: data, queryParameters: {"devicetoken": deviceToken});
     log('login user response: $response');
     return response.data;
   }
@@ -380,6 +382,26 @@ class API {
     Response response = await _dio.get(searchArticlesByKeywordUrl,
         options: options, queryParameters: {"keyword": keyword});
     log('search response: $response');
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> logout(
+      {required String devicetoken,
+      required int userid,
+      required String token}) async {
+    Map<String, dynamic> queryParam = {
+      "devicetoken": devicetoken,
+      "userid": userid
+    };
+    Options options = Options(
+        validateStatus: (_) => true,
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+        headers: {HttpHeaders.authorizationHeader: token});
+    log('Logging out: $queryParam');
+    Response response = await _dio.post(logoutUrl,
+        options: options, queryParameters: queryParam);
+    log('Logout response: $response');
     return response.data;
   }
 }

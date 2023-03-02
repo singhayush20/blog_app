@@ -68,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   final AppBar _appBar = AppBar(
-    title: Text("Profile"),
+    title: const Text("Profile"),
   );
   @override
   Widget build(BuildContext context) {
@@ -89,8 +89,8 @@ class _ProfilePageState extends State<ProfilePage>
             case ConnectionState.waiting:
             case ConnectionState.active:
               {
-                return Center(
-                  child: Container(
+                return const Center(
+                  child: SizedBox(
                     height: 100,
                     width: 100,
                     child: CustomLoadingIndicator(),
@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage>
                     onRefresh: _refreshUserData,
                     key: _refreshIndicatorKey,
                     child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
+                      physics: const AlwaysScrollableScrollPhysics(),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: width * 0.05,
@@ -156,9 +156,9 @@ class _ProfilePageState extends State<ProfilePage>
                                     ),
                                     onPressed: () {
                                       Get.to(
-                                        MyArticlesPage(),
+                                        const MyArticlesPage(),
                                         transition: Transition.fadeIn,
-                                        duration: Duration(
+                                        duration: const Duration(
                                           milliseconds: 800,
                                         ),
                                       );
@@ -185,8 +185,9 @@ class _ProfilePageState extends State<ProfilePage>
                                           Get.bottomSheet(
                                             _updateProfileBottomSheet(),
                                             persistent: true,
-                                            backgroundColor: Color.fromARGB(
-                                                255, 177, 251, 240),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 177, 251, 240),
                                             elevation: 5,
                                             shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.only(
@@ -207,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage>
                               height: height * 0.02,
                             ),
                             ListView(
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               children: [
                                 ItemTile(
@@ -215,14 +216,14 @@ class _ProfilePageState extends State<ProfilePage>
                                   subtitle:
                                       '${_user!.firstName} ${_user!.lastName}',
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 ItemTile(
                                   title: "About",
                                   subtitle: _user!.about,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 ItemTile(
@@ -280,7 +281,7 @@ class _ProfilePageState extends State<ProfilePage>
         child: Container(
           height: 100,
           width: 100,
-          child: CustomLoadingIndicator(),
+          child: const CustomLoadingIndicator(),
         ),
       ),
       disableBackButton: true,
@@ -290,7 +291,7 @@ class _ProfilePageState extends State<ProfilePage>
           return Container(
             child: LayoutBuilder(builder: (context, dialogConstraints) {
               return Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 4,
                 ),
                 child: Column(
@@ -305,7 +306,7 @@ class _ProfilePageState extends State<ProfilePage>
                             child: TextFormField(
                               controller: _firstNameController,
                               obscureText: false,
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                               cursorColor: Colors.black,
                               keyboardType: TextInputType.name,
                               validator: (value) {
@@ -326,7 +327,7 @@ class _ProfilePageState extends State<ProfilePage>
                             child: TextFormField(
                               controller: _lastNameController,
                               obscureText: false,
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                               cursorColor: Colors.black,
                               keyboardType: TextInputType.name,
                               validator: (value) {
@@ -347,7 +348,7 @@ class _ProfilePageState extends State<ProfilePage>
                             child: TextFormField(
                               controller: _aboutController,
                               obscureText: false,
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                               cursorColor: Colors.black,
                               keyboardType: TextInputType.text,
                               maxLines: 2,

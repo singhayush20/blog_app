@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:blog_app/GetController/SubscribedCategoriesController.dart';
 import 'package:blog_app/Model/Category.dart';
 import 'package:blog_app/Model/Post2.dart' as posts;
 import 'package:blog_app/Model/SubscribedCategory.dart';
@@ -9,7 +8,6 @@ import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/network_util/API.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryProvider with ChangeNotifier {
@@ -30,7 +28,6 @@ class CategoryProvider with ChangeNotifier {
     _categoryService = CategoryService();
     _api = API();
     messaging = FirebaseMessaging.instance; //for firebase messaging
-
   }
   void _initializePrefs(SharedPreferences sf) {
     log('Initializing sharedPreferences');

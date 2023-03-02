@@ -7,6 +7,7 @@ import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/Pages/login_and_auth/ForgetPassword.dart';
 import 'package:blog_app/Pages/login_and_auth/RegisterScreen.dart';
 import 'package:blog_app/network_util/API.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -205,9 +206,13 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () async {
                           context.loaderOverlay.show();
                           final API api = API();
+                          final FirebaseMessaging messaging =
+                              FirebaseMessaging.instance;
+                          String? token = await messaging.getToken();
                           Map<String, dynamic> result = await api.login(
                               email: _emailController.text,
-                              password: _passwordController.text);
+                              password: _passwordController.text,
+                              deviceToken: token ?? 'null');
                           context.loaderOverlay.hide();
                           String code = result[CODE];
                           if (code == '2000') {

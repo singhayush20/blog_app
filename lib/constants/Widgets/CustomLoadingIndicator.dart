@@ -9,7 +9,7 @@ class CustomLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: LoadingIndicator(
         strokeWidth: 0.5,
         indicatorType: Indicator.ballPulse,

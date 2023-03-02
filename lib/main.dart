@@ -1,23 +1,22 @@
 import 'dart:developer';
 
 import 'package:blog_app/Pages/Home/HomePage.dart';
-import 'package:blog_app/Pages/Home/MessageArticlePage.dart';
+import 'package:blog_app/Pages/UserProfile/ViewArticle.dart';
 import 'package:blog_app/constants/Themes.dart';
 import 'package:blog_app/constants/app_constants.dart';
 import 'package:blog_app/Pages/login_and_auth/LoginPage.dart';
 import 'package:blog_app/network_util/FCMNotificationUtil.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:sizer/sizer.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:blog_app/Model/Post.dart';
 
 late SharedPreferences _sharedPreferences;
 bool isLoggedIn = false;
@@ -139,17 +138,28 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _goToArticleScreen(Map<String, dynamic> messageData) {
-    if (_sharedPreferences.getBool(IS_LOGGED_IN) == true) {
-      Get.to(() => MessageArticlePage(data: messageData));
+    log('===DATE===: ${messageData['addDate']}');
+    Post post = Post(
+        postId: int.parse(messageData['postid']),
+        title: messageData['title'],
+        content: messageData['content'],
+        addDate: DateTime.parse(messageData['addDate']),
+        image: messageData['image']);
+    if (_sharedPreferences.getBool(IS_LOGGED_IN) != null &&
+        _sharedPreferences.getBool(IS_LOGGED_IN) == true) {
+      Get.to(
+          () => ViewArticle(post: post, sharedPreferences: _sharedPreferences));
     } else {
-      Get.to(() => const LoginPage());
+      log('user is not logged in');
+      // Get.to(() => const LoginPage());
     }
   }
 
   @override
   void initState() {
     super.initState();
-    LocalNotificationService.initialize(context); //for foreground notifications
+    LocalNotificationService.initialize(
+        context, _sharedPreferences); //for foreground notifications
 
     /*
     If the application has been opened from a terminated state via a [RemoteMessage] (containing a [Notification]), it will be returned, otherwise it will be null.

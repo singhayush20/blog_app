@@ -89,7 +89,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 2,
                       ),
@@ -99,11 +99,11 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                             width: 2,
                             style: BorderStyle.solid),
                         borderRadius: BorderRadius.circular(5),
-                        color: Color.fromARGB(255, 32, 124, 124),
+                        color: const Color.fromARGB(255, 32, 124, 124),
                       ),
                       child: DropdownButton<Category>(
                         value: _selectedCategory,
-                        hint: Text(
+                        hint: const Text(
                           'Select Category',
                           style: TextStyle(
                             color: Colors.white,
@@ -133,7 +133,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                           fontSize: 18.sp,
                           color: Colors.white,
                         ),
-                        dropdownColor: Color.fromARGB(255, 98, 201, 230),
+                        dropdownColor: const Color.fromARGB(255, 98, 201, 230),
                         iconEnabledColor: Colors.white,
                         menuMaxHeight: 100,
                         //Icon color
@@ -156,7 +156,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                           : Column(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                     top: 4,
                                   ),
                                   height: height * 0.2,
@@ -218,7 +218,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                     ElevatedButton(
                       onPressed: (_sharedPreferences != null)
                           ? () async {
-                              final _api = API();
+                              final api = API();
                               if (imageController.pickedFile == null ||
                                   _selectedCategory == null) {
                                 Get.snackbar(
@@ -233,7 +233,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                               }
                               context.loaderOverlay.show();
 
-                              Map<String, dynamic> postResult = await _api
+                              Map<String, dynamic> postResult = await api
                                   .createPost(
                                       userid:
                                           _sharedPreferences!.getInt(USER_ID)!,
@@ -262,6 +262,8 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                                     backgroundColor: snackbarBackgroundColor,
                                   );
                                   context.loaderOverlay.hide();
+                                  log('Going back from write article page');
+
                                   Get.back();
                                 }
                               } else if (postResult[CODE] == '2000') {
@@ -274,6 +276,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                                   backgroundColor: snackbarBackgroundColor,
                                 );
                                 context.loaderOverlay.hide();
+                                log('Going back from write article page');
                                 Get.back();
                               } else {
                                 Get.snackbar(
@@ -289,7 +292,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                             }
                           : null,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 10,
                           vertical: 10,
                         ),

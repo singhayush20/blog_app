@@ -1,20 +1,24 @@
 import 'dart:developer';
 
+import 'package:blog_app/Model/Post.dart';
 import 'package:blog_app/Pages/Home/MessageArticlePage.dart';
+import 'package:blog_app/Pages/UserProfile/ViewArticle.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationPlugin =
       FlutterLocalNotificationsPlugin();
 
   static late Map<String, dynamic> _messageData;
-  static void initialize(BuildContext context) {
+  static void initialize(
+      BuildContext context, SharedPreferences sharedPreferences) {
     final InitializationSettings initializationSettings =
-        InitializationSettings(
+        const InitializationSettings(
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
     );
     // _notificationPlugin.initialize(initializationSettings,onSelectNotification: (String? payload)async{
@@ -26,7 +30,16 @@ class LocalNotificationService {
       onDidReceiveNotificationResponse:
           (NotificationResponse notificationResponse) {
         log('Foreground notification clicked: response type: ${notificationResponse.notificationResponseType}');
-        Get.to(() => MessageArticlePage(data: _messageData));
+        log('===DATE===: ${_messageData['addDate']}');
+        Post post = Post(
+            postId: int.parse(_messageData['postid']),
+            title: _messageData['title'],
+            content: _messageData['content'],
+            // addDate: DateTime.parse(messageData['addDate']),
+            addDate: DateTime.parse(_messageData['addDate']),
+            image: _messageData['image']);
+        Get.to(() =>
+            ViewArticle(post: post, sharedPreferences: sharedPreferences));
         // switch (notificationResponse.notificationResponseType) {
         //   case NotificationResponseType.selectedNotification:
         //     // selectNotificationStream.add(notificationResponse.payload);
