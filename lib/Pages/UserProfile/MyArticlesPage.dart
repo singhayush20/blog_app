@@ -298,7 +298,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                               onPressed: () async {
                                 await postController.loadUserArticles(
                                     token: _sharedPreferences!
-                                            .getString('BEARER_TOKEN') ??
+                                            .getString(BEARER_TOKEN) ??
                                         'null',
                                     userid:
                                         _sharedPreferences!.getInt(USER_ID) ??

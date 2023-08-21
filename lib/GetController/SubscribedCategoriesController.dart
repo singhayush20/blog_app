@@ -5,7 +5,7 @@ import 'package:blog_app/network_util/API.dart';
 import 'package:get/get.dart';
 
 import '../constants/app_constants.dart';
-
+//Not used anywhere
 class SubscribedCategoriesController extends GetxController {
   final API _api = API();
   List<SubscribedCategory> _subscribedCategories = [];

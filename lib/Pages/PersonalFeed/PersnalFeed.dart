@@ -109,7 +109,7 @@ class _PersonalFeedState extends State<PersonalFeed> {
                   'You haven\'t subscribed to any topic yet',
                   style: TextStyle(
                     fontSize: 15.sp,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

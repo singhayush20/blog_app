@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
+//This class has not been used anywhere
 class MessageArticlePage extends StatefulWidget {
   Map<String, dynamic> data;
   MessageArticlePage({required this.data});

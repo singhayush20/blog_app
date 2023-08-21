@@ -18,8 +18,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:blog_app/Model/Post.dart';
 
-late SharedPreferences _sharedPreferences;
-bool isLoggedIn = false;
+late SharedPreferences _sharedPreferences; //shared preferences variable
+bool isLoggedIn = false; //flag to store the logged in status
+
+//_initializePrefs() method is used to initialize the shared preferences and setup notifications
+
 Future<void> _initializePrefs() async {
   log("Loading Shared Preferences");
   _sharedPreferences = await SharedPreferences.getInstance();
@@ -29,8 +32,7 @@ Future<void> _initializePrefs() async {
 
 /// Initialize the [FlutterLocalNotificationsPlugin] package.
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-//  =
-// FlutterLocalNotificationsPlugin();
+
 
 //background handler works in its own isolate, and not part of
 //the application therefore, we should keep it out of any context, outside the
@@ -167,14 +169,7 @@ class _MyAppState extends State<MyApp> {
     This should be used to determine whether specific notification interaction should open the app with a specific purpose (e.g. opening a chat message, specific screen etc).
     */
     ///Gives the message on which the user taps from terminated state
-    // FirebaseMessaging.instance.getInitialMessage().then((message) {
-    //   //if we have a message
-    //   if (message != null) {
-    //     log('App terminated: notification clicked: ${message.data}');
-    //     //now we can navigate to a screen
-    //     _goToArticleScreen(message.data);
-    //   }
-    // });
+
 
     _configureForegroundMessaging();
     _handleMessageClickEvent();

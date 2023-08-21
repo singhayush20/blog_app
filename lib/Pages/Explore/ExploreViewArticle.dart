@@ -151,12 +151,45 @@ class _ExploreViewArticleState extends State<ExploreViewArticle> {
                   child: Text(widget.post.content,
                       style: Theme.of(context).textTheme.bodySmall),
                 ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                ListTile(
+                  title: PostTextField(
+                    labelText: 'Your comment here...',
+                    hintText: 'Comment...',
+                    textController: _commentController,
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(
+                      FontAwesomeIcons.check,
+                      color: Colors.white,
+                    ),
+                    onPressed: () async {
+                      if (_commentController.text.trim().isNotEmpty) {
+                        context.loaderOverlay.show();
+                        bool result = await _commentService.writeComment(
+                          token:
+                              widget.sharedPreferences.getString(BEARER_TOKEN)!,
+                          userid: widget.sharedPreferences.getInt(USER_ID)!,
+                          postid: widget.post.postId,
+                          content: _commentController.text.trim(),
+                        );
+                        context.loaderOverlay.hide();
+                        log('comment result: $result');
+                        if (result) {
+                          await _loadComments();
+                        }
+                      }
+                    },
+                  ),
+                ),
                 Container(
                   height: height * 0.05,
                   alignment: Alignment.centerLeft,
                   child: TextButton(
                     child: Text(
-                      'Comments',
+                      'More Comments',
                       style: TextStyle(
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w700,
@@ -172,38 +205,6 @@ class _ExploreViewArticleState extends State<ExploreViewArticle> {
                         _comments!.isNotEmpty &&
                         _loadingStatus != LoadingStatus.LOADING)
                     ? Column(children: [
-                        ListTile(
-                          title: PostTextField(
-                            labelText: 'Your comment here...',
-                            hintText: 'Comment...',
-                            textController: _commentController,
-                          ),
-                          trailing: IconButton(
-                            icon: Icon(
-                              FontAwesomeIcons.check,
-                              color: Colors.white,
-                            ),
-                            onPressed: () async {
-                              if (_commentController.text.trim().isNotEmpty) {
-                                context.loaderOverlay.show();
-                                bool result =
-                                    await _commentService.writeComment(
-                                  token: widget.sharedPreferences
-                                      .getString(BEARER_TOKEN)!,
-                                  userid:
-                                      widget.sharedPreferences.getInt(USER_ID)!,
-                                  postid: widget.post.postId,
-                                  content: _commentController.text.trim(),
-                                );
-                                context.loaderOverlay.hide();
-                                log('comment result: $result');
-                                if (result) {
-                                  await _loadComments();
-                                }
-                              }
-                            },
-                          ),
-                        ),
                         ListView.separated(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
