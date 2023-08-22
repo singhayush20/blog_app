@@ -19,72 +19,39 @@ class PostTextField extends StatelessWidget {
       textAlign: TextAlign.start,
       textCapitalization: TextCapitalization.sentences,
       controller: textController,
-
       style: TextStyle(
         fontSize: 15.sp,
-        color: Colors.white,
+        color: Colors.red,
         fontWeight: FontWeight.w600,
       ),
       cursorColor: Colors.red,
-      // decoration: InputDecoration(
-      //   label: Text(labelText),
-      //   labelStyle: TextStyle(
-      //     fontSize: 15.sp,
-      //     color: Color.fromARGB(255, 4, 56, 146),
-      //     fontWeight: FontWeight.bold,
-      //   ),
-      //   filled: true,
-      //   fillColor: Color.fromARGB(255, 152, 240, 217),
-      //   enabledBorder: OutlineInputBorder(
-      //     borderSide: BorderSide(
-      //       color: Color.fromARGB(255, 6, 37, 122),
-      //       width: 1.5,
-      //     ),
-      //     borderRadius: BorderRadius.circular(10.0),
-      //   ),
-      //   focusedBorder: OutlineInputBorder(
-      //     borderSide: BorderSide(
-      //       color: Colors.black,
-      //       width: 2,
-      //     ),
-      //     borderRadius: BorderRadius.circular(10.0),
-      //   ),
-      //   errorBorder: OutlineInputBorder(
-      //     borderSide: BorderSide(
-      //       color: Colors.red,
-      //       width: 3,
-      //     ),
-      //     borderRadius: BorderRadius.circular(10.0),
-      //   ),
-      //   hintText: hintText,
-      //   hintStyle: TextStyle(
-      //     color: Colors.black,
-      //   ),
-      // ),
-      decoration: formFieldDecoration.copyWith(
+      decoration: inputFormFieldBoxDecoration.copyWith(
         hintText: hintText,
         label: Text(labelText),
+        hintStyle: const TextStyle(
+          color: Colors.black,
+        ),
         labelStyle: TextStyle(
           fontSize: 15.sp,
-          color: Colors.amber,
+          color: Colors.blue,
           fontWeight: FontWeight.bold,
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.yellow,
+          borderSide: const BorderSide(
+            color: Colors.green,
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.white,
+          borderSide: const BorderSide(
+            color: Colors.greenAccent,
             width: 2,
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Colors.red,
             width: 3,
           ),

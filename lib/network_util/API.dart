@@ -47,7 +47,7 @@ class API {
   Future<Map<String, dynamic>> sendResetPasswordOTP(
       {required String email}) async {
     Map<String, String> data = {"email": email};
-    log('Sending otp for resetting password: $data');
+    log('Sending otp for resetting password: $data on url: $sendResetPasswordOTPUrl');
     Response response =
         await _dio.post(sendResetPasswordOTPUrl, queryParameters: data);
     log('reset password otp response: $response');

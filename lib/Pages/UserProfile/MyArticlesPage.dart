@@ -89,7 +89,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                         overlayWidget: Container(
                           height: 100,
                           width: 100,
-                          child: CustomLoadingIndicator(),
+                          child: const CustomLoadingIndicator(),
                         ),
                         child: RefreshIndicator(
                           onRefresh: () async {
@@ -126,7 +126,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                                   sharedPreferences:
                                                       _sharedPreferences!),
                                               transition: Transition.topLevel,
-                                              duration: Duration(
+                                              duration: const Duration(
                                                 milliseconds: 1000,
                                               ),
                                             );
@@ -236,7 +236,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                                                     USER_ID)!),
                                                     transition:
                                                         Transition.leftToRight,
-                                                    duration: Duration(
+                                                    duration: const Duration(
                                                       milliseconds: 500,
                                                     ),
                                                   );
@@ -279,38 +279,40 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                                height: 100,
-                                child:
-                                    Image.asset('images/category_default.jpg')),
+                                height: height * 0.4,
+                                child: Image.asset('images/no_data_image.jpg')),
                             Container(
-                              height: 100,
+                              height: height * 0.1,
                               alignment: Alignment.center,
                               child: Text(
                                 'No Data',
                                 style: TextStyle(
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w700,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
-                            TextButton(
-                              onPressed: () async {
-                                await postController.loadUserArticles(
-                                    token: _sharedPreferences!
-                                            .getString(BEARER_TOKEN) ??
-                                        'null',
-                                    userid:
-                                        _sharedPreferences!.getInt(USER_ID) ??
-                                            0);
-                              },
-                              child: Text(
-                                'Try Again',
-                                style: TextStyle(
-                                    fontSize: 10.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                    decoration: TextDecoration.underline),
+                            Container(
+                              height: height * 0.1,
+                              child: TextButton(
+                                onPressed: () async {
+                                  await postController.loadUserArticles(
+                                      token: _sharedPreferences!
+                                              .getString(BEARER_TOKEN) ??
+                                          'null',
+                                      userid:
+                                          _sharedPreferences!.getInt(USER_ID) ??
+                                              0);
+                                },
+                                child: Text(
+                                  'Try Again',
+                                  style: TextStyle(
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline),
+                                ),
                               ),
                             )
                           ]);

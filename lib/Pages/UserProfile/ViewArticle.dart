@@ -16,7 +16,7 @@ class ViewArticle extends StatefulWidget {
   Post post;
   SharedPreferences sharedPreferences;
 
-  ViewArticle({required this.post, required this.sharedPreferences});
+  ViewArticle({super.key, required this.post, required this.sharedPreferences});
 
   @override
   State<ViewArticle> createState() => _ViewArticleState();
@@ -47,7 +47,7 @@ class _ViewArticleState extends State<ViewArticle> {
       appBar: AppBar(
         title: Text(
           widget.post.title,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
           maxLines: 1,
@@ -55,7 +55,7 @@ class _ViewArticleState extends State<ViewArticle> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: width * 0.01,
@@ -85,10 +85,6 @@ class _ViewArticleState extends State<ViewArticle> {
                 },
                 child: Hero(
                   tag: 'imageHero',
-                  // child: Image.asset('images/category_default.jpg'),
-                  // child: Image.network(
-                  //   'https://imagedbspringboot.blob.core.windows.net/imagecontainer/image_picker8167626668264245641.jpg',
-                  // ),
                   child: Container(
                     height: height * 0.4,
                     color: Colors.black,
@@ -99,7 +95,7 @@ class _ViewArticleState extends State<ViewArticle> {
                         child: Container(
                           height: 50,
                           width: 50,
-                          child: DataLoadingIndicator(),
+                          child: const DataLoadingIndicator(),
                         ),
                       ),
                       errorWidget: (context, url, error) =>
@@ -110,12 +106,12 @@ class _ViewArticleState extends State<ViewArticle> {
                 ),
               ),
               Container(
-                color: Color.fromARGB(255, 8, 66, 194),
+                color: const Color.fromARGB(255, 8, 66, 194),
                 child: Text(
                   'Added on: ${_dateFormatter.format(widget.post.addDate)}',
                   style: TextStyle(
                     fontWeight: FontWeight.w800,
-                    color: Color.fromARGB(219, 242, 239, 239),
+                    color: const Color.fromARGB(219, 242, 239, 239),
                     fontSize: 12.sp,
                   ),
                 ),
@@ -123,7 +119,7 @@ class _ViewArticleState extends State<ViewArticle> {
               Container(
                 decoration: articleBoxDecoration,
                 alignment: Alignment.topLeft,
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 4,
                   vertical: 2,
                 ),
@@ -229,7 +225,7 @@ class _ViewArticleState extends State<ViewArticle> {
                           height: 50,
                           width: 50,
                           margin: EdgeInsets.symmetric(horizontal: width * 0.3),
-                          child: DataLoadingIndicator(),
+                          child: const DataLoadingIndicator(),
                         )
                       : (_comments != null && _comments!.isEmpty)
                           ? Container(

@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -66,7 +67,13 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                 alignment: Alignment.center,
                 height: 100,
                 width: 100,
-                child: const CustomLoadingIndicator(),
+                child: const Center(
+                  child: LoadingIndicator(
+                    strokeWidth: 0.5,
+                    indicatorType: Indicator.ballPulse,
+                    colors: customIndicatorColors,
+                  ),
+                ),
               ),
             ),
             child: SingleChildScrollView(
@@ -85,6 +92,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                         style: TextStyle(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w800,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -99,7 +107,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                             width: 2,
                             style: BorderStyle.solid),
                         borderRadius: BorderRadius.circular(5),
-                        color: const Color.fromARGB(255, 32, 124, 124),
+                        color: const Color(0xFF006697),
                       ),
                       child: DropdownButton<Category>(
                         value: _selectedCategory,
@@ -133,8 +141,8 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                           fontSize: 18.sp,
                           color: Colors.white,
                         ),
-                        dropdownColor: const Color.fromARGB(255, 98, 201, 230),
-                        iconEnabledColor: Colors.white,
+                        dropdownColor: const Color(0xFF97B1C5),
+                        iconEnabledColor: Colors.black,
                         menuMaxHeight: 100,
                         //Icon color
                       ),
@@ -147,31 +155,20 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                         horizontal: width * 0.02,
                       ),
                       alignment: Alignment.center,
-                      color: Colors.black,
+                      color: Colors.white,
                       child: imageController.pickedFile != null
                           ? Image.file(
                               File(imageController.pickedFile!.path),
                               fit: BoxFit.cover,
                             )
-                          : Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                    top: 4,
-                                  ),
-                                  height: height * 0.2,
-                                  child: Image.asset(
-                                    'images/category_default.jpg',
-                                  ),
-                                ),
-                                Text(
-                                  'Your image appears here',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.sp,
-                                  ),
-                                ),
-                              ],
+                          : Container(
+                              margin: const EdgeInsets.only(
+                                top: 4,
+                              ),
+                              height: height * 0.3,
+                              child: Image.asset(
+                                'images/pick_file.jpg',
+                              ),
                             ),
                     ),
                     Container(
@@ -182,6 +179,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                           style: TextStyle(
                             fontSize: 15.sp,
                             decoration: TextDecoration.underline,
+                            color: Colors.black,
                           ),
                         ),
                         onPressed: () {
@@ -213,7 +211,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                       ),
                     ),
                     SizedBox(
-                      height: height * 0.05,
+                      height: height * 0.02,
                     ),
                     ElevatedButton(
                       onPressed: (_sharedPreferences != null)
@@ -225,6 +223,18 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                                   'Image/Category required!',
                                   "Choose image and category",
                                   snackPosition: SnackPosition.BOTTOM,
+                                  snackStyle: SnackStyle.FLOATING,
+                                  colorText: snackbarColorText,
+                                  backgroundColor: snackbarBackgroundColor,
+                                );
+                                return;
+                              }
+                              if (_titleController.text.trim().isEmpty ||
+                                  _contentController.text.trim().isEmpty) {
+                                Get.snackbar(
+                                  'Empty Fields',
+                                  "Please provide Title and Content!",
+                                  snackPosition: SnackPosition.TOP,
                                   snackStyle: SnackStyle.FLOATING,
                                   colorText: snackbarColorText,
                                   backgroundColor: snackbarBackgroundColor,
@@ -303,6 +313,9 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: height * 0.03,
                     ),
                   ],
                 ),

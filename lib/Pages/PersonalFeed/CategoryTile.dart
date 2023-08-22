@@ -26,7 +26,7 @@ class _CategoryTileState extends State<CategoryTile> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 10,
             vertical: 10,
           ),
@@ -36,24 +36,24 @@ class _CategoryTileState extends State<CategoryTile> {
               Get.to(
                 () => FeedArticlesPage(category: widget.subscribedCategory),
                 transition: Transition.fade,
-                duration: Duration(
-                  milliseconds: 800,
+                duration: const Duration(
+                  milliseconds: 200,
                 ),
               );
             },
             child: Material(
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(20),
               ),
               elevation: 5,
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: Colors.white, width: 1, style: BorderStyle.solid),
-                  borderRadius: BorderRadius.all(
+                      color: Colors.black, width: 4, style: BorderStyle.solid),
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  color: Color.fromARGB(255, 160, 30, 30),
+                  color: const Color.fromARGB(255, 160, 30, 30),
                 ),
                 alignment: Alignment.center,
                 child: LayoutBuilder(
@@ -73,7 +73,6 @@ class _CategoryTileState extends State<CategoryTile> {
                                   20,
                                 ),
                               ),
-                              color: Color.fromARGB(255, 218, 237, 44),
                             ),
                             child: ClipRRect(
                               borderRadius: const BorderRadius.only(
@@ -85,7 +84,7 @@ class _CategoryTileState extends State<CategoryTile> {
                                 ),
                               ),
                               child: Image.asset(
-                                'images/category_default.jpg',
+                                'images/blog_image.jpeg',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -99,10 +98,12 @@ class _CategoryTileState extends State<CategoryTile> {
                           height: size.maxHeight * 0.3,
                           child: FittedBox(
                             child: Text(
-                              '${widget.subscribedCategory.categoryName}',
+                              widget.subscribedCategory.categoryName,
                               style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
                               ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),

@@ -34,9 +34,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Reset Password'),
+        title: const Text('Reset Password'),
       ),
       body: LoaderOverlay(
         useDefaultLoading: false,
@@ -44,302 +43,329 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           child: Container(
               height: 100, width: 100, child: const CustomLoadingIndicator()),
         ),
-        child: SafeArea(
-          child: Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: width * 0.05,
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: height * 0.05,
-                  ),
-                  Container(
-                    height: height * 0.1,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Reset your password by verifying your registered email',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.05,
-                  ),
-                  Container(
-                    height: height * 0.4,
-                    decoration: formFieldBoxDecoration,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    child: Form(
-                      key: _formKey,
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Column(
-                            children: [
-                              //====Email====
-                              Container(
-                                alignment: Alignment.center,
-                                height: constraints.maxHeight * 0.2,
-                                child: TextFormField(
-                                  controller: _emailController,
-                                  obscureText: false,
-                                  style: TextStyle(color: Colors.white),
-                                  cursorColor: Colors.white,
-                                  keyboardType: TextInputType.emailAddress,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Email cannot be empty';
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  decoration: formFieldDecoration.copyWith(
-                                    hintText: "Email",
-                                    prefixIcon: Icon(
-                                      FontAwesomeIcons.envelope,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              //Send OTP Button
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    height: constraints.maxHeight * 0.1,
-                                    child: TextButton(
-                                      onPressed: () async {
-                                        if (EmailValidator.validate(
-                                            _emailController.text)) {
-                                          context.loaderOverlay.show();
-                                          Map<String, dynamic> result =
-                                              await api.sendResetPasswordOTP(
-                                                  email: _emailController.text);
-                                          context.loaderOverlay.hide();
-                                          String code = result[CODE];
-                                          if (code == '2000') {
-                                            if (!isOTPSent) {
-                                              setState(() {
-                                                isOTPSent = true;
-                                              });
-                                            }
-                                          } else {
-                                            Get.snackbar(
-                                              "Error",
-                                              "OTP could not be sent",
-                                              snackPosition: SnackPosition.TOP,
-                                              backgroundColor:
-                                                  snackbarBackgroundColor,
-                                              colorText: snackbarColorText,
-                                              snackStyle: SnackStyle.FLOATING,
-                                            );
-                                          }
-                                        }
-                                      },
-                                      child: FittedBox(
-                                        alignment: Alignment.center,
-                                        fit: BoxFit.fitWidth,
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 2,
-                                          ),
-                                          child: Text(
-                                            'Send OTP',
-                                            style: TextStyle(
-                                              fontSize: 10.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 30,
-                                  ),
-                                ],
-                              ),
-                              //====OTP====
-                              Container(
-                                height: constraints.maxHeight * 0.2,
-                                alignment: Alignment.center,
-                                child: TextFormField(
-                                  enabled: isOTPSent ? true : false,
-                                  controller: _otpController,
-                                  cursorColor: Colors.white,
-                                  style: TextStyle(color: Colors.white),
-                                  keyboardType: TextInputType.text,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter otp';
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  decoration: formFieldDecoration.copyWith(
-                                    hintText: "OTP",
-                                    prefixIcon: Icon(
-                                      FontAwesomeIcons.key,
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              //====PASSWORD====
-                              Container(
-                                height: constraints.maxHeight * 0.2,
-                                alignment: Alignment.center,
-                                child: TextFormField(
-                                  controller: _passwordController,
-                                  obscureText: isPasswordVisible,
-                                  cursorColor: Colors.white,
-                                  style: const TextStyle(color: Colors.white),
-                                  keyboardType: TextInputType.text,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Password cannot be empty';
-                                    } else if (value.length < 6) {
-                                      return "Password must be atleast 6 characters long";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                  decoration: formFieldDecoration.copyWith(
-                                    hintText: "Password",
-                                    prefixIcon: Icon(
-                                      FontAwesomeIcons.lock,
-                                    ),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(
-                                        (!isPasswordVisible)
-                                            ? Icons.visibility
-                                            : Icons.visibility_off,
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          isPasswordVisible =
-                                              !isPasswordVisible;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              //====CONFIRM PASSWORD====
-                              Container(
-                                height: constraints.maxHeight * 0.2,
-                                alignment: Alignment.center,
-                                child: TextFormField(
-                                  controller: _confirmPasswordController,
-                                  obscureText: isPasswordVisible,
-                                  cursorColor: Colors.white,
-                                  style: TextStyle(color: Colors.white),
-                                  keyboardType: TextInputType.text,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Password cannot be empty";
-                                    } else if (value !=
-                                        _passwordController.text) {
-                                      return "Passwords do not match";
-                                    }
-                                    return null;
-                                  },
-                                  decoration: formFieldDecoration.copyWith(
-                                    hintText: "Confirm Password",
-                                    prefixIcon: Icon(
-                                      FontAwesomeIcons.lock,
-                                    ),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(
-                                        (!isPasswordVisible)
-                                            ? Icons.visibility
-                                            : Icons.visibility_off,
-                                      ),
-                                      onPressed: () {
-                                        setState(
-                                          () {
-                                            isPasswordVisible =
-                                                !isPasswordVisible;
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: width * 0.02,
+                ),
+                height: height * 0.1,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Reset your password by verifying your registered email',
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Colors.black,
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height * 0.05,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: width * 0.2,
-                    ),
-                    height: height * 0.05,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          context.loaderOverlay.show();
-                          Map<String, dynamic> result = await api.resetPassword(
-                              email: _emailController.text,
-                              otp: _otpController.text,
-                              password: _passwordController.text);
-                          context.loaderOverlay.hide();
-                          String code = result[CODE];
-                          if (code == '2000') {
-                            Get.snackbar(
-                              "Successful",
-                              "Password has been reset successfully",
-                              snackPosition: SnackPosition.BOTTOM,
-                              snackStyle: SnackStyle.FLOATING,
-                              backgroundColor: snackbarBackgroundColor,
-                              colorText: snackbarColorText,
-                            );
-                            Get.back();
-                          } else {
-                            Get.snackbar(
-                              "Failed",
-                              "Password reset failed",
-                              snackPosition: SnackPosition.BOTTOM,
-                              snackStyle: SnackStyle.FLOATING,
-                              backgroundColor: snackbarBackgroundColor,
-                              colorText: snackbarColorText,
-                            );
-                          }
-                        }
-                      },
-                      child: const FittedBox(
-                        alignment: Alignment.center,
-                        fit: BoxFit.fitWidth,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 2,
-                          ),
-                          child: Text(
-                            'Reset Password',
-                            style: TextStyle(
-                              fontSize: 80,
+                ),
+              ),
+              SizedBox(
+                height: height * 0.05,
+              ),
+              Container(
+                height: height * 0.55,
+                decoration: formFieldBoxDecoration,
+                padding: EdgeInsets.symmetric(
+                  horizontal: width * 0.02,
+                  vertical: height * 0.02,
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: LayoutBuilder(
+                    builder: (context, boxConstraints) {
+                      return Column(
+                        children: [
+                          //====Email====
+                          Container(
+                            alignment: Alignment.center,
+                            height: boxConstraints.maxHeight * 0.2,
+                            child: TextFormField(
+                              controller: _emailController,
+                              obscureText: false,
+                              style: const TextStyle(color: Colors.black),
+                              cursorColor: Colors.black,
+                              keyboardType: TextInputType.emailAddress,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Email cannot be empty';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration:
+                                  forgotPasswordFormFieldDecoration.copyWith(
+                                hintText: "Email",
+                                prefixIcon: const Icon(
+                                  FontAwesomeIcons.envelope,
+                                ),
+                                errorStyle: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 10.sp,
+                                  height: 0,
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: const BorderSide(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
+
+                          //Send OTP Button
+                          Container(
+                            height: boxConstraints.maxHeight * 0.2,
+                            alignment: Alignment.centerLeft,
+                            child: TextButton(
+                              onPressed: () async {
+                                if (EmailValidator.validate(
+                                    _emailController.text)) {
+                                  context.loaderOverlay.show();
+                                  Map<String, dynamic> result =
+                                      await api.sendResetPasswordOTP(
+                                          email: _emailController.text);
+                                  context.loaderOverlay.hide();
+                                  String code = result[CODE];
+                                  if (code == '2000') {
+                                    if (!isOTPSent) {
+                                      setState(() {
+                                        isOTPSent = true;
+                                      });
+                                    }
+                                  } else {
+                                    Get.snackbar(
+                                      "Error",
+                                      "OTP could not be sent",
+                                      snackPosition: SnackPosition.TOP,
+                                      backgroundColor: snackbarBackgroundColor,
+                                      colorText: snackbarColorText,
+                                      snackStyle: SnackStyle.FLOATING,
+                                    );
+                                  }
+                                } else {
+                                  Get.snackbar(
+                                    "Email is Empty",
+                                    "Please provide an email",
+                                    snackPosition: SnackPosition.TOP,
+                                    backgroundColor: snackbarBackgroundColor,
+                                    colorText: snackbarColorText,
+                                    snackStyle: SnackStyle.FLOATING,
+                                  );
+                                }
+                              },
+                              child: FittedBox(
+                                alignment: Alignment.center,
+                                fit: BoxFit.fitWidth,
+                                child: Text(
+                                  'Send OTP',
+                                  style: TextStyle(
+                                    fontSize: 15.sp,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          //====OTP====
+                          Container(
+                            height: boxConstraints.maxHeight * 0.2,
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              enabled: isOTPSent ? true : false,
+                              controller: _otpController,
+                              cursorColor: Colors.black,
+                              style: const TextStyle(color: Colors.black),
+                              keyboardType: TextInputType.text,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter otp';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration:
+                                  forgotPasswordFormFieldDecoration.copyWith(
+                                hintText: "OTP",
+                                prefixIcon: const Icon(
+                                  FontAwesomeIcons.key,
+                                ),
+                                disabledBorder: UnderlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.black45,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: const BorderSide(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                                errorStyle: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 10.sp,
+                                  height: 0,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          //====PASSWORD====
+                          Container(
+                            height: boxConstraints.maxHeight * 0.2,
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              controller: _passwordController,
+                              obscureText: isPasswordVisible,
+                              cursorColor: Colors.black,
+                              style: const TextStyle(color: Colors.black),
+                              keyboardType: TextInputType.text,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Password cannot be empty';
+                                } else if (value.length < 6) {
+                                  return "Password must be atleast 6 characters long";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration:
+                                  forgotPasswordFormFieldDecoration.copyWith(
+                                hintText: "Password",
+                                prefixIcon: const Icon(
+                                  FontAwesomeIcons.lock,
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    (!isPasswordVisible)
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      isPasswordVisible = !isPasswordVisible;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          //====CONFIRM PASSWORD====
+                          Container(
+                            height: boxConstraints.maxHeight * 0.2,
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              controller: _confirmPasswordController,
+                              obscureText: isPasswordVisible,
+                              cursorColor: Colors.black,
+                              style: const TextStyle(color: Colors.black),
+                              keyboardType: TextInputType.text,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Password cannot be empty";
+                                } else if (value != _passwordController.text) {
+                                  return "Passwords do not match";
+                                }
+                                return null;
+                              },
+                              decoration:
+                                  forgotPasswordFormFieldDecoration.copyWith(
+                                hintText: "Confirm Password",
+                                prefixIcon: const Icon(
+                                  FontAwesomeIcons.lock,
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    (!isPasswordVisible)
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                  onPressed: () {
+                                    setState(
+                                      () {
+                                        isPasswordVisible = !isPasswordVisible;
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: height * 0.05,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: width * 0.2,
+                ),
+                height: height * 0.05,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      context.loaderOverlay.show();
+                      Map<String, dynamic> result = await api.resetPassword(
+                          email: _emailController.text,
+                          otp: _otpController.text,
+                          password: _passwordController.text);
+                      context.loaderOverlay.hide();
+                      String code = result[CODE];
+                      if (code == '2000') {
+                        Get.snackbar(
+                          "Successful",
+                          "Password has been reset successfully",
+                          snackPosition: SnackPosition.BOTTOM,
+                          snackStyle: SnackStyle.FLOATING,
+                          backgroundColor: snackbarBackgroundColor,
+                          colorText: snackbarColorText,
+                        );
+                        Get.back();
+                      } else {
+                        Get.snackbar(
+                          "Failed",
+                          "Password reset failed",
+                          snackPosition: SnackPosition.BOTTOM,
+                          snackStyle: SnackStyle.FLOATING,
+                          backgroundColor: snackbarBackgroundColor,
+                          colorText: snackbarColorText,
+                        );
+                      }
+                    }
+                  },
+                  child: const FittedBox(
+                    alignment: Alignment.center,
+                    fit: BoxFit.fitWidth,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 2,
+                      ),
+                      child: Text(
+                        'Reset Password',
+                        style: TextStyle(
+                          fontSize: 80,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: height * 0.05,
-                  ),
-                ],
+                ),
               ),
-            ),
+              SizedBox(
+                height: height * 0.05,
+              ),
+            ],
           ),
         ),
       ),

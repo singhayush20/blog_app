@@ -5,16 +5,16 @@ import 'package:sizer/sizer.dart';
 ThemeData lightThemeData = ThemeData(
   textTheme: TextTheme(
     displayLarge: TextStyle(
-      color: Colors.white,
-      fontSize: 50.sp,
+      color: Colors.red,
+      fontSize: 30.sp,
       fontWeight: FontWeight.bold,
     ),
     titleLarge: TextStyle(
-      color: Colors.white,
+      color: Colors.red,
       fontSize: 20.sp,
       fontWeight: FontWeight.w700,
     ),
-    titleMedium: TextStyle(
+    titleMedium: const TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.bold,
     ),
@@ -37,7 +37,7 @@ ThemeData lightThemeData = ThemeData(
     ),
   ),
 
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: appBarColor,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -48,7 +48,7 @@ ThemeData lightThemeData = ThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
         fontWeight: FontWeight.w500,
         color: Colors.white,
       ),
@@ -82,18 +82,20 @@ ThemeData lightThemeData = ThemeData(
     titleTextStyle: TextStyle(
       color: appBarItemColor,
       fontWeight: FontWeight.w900,
-      fontSize: 15.sp,
+      fontSize: 20.sp,
     ),
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: appBarItemColor,
     ),
-    elevation: 0,
-    shadowColor: Colors.white,
     color: appBarColor,
-    systemOverlayStyle: SystemUiOverlayStyle(
+    elevation: 0,
+    systemOverlayStyle: const SystemUiOverlayStyle(
       statusBarColor: appBarColor,
       statusBarIconBrightness: Brightness.light,
       systemStatusBarContrastEnforced: true,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      systemNavigationBarDividerColor: appBarColor,
     ),
   ),
   //==Scaffold==
@@ -102,70 +104,71 @@ ThemeData lightThemeData = ThemeData(
   //====BOTTOM NAVIGATION Theme
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     elevation: 4,
-    backgroundColor: Color.fromARGB(255, 37, 37, 37),
+    backgroundColor: scaffoldColor,
     selectedLabelStyle: TextStyle(
       fontWeight: FontWeight.bold,
     ),
-    selectedItemColor: Colors.white,
+    selectedItemColor: Color.fromARGB(255, 2, 2, 2),
     unselectedItemColor: Color.fromARGB(255, 132, 131, 131),
     showUnselectedLabels: true,
-    showSelectedLabels: false,
-    type: BottomNavigationBarType.fixed,
+    showSelectedLabels: true,
+    type: BottomNavigationBarType.shifting,
   ),
 
   inputDecorationTheme: InputDecorationTheme(
     enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.white,
+      borderSide: const BorderSide(
+        color: Colors.black,
         width: 2,
       ),
       borderRadius: BorderRadius.circular(20),
     ),
     focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Colors.white,
+      borderSide: const BorderSide(
+        color: appBarColor,
         width: 2,
       ),
       borderRadius: BorderRadius.circular(20),
     ),
     filled: false,
-    prefixIconColor: Colors.green,
-    suffixIconColor: Colors.greenAccent,
-    hintStyle: TextStyle(
-      color: Colors.white,
+    prefixIconColor: formFieldIconColor,
+    suffixIconColor: formFieldIconColor,
+    hintStyle: const TextStyle(
+      color: Colors.black26,
       fontWeight: FontWeight.w800,
       fontSize: 20,
     ),
-    errorStyle: TextStyle(
-      color: Colors.amberAccent,
+    errorStyle: const TextStyle(
+      color: Colors.red,
       fontWeight: FontWeight.w500,
     ),
     border: UnderlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(
-        color: Colors.white70,
+      borderSide: const BorderSide(
+        color: Colors.black,
       ),
     ),
     errorBorder: UnderlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(
-        color: Colors.amberAccent,
+      borderSide: const BorderSide(
+        color: Colors.red,
       ),
     ),
   ),
 );
 
-const Color appBarColor = Color.fromARGB(255, 7, 7, 7);
-const Color elevatedButtonColor = Color.fromARGB(255, 177, 69, 69);
-const Color scaffoldColor = Color.fromARGB(255, 0, 0, 0);
+const Color appBarColor = Color(0xFFD35C26);
+const Color formFieldIconColor = Color(0xFF3958CE);
+const Color elevatedButtonColor = Color(0xFF3958CE);
+const Color scaffoldColor = Color(0xFFF2F3FA);
 const Color appBarItemColor = Colors.white;
 const Color textButtonTextColor = Colors.white;
 BoxDecoration articleBoxDecoration = BoxDecoration(
   border: Border.all(color: Colors.black, width: 0.5, style: BorderStyle.solid),
-  borderRadius: BorderRadius.all(
+  borderRadius: const BorderRadius.all(
     Radius.circular(5),
   ),
-  gradient: LinearGradient(
+  gradient: const LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
@@ -189,14 +192,14 @@ InputDecoration fieldDecoration(
       color: Colors.black,
     ),
     enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
+      borderSide: const BorderSide(
         color: Colors.black,
         width: 2,
       ),
       borderRadius: BorderRadius.circular(20),
     ),
     focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
+      borderSide: const BorderSide(
         color: Colors.black,
         width: 2,
       ),
@@ -205,7 +208,7 @@ InputDecoration fieldDecoration(
     filled: false,
     border: UnderlineInputBorder(
       borderRadius: BorderRadius.circular(8.0),
-      borderSide: BorderSide(
+      borderSide: const BorderSide(
         color: Colors.black,
       ),
     ),
@@ -217,26 +220,26 @@ BoxDecoration listTileDecoration = BoxDecoration(
   borderRadius: const BorderRadius.all(
     Radius.circular(20),
   ),
-  // gradient: const LinearGradient(
-  //   begin: Alignment.topLeft,
-  //   end: Alignment.bottomRight,
-  //   colors: [
-  //     Colors.black12,
-  //     Colors.black12,
-  //   ],
-  //   stops: [0.]
-  // ),
   color: Colors.black12,
 );
 
 BoxDecoration categoryTopDecoration = BoxDecoration(
   border:
       Border.all(color: Colors.white70, width: 0.5, style: BorderStyle.solid),
-  borderRadius: BorderRadius.only(
+  borderRadius: const BorderRadius.only(
     bottomLeft: Radius.circular(20),
     bottomRight: Radius.circular(20),
   ),
-  color: appBarColor,
+  // color: Color(0xFFD35C26),
+  gradient: const LinearGradient(
+    stops: [0.2, 0.4, 0.6, 0.8],
+    colors: [
+      appBarColor,
+      Color.fromARGB(255, 233, 109, 51),
+      Color.fromARGB(255, 248, 121, 62),
+      Color.fromARGB(255, 246, 136, 85)
+    ],
+  ),
 );
 BoxDecoration profileBox1Decoration = BoxDecoration(
   border:
@@ -253,7 +256,7 @@ BoxDecoration profileBox1Decoration = BoxDecoration(
     ],
   ),
 );
-const snackbarBackgroundColor = Colors.white;
+const snackbarBackgroundColor = Color(0xFF91BED6);
 const snackbarColorText = Colors.black;
 const customIndicatorColors = [
   Colors.blueAccent,
@@ -261,61 +264,108 @@ const customIndicatorColors = [
   Colors.yellowAccent
 ];
 
-//applied to auth pages form fields
-InputDecoration formFieldDecoration = InputDecoration(
+InputDecoration forgotPasswordFormFieldDecoration = InputDecoration(
   enabledBorder: UnderlineInputBorder(
-    borderSide: BorderSide(
-      color: Colors.white,
+    borderSide: const BorderSide(
+      color: Colors.black,
       width: 2,
     ),
     borderRadius: BorderRadius.circular(20),
   ),
   focusedBorder: UnderlineInputBorder(
-    borderSide: BorderSide(
-      color: Colors.white,
+    borderSide: const BorderSide(
+      color: Colors.black,
       width: 2,
     ),
     borderRadius: BorderRadius.circular(20),
   ),
   filled: false,
-  prefixIconColor: Colors.green,
-  suffixIconColor: Colors.greenAccent,
-  hintStyle: TextStyle(
+  prefixIconColor: formFieldIconColor,
+  suffixIconColor: formFieldIconColor,
+  hintStyle: const TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.w800,
     fontSize: 20,
   ),
   errorStyle: TextStyle(
-    color: Colors.amberAccent,
+    color: Colors.blue,
     fontWeight: FontWeight.w500,
+    fontSize: 10.sp,
+    height: 0,
   ),
   border: UnderlineInputBorder(
     borderRadius: BorderRadius.circular(8.0),
-    borderSide: BorderSide(
-      color: Colors.white70,
+    borderSide: const BorderSide(
+      color: Colors.blue,
+    ),
+  ),
+  focusedErrorBorder: UnderlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: const BorderSide(
+      color: Colors.blue,
     ),
   ),
   errorBorder: UnderlineInputBorder(
     borderRadius: BorderRadius.circular(8.0),
-    borderSide: BorderSide(
-      color: Colors.amberAccent,
+    borderSide: const BorderSide(
+      color: Colors.blue,
+    ),
+  ),
+);
+//applied to auth pages form fields
+InputDecoration inputFormFieldBoxDecoration = InputDecoration(
+  enabledBorder: OutlineInputBorder(
+    borderSide: const BorderSide(
+      color: Colors.black,
+      width: 2,
+    ),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: const BorderSide(
+      color: Colors.black,
+      width: 2,
+    ),
+    borderRadius: BorderRadius.circular(20),
+  ),
+  filled: false,
+  prefixIconColor: formFieldIconColor,
+  suffixIconColor: formFieldIconColor,
+  hintStyle: const TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.w800,
+    fontSize: 20,
+    height: 0,
+  ),
+  errorStyle: TextStyle(
+    color: Colors.blue,
+    fontWeight: FontWeight.w500,
+    fontSize: 10.sp,
+  ),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: const BorderSide(
+      color: Colors.blue,
+    ),
+  ),
+  errorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: const BorderSide(
+      color: Colors.blue,
+    ),
+  ),
+  focusedErrorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(8.0),
+    borderSide: const BorderSide(
+      color: Colors.blue,
     ),
   ),
 );
 //applied to auth pages form fields containers
 BoxDecoration formFieldBoxDecoration = BoxDecoration(
-  gradient: const LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    stops: [0.3, 0.8, 1],
-    colors: [
-      Color.fromARGB(179, 75, 75, 75),
-      Color.fromARGB(179, 75, 75, 75),
-      Color.fromARGB(179, 75, 75, 75),
-    ],
-  ),
-  border: Border.all(color: Colors.white, width: 1, style: BorderStyle.solid),
-  borderRadius: BorderRadius.all(
+  color: const Color.fromARGB(255, 158, 203, 248),
+  border: Border.all(color: Colors.black, width: 1, style: BorderStyle.solid),
+  borderRadius: const BorderRadius.all(
     Radius.circular(20),
   ),
 );

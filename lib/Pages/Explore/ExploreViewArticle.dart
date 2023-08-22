@@ -115,7 +115,7 @@ class _ExploreViewArticleState extends State<ExploreViewArticle> {
                       color: Colors.black,
                       child: CachedNetworkImage(
                         imageUrl:
-                            'https://imagedbspringboot.blob.core.windows.net/imagecontainer/${widget.post.image}',
+                            'https://blogimagesa.blob.core.windows.net/imagecontainer/${widget.post.image}',
                         placeholder: (context, url) => Center(
                           child: Container(
                             height: 50,

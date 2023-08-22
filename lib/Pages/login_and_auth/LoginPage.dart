@@ -47,163 +47,169 @@ class _LoginPageState extends State<LoginPage> {
     final width = MediaQuery.of(context).size.width;
     return Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0.2, 0.4, 0.6, 0.8],
-          colors: [
-            Color.fromARGB(255, 7, 7, 7),
-            Color.fromARGB(255, 33, 33, 33),
-            Color.fromARGB(255, 49, 49, 49),
-            Color.fromARGB(255, 64, 64, 64),
-          ],
-        ),
+        color: Colors.white,
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: LoaderOverlay(
-            useDefaultLoading: false,
-            overlayWidget: Center(
-              child: Container(
-                  height: 100,
-                  width: 100,
-                  child: const CustomLoadingIndicator()),
-            ),
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text(
+            'Connect',
+          ),
+        ),
+        body: LoaderOverlay(
+          useDefaultLoading: false,
+          overlayWidget: Center(
             child: Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: width * 0.05,
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(
-                      height: height * 0.05,
+                height: 100, width: 100, child: const CustomLoadingIndicator()),
+          ),
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: width * 0.05,
+            ),
+            height: height,
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                      bottomRight: Radius.circular(8.0),
+                      bottomLeft: Radius.circular(8.0),
                     ),
-                    Container(
-                      height: height * 0.1,
-                      alignment: Alignment.center,
+                    child: Image.asset('images/BlogImage.png',
+                        height: 200, fit: BoxFit.fill),
+                  ),
+                  Container(
+                    height: height * 0.05,
+                    child: FittedBox(
+                      alignment: Alignment.centerLeft,
                       child: Text(
-                        'Connect',
-                        style: Theme.of(context).textTheme.displayLarge,
+                        'Login',
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                              color: Colors.black,
+                            ),
                       ),
                     ),
-                    SizedBox(
-                      height: height * 0.05,
-                    ),
-                    Container(
-                      height: height * 0.05,
-                      child: FittedBox(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Login',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
+                  ),
+                  SizedBox(
+                    height: height * 0.05,
+                  ),
+                  Container(
+                      height: height * 0.3,
+                      decoration: formFieldBoxDecoration,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
                       ),
-                    ),
-                    Container(
-                        height: height * 0.2,
-                        decoration: formFieldBoxDecoration,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        child: Form(
-                          key: _formKey,
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: constraints.maxHeight * 0.2,
-                                    alignment: Alignment.center,
-                                    child: TextFormField(
-                                      controller: _emailController,
-                                      obscureText: false,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                      cursorColor: Colors.white,
-                                      keyboardType: TextInputType.emailAddress,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Email cannot be empty';
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                      decoration: formFieldDecoration.copyWith(
-                                        hintText: "Email",
-                                        prefixIcon: Icon(
-                                          FontAwesomeIcons.circleUser,
-                                        ),
+                      child: Form(
+                        key: _formKey,
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: constraints.maxHeight * 0.4,
+                                  alignment: Alignment.center,
+                                  child: TextFormField(
+                                    controller: _emailController,
+                                    obscureText: false,
+                                    style: const TextStyle(color: Colors.black),
+                                    cursorColor: Colors.black,
+                                    keyboardType: TextInputType.emailAddress,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Email cannot be empty';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    decoration:
+                                        inputFormFieldBoxDecoration.copyWith(
+                                      hintText: "Email",
+                                      prefixIcon: Icon(
+                                        FontAwesomeIcons.circleUser,
                                       ),
                                     ),
                                   ),
-                                  //====PASSWORD====
-                                  SizedBox(
-                                    height: constraints.maxHeight * 0.2,
-                                  ),
-                                  Container(
-                                    height: constraints.maxHeight * 0.2,
-                                    alignment: Alignment.center,
-                                    child: TextFormField(
-                                      controller: _passwordController,
-                                      obscureText: !isPasswordVisible,
-                                      cursorColor: Colors.white,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                      keyboardType: TextInputType.text,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Password cannot be empty';
-                                        } else if (value.length < 8) {
-                                          return "Password must be at least 8 characters long";
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                      decoration: formFieldDecoration.copyWith(
-                                        hintText: "Password",
-                                        prefixIcon: const Icon(
-                                          FontAwesomeIcons.lock,
+                                ),
+                                //====PASSWORD====
+                                SizedBox(
+                                  height: constraints.maxHeight * 0.1,
+                                ),
+                                Container(
+                                  height: constraints.maxHeight * 0.4,
+                                  alignment: Alignment.center,
+                                  child: TextFormField(
+                                    controller: _passwordController,
+                                    obscureText: !isPasswordVisible,
+                                    cursorColor: Colors.black,
+                                    style: const TextStyle(color: Colors.black),
+                                    keyboardType: TextInputType.text,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Password cannot be empty';
+                                      } else if (value.length < 8) {
+                                        return "Password must be at least 8 characters long";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    decoration:
+                                        inputFormFieldBoxDecoration.copyWith(
+                                      hintText: "Password",
+                                      prefixIcon: const Icon(
+                                        FontAwesomeIcons.lock,
+                                      ),
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          (isPasswordVisible)
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
                                         ),
-                                        suffixIcon: IconButton(
-                                          icon: Icon(
-                                            (isPasswordVisible)
-                                                ? Icons.visibility
-                                                : Icons.visibility_off,
-                                          ),
-                                          onPressed: () {
-                                            setState(
-                                              () {
-                                                isPasswordVisible =
-                                                    !isPasswordVisible;
-                                              },
-                                            );
-                                          },
-                                        ),
+                                        onPressed: () {
+                                          setState(
+                                            () {
+                                              isPasswordVisible =
+                                                  !isPasswordVisible;
+                                            },
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
-                                ],
-                              );
-                            },
-                          ),
-                        )),
-                    SizedBox(
-                      height: height * 0.05,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      )),
+                  SizedBox(
+                    height: height * 0.05,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.2,
                     ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: width * 0.2,
-                      ),
-                      height: height * 0.05,
-                      child: ElevatedButton(
-                        onPressed: () async {
+                    height: height * 0.05,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_emailController.text.trim().isEmpty ||
+                            _passwordController.text.trim().isEmpty) {
+                          Get.snackbar(
+                            "Empty Fields",
+                            "Email and password cannot be empty",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: snackbarBackgroundColor,
+                            colorText: snackbarColorText,
+                            snackStyle: SnackStyle.FLOATING,
+                          );
+                        }
+                        if (_formKey.currentState!.validate() == true) {
                           context.loaderOverlay.show();
                           final API api = API();
                           final FirebaseMessaging messaging =
@@ -245,82 +251,84 @@ class _LoginPageState extends State<LoginPage> {
                               snackPosition: SnackPosition.BOTTOM,
                             );
                           }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 2,
-                          ),
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                            ),
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 2,
+                        ),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            fontSize: 20.sp,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(
+                  ),
+                  SizedBox(
+                    height: height * 0.05,
+                  ),
+                  Container(
                       height: height * 0.05,
-                    ),
-                    Container(
-                        height: height * 0.05,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: TextButton(
-                                onPressed: () {
-                                  Get.to(
-                                    const ForgetPassword(),
-                                    transition: Transition.leftToRight,
-                                    duration: const Duration(
-                                      milliseconds: 800,
-                                    ),
-                                  );
-                                },
-                                child: FittedBox(
-                                  child: Text(
-                                    'Forgot Password',
-                                    style: TextStyle(
-                                      fontSize: 20.sp,
-                                      decoration: TextDecoration.underline,
-                                    ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: TextButton(
+                              onPressed: () {
+                                Get.to(
+                                  const ForgetPassword(),
+                                  transition: Transition.leftToRight,
+                                  duration: const Duration(
+                                    milliseconds: 200,
+                                  ),
+                                );
+                              },
+                              child: FittedBox(
+                                child: Text(
+                                  'Forgot Password',
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
                             ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: TextButton(
-                                onPressed: () {
-                                  Get.to(
-                                    const RegisterScreen(),
-                                    transition: Transition.rightToLeft,
-                                    duration: const Duration(
-                                      milliseconds: 800,
-                                    ),
-                                  );
-                                },
-                                child: FittedBox(
-                                  child: Text(
-                                    'Register',
-                                    style: TextStyle(
-                                      fontSize: 20.sp,
-                                      decoration: TextDecoration.underline,
-                                    ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: TextButton(
+                              onPressed: () {
+                                Get.to(
+                                  const RegisterScreen(),
+                                  transition: Transition.rightToLeft,
+                                  duration: const Duration(
+                                    milliseconds: 100,
+                                  ),
+                                );
+                              },
+                              child: FittedBox(
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ))
-                  ],
-                ),
+                          ),
+                        ],
+                      ))
+                ],
               ),
             ),
           ),

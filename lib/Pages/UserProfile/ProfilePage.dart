@@ -152,6 +152,7 @@ class _ProfilePageState extends State<ProfilePage>
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w800,
                                         decoration: TextDecoration.underline,
+                                        color: Colors.red,
                                       ),
                                     ),
                                     onPressed: () {
@@ -169,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage>
                                       Icon(
                                         FontAwesomeIcons.userPen,
                                         size: 15.sp,
-                                        color: Colors.white,
+                                        color: Colors.red,
                                       ),
                                       TextButton(
                                         child: Text(
@@ -179,6 +180,7 @@ class _ProfilePageState extends State<ProfilePage>
                                             fontWeight: FontWeight.w800,
                                             decoration:
                                                 TextDecoration.underline,
+                                            color: Colors.red,
                                           ),
                                         ),
                                         onPressed: () {
@@ -288,12 +290,13 @@ class _ProfilePageState extends State<ProfilePage>
       overlayWholeScreen: true,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return Container(
-            child: LayoutBuilder(builder: (context, dialogConstraints) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 4,
-                ),
+          return LayoutBuilder(builder: (context, dialogConstraints) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 4,
+              ),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
                     Form(
@@ -301,7 +304,7 @@ class _ProfilePageState extends State<ProfilePage>
                       child: Column(
                         children: [
                           Container(
-                            height: dialogConstraints.maxHeight * 0.2,
+                            height: dialogConstraints.maxHeight * 0.3,
                             alignment: Alignment.center,
                             child: TextFormField(
                               controller: _firstNameController,
@@ -322,7 +325,7 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                           ),
                           Container(
-                            height: dialogConstraints.maxHeight * 0.2,
+                            height: dialogConstraints.maxHeight * 0.3,
                             alignment: Alignment.center,
                             child: TextFormField(
                               controller: _lastNameController,
@@ -385,10 +388,14 @@ class _ProfilePageState extends State<ProfilePage>
                                   Get.back();
                                   Get.snackbar(
                                       "Success", "Profile updated successfully",
+                                      backgroundColor: snackbarBackgroundColor,
+                                      colorText: snackbarColorText,
                                       snackPosition: SnackPosition.BOTTOM);
                                 } else {
                                   Get.snackbar(
                                       "Failed!", "Could not update profile!",
+                                      backgroundColor: snackbarBackgroundColor,
+                                      colorText: snackbarColorText,
                                       snackPosition: SnackPosition.BOTTOM);
                                 }
                               }
@@ -406,9 +413,9 @@ class _ProfilePageState extends State<ProfilePage>
                     ),
                   ],
                 ),
-              );
-            }),
-          );
+              ),
+            );
+          });
         },
       ),
     );

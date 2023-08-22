@@ -24,7 +24,7 @@ class _PersonalFeedState extends State<PersonalFeed> {
   }
 
   final _appBar = AppBar(
-    title: Text('Feed'),
+    title: const Text('Feed'),
   );
   @override
   Widget build(BuildContext context) {
@@ -45,33 +45,25 @@ class _PersonalFeedState extends State<PersonalFeed> {
                   await categoryProvider.loadSubscribedCategories();
                 },
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
                       Container(
-                        child: Container(
-                          margin: EdgeInsets.symmetric(
-                            horizontal: width * 0.05,
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                height: height * 0.1,
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  '${DateFormat("EEEEE, dd, yyyy").format(DateTime.now())}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(fontSize: 25.sp),
-                                ),
-                              ),
-                              (categoryProvider.subscribedCategories != null &&
-                                      categoryProvider
-                                          .subscribedCategories.isNotEmpty)
-                                  ? GridView.builder(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: width * 0.05,
+                        ),
+                        height: height,
+                        child: Column(
+                          children: [
+                            (categoryProvider.subscribedCategories != null &&
+                                    categoryProvider
+                                        .subscribedCategories.isNotEmpty)
+                                ? Container(
+                                    height: height * 0.75,
+                                    child: GridView.builder(
                                       shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       itemCount: categoryProvider
                                           .subscribedCategories.length,
                                       itemBuilder: (context, index) =>
@@ -84,36 +76,37 @@ class _PersonalFeedState extends State<PersonalFeed> {
                                         crossAxisCount: width > 700 ? 4 : 2,
                                         // childAspectRatio: 5,
                                       ),
-                                    )
-                                  : Center(
-                                      child: Text(
-                                        'You haven\'t subscribed to any topic yet',
-                                        style: TextStyle(
-                                          fontSize: 15.sp,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                    ),
+                                  )
+                                : Center(
+                                    child: Text(
+                                      'You haven\'t subscribed to any topic yet',
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
                                       ),
-                                    )
-                            ],
-                          ),
+                                    ),
+                                  )
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
               );
-            } else
+            } else {
               return Center(
                 child: Text(
                   'You haven\'t subscribed to any topic yet',
                   style: TextStyle(
                     fontSize: 15.sp,
-                    color: Colors.white,
+                    color: Colors.black,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               );
+            }
           },
         ));
   }
