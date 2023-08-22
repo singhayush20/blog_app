@@ -152,6 +152,7 @@ class _ProfilePageState extends State<ProfilePage>
                                         fontSize: 15.sp,
                                         fontWeight: FontWeight.w800,
                                         decoration: TextDecoration.underline,
+                                        color: Colors.red,
                                       ),
                                     ),
                                     onPressed: () {
@@ -169,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage>
                                       Icon(
                                         FontAwesomeIcons.userPen,
                                         size: 15.sp,
-                                        color: Colors.white,
+                                        color: Colors.red,
                                       ),
                                       TextButton(
                                         child: Text(
@@ -179,6 +180,7 @@ class _ProfilePageState extends State<ProfilePage>
                                             fontWeight: FontWeight.w800,
                                             decoration:
                                                 TextDecoration.underline,
+                                            color: Colors.red,
                                           ),
                                         ),
                                         onPressed: () {

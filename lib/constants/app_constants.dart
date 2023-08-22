@@ -1,9 +1,9 @@
-const String domain = "https://bloggingapplicationwebapp.azurewebsites.net";
-const String domain2 = "bloggingapplicationwebapp.azurewebsites.net";
+// const String domain = "https://bloggingapplicationwebapp.azurewebsites.net";
+// const String domain2 = "bloggingapplicationwebapp.azurewebsites.net";
 
-
-// const String domain = "https://7dca-14-139-240-85.ngrok-free.app";
-// const String domain2 = "7dca-14-139-240-85.ngrok-free.app";
+//local
+const String domain = "https://9624-14-139-240-85.ngrok-free.app";
+const String domain2 = "9624-14-139-240-85.ngrok-free.app";
 const BEARER_TOKEN = "BEARER TOKEN";
 const IS_LOGGED_IN = "isLoggedIn";
 const Bearer = "Bearer ";

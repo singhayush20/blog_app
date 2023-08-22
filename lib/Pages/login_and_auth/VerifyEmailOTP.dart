@@ -49,17 +49,22 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
             child: Column(
               children: [
                 SizedBox(
-                  height: height * 0.15,
+                  height: height * 0.05,
                 ),
                 Container(
-                  height: height * 0.1,
+                  height: height * 0.15,
                   child: Text(
                     'You must have received an OTP on the email you just entered. Enter it here and click verify',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Colors.black,
+                        ),
                   ),
                 ),
+                SizedBox(
+                  height: height * 0.05,
+                ),
                 Container(
-                  height: height * 0.1,
+                  height: height * 0.2,
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(
                     horizontal: 20,
@@ -80,13 +85,7 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                           return null;
                         }
                       },
-                      // decoration: const InputDecoration(
-                      //   hintText: "OTP",
-                      //   prefixIcon: Icon(
-                      //     FontAwesomeIcons.key,
-                      //   ),
-                      // ),
-                      decoration: formFieldDecoration.copyWith(
+                      decoration: inputFormFieldBoxDecoration.copyWith(
                         hintText: "OTP",
                         prefixIcon: Icon(
                           FontAwesomeIcons.key,
@@ -158,6 +157,7 @@ class _VerifyEmailOTPState extends State<VerifyEmailOTP> {
                         "Didn't receive? Resend.",
                         style: TextStyle(
                           fontSize: 15.sp,
+                          color: Colors.black,
                         ),
                       ),
                     ),

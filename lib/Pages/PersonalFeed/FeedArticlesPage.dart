@@ -30,7 +30,7 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
   late Future<Map<String, dynamic>> _futurePosts;
   late int _totalPages;
   int _currentPage = 0;
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   List<posts.Post2> _posts = [];
   @override
@@ -95,7 +95,6 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height -
-        // _appBar.preferredSize.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
     final width = MediaQuery.of(context).size.width;
@@ -109,8 +108,8 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
               controller: _refreshController,
               onRefresh: _onRefresh,
               onLoading: _onLoading,
-              header: WaterDropMaterialHeader(
-                color: Colors.blueAccent,
+              header: const WaterDropMaterialHeader(
+                color: Colors.black,
                 backgroundColor: Colors.white,
               ),
               footer: CustomFooter(
@@ -118,15 +117,15 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
                   Widget body;
                   log("Mode is $mode");
                   if (mode == LoadStatus.idle) {
-                    body = Text("pull up load");
+                    body = const Text("pull up load");
                   } else if (mode == LoadStatus.loading) {
-                    body = CircularProgressIndicator.adaptive();
+                    body = const CircularProgressIndicator.adaptive();
                   } else if (mode == LoadStatus.failed) {
-                    body = Text("Load Failed! Click retry!");
+                    body = const Text("Load Failed! Click retry!");
                   } else if (mode == LoadStatus.canLoading) {
-                    body = Text("release to load more");
+                    body = const Text("release to load more");
                   } else {
-                    body = Text("---");
+                    body = const Text("---");
                   }
                   return Container(
                     height: 55.0,
@@ -136,19 +135,16 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
               ),
               child: CustomScrollView(slivers: <Widget>[
                 SliverAppBar(
-                  expandedHeight: height * 0.2,
+                  expandedHeight: height * 0.1,
                   flexibleSpace: FlexibleSpaceBar(
                     title: Text(
-                      '${widget.category.categoryName}',
-                      textScaleFactor: 2,
+                      widget.category.categoryName,
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    // background: Image.asset(
-                    //   'assets/register.jpg',
-                    //   fit: BoxFit.fill,
-                    // ),
                   ),
                 ),
                 FutureBuilder(
@@ -157,17 +153,19 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
                       if (snapshot.hasData) {
                         _totalPages = snapshot.data!['totalPages'];
                         _currentPage = snapshot.data!['pageNumber'];
-                        if (_posts.length == 0)
+                        if (_posts.isEmpty) {
                           _posts = snapshot.data!['posts'];
+                        }
                         log("Posts assigned");
                         return _posts.isNotEmpty
                             ? SliverToBoxAdapter(
                                 child: ListView.separated(
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
                                       return Padding(
-                                        padding: EdgeInsets.only(
+                                        padding: const EdgeInsets.only(
                                           bottom: 2,
                                           top: 2,
                                         ),
@@ -192,7 +190,7 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
                                                       height: 50,
                                                       width: 50,
                                                       child:
-                                                          DataLoadingIndicator(),
+                                                          const DataLoadingIndicator(),
                                                     ),
                                                   ),
                                                   errorWidget: (context, url,
@@ -218,12 +216,16 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
                                     itemCount: _posts.length),
                               )
                             : SliverToBoxAdapter(
-                                child: Center(
-                                  child: Text(
-                                    'No Data',
-                                    style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w700,
+                                child: Container(
+                                  height: height * 0.5,
+                                  child: Center(
+                                    child: Text(
+                                      'No Data',
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -234,7 +236,7 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
                             child: Container(
                               height: 100,
                               width: 100,
-                              child: CustomLoadingIndicator(),
+                              child: const CustomLoadingIndicator(),
                             ),
                           ),
                         );

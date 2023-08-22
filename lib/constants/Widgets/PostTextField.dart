@@ -61,7 +61,7 @@ class PostTextField extends StatelessWidget {
       //     color: Colors.black,
       //   ),
       // ),
-      decoration: formFieldDecoration.copyWith(
+      decoration: inputFormFieldBoxDecoration.copyWith(
         hintText: hintText,
         label: Text(labelText),
         labelStyle: TextStyle(

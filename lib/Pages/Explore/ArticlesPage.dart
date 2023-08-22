@@ -71,13 +71,8 @@ class _ArticlesPageState extends State<ArticlesPage> {
   }
 
   void _onLoading() async {
-    // monitor network fetch
     log("In _onLoading");
-    // monitor network fetch
-    // if (_refreshController.isTwoLevel) {
-    //   log('Is refreshing: ${_refreshController.isRefresh}');
-    //   return;
-    // }
+
     if (_currentPage + 1 < _totalPages) {
       log("In currentpage+1 <total pages");
       _futurePosts = _postService.getAllPostsForCategory(
@@ -103,7 +98,6 @@ class _ArticlesPageState extends State<ArticlesPage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height -
-        // _appBar.preferredSize.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom;
     final width = MediaQuery.of(context).size.width;
@@ -117,24 +111,24 @@ class _ArticlesPageState extends State<ArticlesPage> {
               controller: _refreshController,
               onRefresh: _onRefresh,
               onLoading: _onLoading,
-              header: WaterDropMaterialHeader(
+              header: const WaterDropMaterialHeader(
                 color: Colors.black,
-                backgroundColor: Colors.yellow,
+                backgroundColor: Colors.white,
               ),
               footer: CustomFooter(
                 builder: (context, mode) {
                   Widget body;
                   log("Mode is $mode");
                   if (mode == LoadStatus.idle) {
-                    body = Text("pull up load");
+                    body = const Text("pull up load");
                   } else if (mode == LoadStatus.loading) {
-                    body = CircularProgressIndicator.adaptive();
+                    body = const CircularProgressIndicator.adaptive();
                   } else if (mode == LoadStatus.failed) {
-                    body = Text("Load Failed! Click retry!");
+                    body = const Text("Load Failed! Click retry!");
                   } else if (mode == LoadStatus.canLoading) {
-                    body = Text("release to load more");
+                    body = const Text("release to load more");
                   } else {
-                    body = Text("---");
+                    body = const Text("---");
                   }
                   return Container(
                     height: 55.0,
@@ -143,32 +137,16 @@ class _ArticlesPageState extends State<ArticlesPage> {
                 },
               ),
               child: CustomScrollView(slivers: <Widget>[
-                // SliverAppBar(
-                //   expandedHeight: height * 0.2,
-                //   flexibleSpace: FlexibleSpaceBar(
-                //     title: Text(
-                //       '${widget.category.categoryName}',
-                //       textScaleFactor: 2,
-                //       style: TextStyle(
-                //           color:
-                //               Theme.of(context).textTheme.headlineLarge!.color),
-                //     ),
-                //     // background: Image.asset(
-                //     //   'assets/register.jpg',
-                //     //   fit: BoxFit.fill,
-                //     // ),
-                //   ),
-                // ),
                 SliverToBoxAdapter(
                   child: Column(children: [
                     Stack(
                       children: [
                         Container(
                           decoration: categoryTopDecoration,
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             left: 2,
                             right: 2,
-                            bottom: 2,
+                            bottom: 20,
                           ),
                           alignment: Alignment.bottomLeft,
                           height: height * 0.4,
@@ -176,16 +154,16 @@ class _ArticlesPageState extends State<ArticlesPage> {
                             title: Text(
                               '${widget.category.categoryName}',
                               style: TextStyle(
-                                  fontSize: 40.sp,
+                                  fontSize: 30.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  color: Colors.blue[900]),
                             ),
                             subtitle: Text(
                               '${widget.category.categoryDescription}',
                               style: TextStyle(
-                                fontSize: 20.sp,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w700,
-                                color: Colors.white,
+                                color: Colors.black87,
                               ),
                             ),
                           ),
@@ -194,14 +172,14 @@ class _ArticlesPageState extends State<ArticlesPage> {
                           left: 10,
                           top: 10,
                           child: Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                 right: 4,
                               ),
                               child: IconButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   FontAwesomeIcons.arrowLeft,
                                   color: Colors.white,
                                 ),
@@ -211,7 +189,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
                           right: 10,
                           top: 10,
                           child: Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               right: 4,
                             ),
                             child: OutlinedButton(
@@ -239,8 +217,8 @@ class _ArticlesPageState extends State<ArticlesPage> {
                               },
                               child: (categoryProvider.subscribedCategoriesIDs
                                       .contains(widget.category.categoryId)
-                                  ? Text('Subscribed')
-                                  : Text('Subscribe')),
+                                  ? const Text('Subscribed')
+                                  : const Text('Subscribe')),
                             ),
                           ),
                         ),
@@ -263,11 +241,12 @@ class _ArticlesPageState extends State<ArticlesPage> {
                         return _posts.isNotEmpty
                             ? SliverToBoxAdapter(
                                 child: ListView.separated(
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
                                       return Padding(
-                                        padding: EdgeInsets.only(
+                                        padding: const EdgeInsets.only(
                                           bottom: 2,
                                           top: 2,
                                         ),
@@ -279,7 +258,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
                                                   sharedPreferences:
                                                       _sharedPreferences!),
                                               transition: Transition.downToUp,
-                                              duration: Duration(
+                                              duration: const Duration(
                                                 milliseconds: 800,
                                               ),
                                             );
@@ -298,7 +277,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
                                                       height: 50,
                                                       width: 50,
                                                       child:
-                                                          DataLoadingIndicator(),
+                                                          const DataLoadingIndicator(),
                                                     ),
                                                   ),
                                                   errorWidget: (context, url,
@@ -340,7 +319,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
                             child: Container(
                               height: 100,
                               width: 100,
-                              child: CustomLoadingIndicator(),
+                              child: const CustomLoadingIndicator(),
                             ),
                           ),
                         );

@@ -20,7 +20,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Register'),
+        title: const Text('Register'),
       ),
       body: LoaderOverlay(
         useDefaultLoading: false,
@@ -57,7 +56,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   alignment: Alignment.center,
                   child: Text(
                     'Enter the email address you want to use for your account',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Colors.black,
+                        ),
                   ),
                 ),
                 SizedBox(
@@ -78,34 +79,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: constraints.maxHeight * 0.1,
                             ),
                             Container(
-                              height: constraints.maxHeight * 0.4,
-                              child: Form(
-                                key: _formKey,
-                                child: TextFormField(
-                                  // style: TextStyle(color: Colors.white),
-                                  maxLines: 2,
-                                  controller: _emailController,
-                                  style: const TextStyle(color: Colors.white),
-                                  obscureText: false,
-                                  cursorColor: Colors.white,
-                                  keyboardType: TextInputType.emailAddress,
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Please enter email';
-                                    } else {
-                                      if (!EmailValidator.validate(value)) {
-                                        return "Wrong email id";
-                                      } else {
-                                        return null;
-                                      }
-                                    }
-                                  },
-
-                                  decoration: formFieldDecoration.copyWith(
-                                    hintText: "Email",
-                                    prefixIcon: Icon(
-                                      FontAwesomeIcons.envelope,
-                                    ),
+                              height: constraints.maxHeight * 0.5,
+                              alignment: Alignment.center,
+                              child: TextFormField(
+                                controller: _emailController,
+                                obscureText: false,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  overflow: TextOverflow.fade,
+                                ),
+                                cursorColor: Colors.black,
+                                keyboardType: TextInputType.emailAddress,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Email cannot be empty';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                decoration:
+                                    inputFormFieldBoxDecoration.copyWith(
+                                  hintText: "Email",
+                                  prefixIcon: Icon(
+                                    FontAwesomeIcons.circleUser,
                                   ),
                                 ),
                               ),
@@ -120,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   "Send OTP",
                                 ),
                                 onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
+                                  if (_emailController.text.isEmail) {
                                     context.loaderOverlay.show();
 
                                     String email = _emailController.text;
@@ -134,7 +130,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       Get.to(
                                         VerifyEmailOTP(email: email),
                                         transition: Transition.rightToLeft,
-                                        duration: Duration(milliseconds: 800),
+                                        duration:
+                                            const Duration(milliseconds: 800),
                                       );
                                       Get.snackbar(
                                         "Successful",
@@ -148,9 +145,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     } else {
                                       Get.snackbar(
                                         "${result[STATUS]}",
-                                        "${result[MESSAGE]}",
+                                        "Failed to send OTP!",
+                                        backgroundColor:
+                                            snackbarBackgroundColor,
+                                        colorText: snackbarColorText,
                                       );
                                     }
+                                  } else {
+                                    Get.snackbar(
+                                      "Invalid Email",
+                                      "Please check the email you entered!",
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      snackStyle: SnackStyle.FLOATING,
+                                      backgroundColor: snackbarBackgroundColor,
+                                      colorText: snackbarColorText,
+                                    );
                                   }
                                 },
                               ),

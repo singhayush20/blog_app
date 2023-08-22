@@ -21,8 +21,6 @@ import 'package:blog_app/Model/Post.dart';
 late SharedPreferences _sharedPreferences; //shared preferences variable
 bool isLoggedIn = false; //flag to store the logged in status
 
-//_initializePrefs() method is used to initialize the shared preferences and setup notifications
-
 Future<void> _initializePrefs() async {
   log("Loading Shared Preferences");
   _sharedPreferences = await SharedPreferences.getInstance();
@@ -32,7 +30,6 @@ Future<void> _initializePrefs() async {
 
 /// Initialize the [FlutterLocalNotificationsPlugin] package.
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
 
 //background handler works in its own isolate, and not part of
 //the application therefore, we should keep it out of any context, outside the
@@ -169,7 +166,6 @@ class _MyAppState extends State<MyApp> {
     This should be used to determine whether specific notification interaction should open the app with a specific purpose (e.g. opening a chat message, specific screen etc).
     */
     ///Gives the message on which the user taps from terminated state
-
 
     _configureForegroundMessaging();
     _handleMessageClickEvent();
