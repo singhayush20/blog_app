@@ -251,47 +251,91 @@ class _ArticlesPageState extends State<ArticlesPage> {
                                           top: 2,
                                         ),
                                         child: GestureDetector(
-                                          onTap: () {
-                                            Get.to(
-                                              () => ExploreViewArticle(
-                                                  post: _posts[index],
-                                                  sharedPreferences:
-                                                      _sharedPreferences!),
-                                              transition: Transition.downToUp,
-                                              duration: const Duration(
-                                                milliseconds: 800,
-                                              ),
-                                            );
-                                          },
-                                          child: ListTile(
-                                            leading: SizedBox(
-                                              child: SizedBox(
-                                                height: 100,
+                                            onTap: () {
+                                              Get.to(
+                                                () => ExploreViewArticle(
+                                                    post: _posts[index],
+                                                    sharedPreferences:
+                                                        _sharedPreferences!),
+                                                transition: Transition.native,
+                                                duration: const Duration(
+                                                  milliseconds: 500,
+                                                ),
+                                              );
+                                            },
+                                            child: ListTile(
+                                              contentPadding: const EdgeInsets
+                                                      .all(
+                                                  16.0), // Adjust the padding as needed
+                                              leading: Container(
                                                 width: 100,
-                                                child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      'https://imagedbspringboot.blob.core.windows.net/imagecontainer/${_posts[index].image}',
-                                                  placeholder: (context, url) =>
-                                                      Center(
-                                                    child: Container(
-                                                      height: 50,
-                                                      width: 50,
-                                                      child:
-                                                          const DataLoadingIndicator(),
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.blue
+                                                          .withOpacity(0.5),
+                                                      spreadRadius: 4,
+                                                      blurRadius: 5,
+                                                      offset:
+                                                          const Offset(0, 3),
                                                     ),
+                                                  ],
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl:
+                                                        'https://blogimagesa.blob.core.windows.net/imagecontainer/${_posts[index].image}',
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            Center(
+                                                      child: Container(
+                                                        height: 50,
+                                                        width: 50,
+                                                        child:
+                                                            const DataLoadingIndicator(),
+                                                      ),
+                                                    ),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        Image.asset(
+                                                            'images/category_default.jpg'),
+                                                    fit: BoxFit.cover,
                                                   ),
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      Image.asset(
-                                                          'images/category_default.jpg'),
-                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
-                                            ),
-                                            title:
-                                                Text('${_posts[index].title}'),
-                                          ),
-                                        ),
+                                              title: Text(
+                                                '${_posts[index].title}',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 15.sp,
+                                                  fontWeight: FontWeight
+                                                      .bold, // You can adjust the font weight
+                                                ),
+                                              ),
+                                              subtitle: Text(
+                                                _posts[index]
+                                                    .content, // Add your subtitle text here
+                                                maxLines: 2,
+                                                overflow: TextOverflow.fade,
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 12.sp,
+                                                ),
+                                              ),
+                                              trailing: const Icon(
+                                                FontAwesomeIcons
+                                                    .arrowRight, // Add your desired trailing icon
+                                                color: Colors
+                                                    .red, // Customize the icon color
+                                              ),
+                                            )),
                                       );
                                     },
                                     separatorBuilder: (context, index) {
@@ -304,15 +348,40 @@ class _ArticlesPageState extends State<ArticlesPage> {
                               )
                             : SliverToBoxAdapter(
                                 child: Center(
-                                  child: Text(
-                                    'No Data',
-                                    style: TextStyle(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w700,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: height * 0.3,
+                                      width: width * 0.9,
+                                      child: Center(
+                                        child: Image.asset(
+                                          "images/no_data_image.jpg",
+                                          fit: BoxFit.cover,
+                                        ), // Replace with your actual image
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(height: height * 0.05),
+                                    const Text(
+                                      'No Articles found!',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Sorry, there are no articles available at the moment.',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
-                              );
+                              ));
                       } else {
                         return SliverToBoxAdapter(
                           child: Center(

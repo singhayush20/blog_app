@@ -160,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage>
                                         const MyArticlesPage(),
                                         transition: Transition.fadeIn,
                                         duration: const Duration(
-                                          milliseconds: 800,
+                                          milliseconds: 500,
                                         ),
                                       );
                                     },

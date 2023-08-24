@@ -44,9 +44,7 @@ class TopUserDetails extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Get.to(
-                        WriteArticlePage(),
-                      );
+                      Get.to(() => const WriteArticlePage());
                     },
                   ),
                 ],

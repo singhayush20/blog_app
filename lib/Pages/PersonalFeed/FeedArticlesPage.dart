@@ -159,77 +159,129 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
                         log("Posts assigned");
                         return _posts.isNotEmpty
                             ? SliverToBoxAdapter(
-                                child: ListView.separated(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 2,
-                                          top: 2,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: _posts
+                                      .length, // Replace with your post list length
+                                  itemBuilder: (context, index) {
+                                    final post = _posts[
+                                        index]; // Replace with your post model
+
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Get.to(() => ExploreViewArticle(
+                                            post: _posts[index],
+                                            sharedPreferences:
+                                                _sharedPreferences!));
+                                      },
+                                      child: Card(
+                                        elevation: 6,
+                                        shadowColor: Colors.black87,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Get.to(() => ExploreViewArticle(
-                                                post: _posts[index],
-                                                sharedPreferences:
-                                                    _sharedPreferences!));
-                                          },
-                                          child: ListTile(
-                                            leading: SizedBox(
-                                              child: SizedBox(
-                                                height: 100,
-                                                width: 100,
-                                                child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      'https://imagedbspringboot.blob.core.windows.net/imagecontainer/${_posts[index].image}',
-                                                  placeholder: (context, url) =>
-                                                      Center(
-                                                    child: Container(
-                                                      height: 50,
-                                                      width: 50,
-                                                      child:
-                                                          const DataLoadingIndicator(),
-                                                    ),
-                                                  ),
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      Image.asset(
-                                                          'images/category_default.jpg'),
-                                                  fit: BoxFit.cover,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 8),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.vertical(
+                                                      top: Radius.circular(10)),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    'https://blogimagesa.blob.core.windows.net/imagecontainer/${post.image}',
+                                                height:
+                                                    200, // Adjust the image height as needed
+                                                width: double.infinity,
+                                                fit: BoxFit.cover,
+                                                placeholder: (context, url) =>
+                                                    Container(
+                                                  width: double.infinity,
+                                                  height: 150,
+                                                  child:
+                                                      const DataLoadingIndicator(),
                                                 ),
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    Image.asset(
+                                                        'images/placeholder_image.jpg'),
                                               ),
                                             ),
-                                            title:
-                                                Text('${_posts[index].title}'),
-                                          ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    post.title,
+                                                    style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.blue,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 6),
+                                                  Text(
+                                                    post.content,
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: Color.fromARGB(
+                                                          255, 218, 138, 32),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) {
-                                      return Container(
-                                        height: 2,
-                                        color: Colors.black,
-                                      );
-                                    },
-                                    itemCount: _posts.length),
+                                      ),
+                                    );
+                                  },
+                                ),
                               )
                             : SliverToBoxAdapter(
-                                child: Container(
-                                  height: height * 0.5,
-                                  child: Center(
-                                    child: Text(
-                                      'No Data',
+                                child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: height * 0.3,
+                                      width: width * 0.9,
+                                      child: Center(
+                                        child: Image.asset(
+                                          "images/no_data_image.jpg",
+                                          fit: BoxFit.cover,
+                                        ), // Replace with your actual image
+                                      ),
+                                    ),
+                                    SizedBox(height: height * 0.05),
+                                    const Text(
+                                      'No Articles found!',
                                       style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
                                         color: Colors.black,
                                       ),
                                     ),
-                                  ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Sorry, there are no articles available at the moment.',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
-                              );
+                              ));
                       } else {
                         return SliverToBoxAdapter(
                           child: Center(

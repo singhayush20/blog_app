@@ -25,18 +25,15 @@ class MyArticlesPage extends StatefulWidget {
 class _MyArticlesPageState extends State<MyArticlesPage> {
   SharedPreferences? _sharedPreferences;
   late final API _api;
-  // late Future<void>? _initialData;
-  // late PostService _postService;
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   Future<void>? _initialData;
-  // List<Post> _userArticles = [];
   Future<void> _loadUserArticles(ImageController postController) async {
     _sharedPreferences ??= await SharedPreferences.getInstance();
     await postController.loadUserArticles(
         token: _sharedPreferences!.getString(BEARER_TOKEN)!,
         userid: _sharedPreferences!.getInt(USER_ID)!);
-    // _userArticles = postController.userArticles;
   }
 
   @override
@@ -104,173 +101,170 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                           child: SingleChildScrollView(
                             physics: const AlwaysScrollableScrollPhysics(),
                             child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.02,
-                                ),
-                                child: ListView.separated(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return Container(
-                                        margin: EdgeInsets.symmetric(
-                                          vertical: height * 0.01,
-                                        ),
-                                        decoration: listTileDecoration,
-                                        child: InkWell(
-                                          onTap: () {
-                                            Get.to(
-                                              ViewArticle(
-                                                  post: postController
-                                                      .userArticles[index],
-                                                  sharedPreferences:
-                                                      _sharedPreferences!),
-                                              transition: Transition.topLevel,
-                                              duration: const Duration(
-                                                milliseconds: 1000,
-                                              ),
-                                            );
-                                          },
-                                          child: ListTile(
-                                            title: Text(
-                                              postController
-                                                  .userArticles[index].title,
-                                              style: TextStyle(
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: width * 0.02,
+                              ),
+                              child: ListView.separated(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      margin: EdgeInsets.symmetric(
+                                        vertical: height * 0.01,
+                                      ),
+                                      decoration: listTileDecoration,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.to(
+                                            ViewArticle(
+                                                post: postController
+                                                    .userArticles[index],
+                                                sharedPreferences:
+                                                    _sharedPreferences!),
+                                            transition: Transition.topLevel,
+                                            duration: const Duration(
+                                              milliseconds: 1000,
                                             ),
-                                            subtitle: Text(
-                                              postController
-                                                  .userArticles[index].content,
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                              ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
+                                          );
+                                        },
+                                        child: ListTile(
+                                          title: Text(
+                                            postController
+                                                .userArticles[index].title,
+                                            style: TextStyle(
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                            trailing: PopupMenuButton(
-                                              color: Colors.blueAccent,
-                                              // add icon, by default "3 dot" icon
-                                              // icon: Icon(Icons.book)
-                                              itemBuilder: (context) {
-                                                return [
-                                                  const PopupMenuItem<int>(
-                                                    value: 0,
-                                                    child: Text(
-                                                      "Delete",
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          subtitle: Text(
+                                            postController
+                                                .userArticles[index].content,
+                                            style: TextStyle(
+                                              fontSize: 12.sp,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          trailing: PopupMenuButton(
+                                            color: Colors.blueAccent,
+                                            // add icon, by default "3 dot" icon
+                                            // icon: Icon(Icons.book)
+                                            itemBuilder: (context) {
+                                              return [
+                                                const PopupMenuItem<int>(
+                                                  value: 0,
+                                                  child: Text(
+                                                    "Delete",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                   ),
-                                                  const PopupMenuItem<int>(
-                                                    value: 1,
-                                                    child: Text(
-                                                      "Update",
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
+                                                ),
+                                                const PopupMenuItem<int>(
+                                                  value: 1,
+                                                  child: Text(
+                                                    "Update",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                   ),
-                                                ];
-                                              },
-                                              onSelected: (value) async {
-                                                if (value == 0) {
-                                                  context.loaderOverlay.show();
-                                                  Map<String, dynamic> result =
-                                                      await _api.deletePost(
-                                                          token: _sharedPreferences!
-                                                                  .getString(
-                                                                      BEARER_TOKEN) ??
-                                                              'null',
-                                                          postid: postController
-                                                              .userArticles[
-                                                                  index]
-                                                              .postId);
-                                                  if (result[CODE] == '2000') {
-                                                    // await _reloadUserArticles();
-                                                    await _loadUserArticles(
-                                                        postController);
-                                                    context.loaderOverlay
-                                                        .hide();
-                                                    Get.snackbar(
-                                                      "Success!",
-                                                      "Article deleted successfully!",
-                                                      snackPosition:
-                                                          SnackPosition.BOTTOM,
-                                                      snackStyle:
-                                                          SnackStyle.FLOATING,
-                                                      colorText:
-                                                          snackbarColorText,
-                                                      backgroundColor:
-                                                          snackbarBackgroundColor,
-                                                    );
-                                                  } else {
-                                                    Get.snackbar(
-                                                      "Failed!",
-                                                      "Failed to delete article!",
-                                                      snackPosition:
-                                                          SnackPosition.BOTTOM,
-                                                      snackStyle:
-                                                          SnackStyle.FLOATING,
-                                                      colorText:
-                                                          snackbarColorText,
-                                                      backgroundColor:
-                                                          snackbarBackgroundColor,
-                                                    );
-                                                  }
-                                                } else if (value == 1) {
-                                                  Get.to(
-                                                    () => UpdateArticlePage(
-                                                        post: postController
-                                                                .userArticles[
-                                                            index],
+                                                ),
+                                              ];
+                                            },
+                                            onSelected: (value) async {
+                                              if (value == 0) {
+                                                context.loaderOverlay.show();
+                                                Map<String, dynamic> result =
+                                                    await _api.deletePost(
                                                         token: _sharedPreferences!
                                                                 .getString(
                                                                     BEARER_TOKEN) ??
                                                             'null',
-                                                        userid:
-                                                            _sharedPreferences!
-                                                                .getInt(
-                                                                    USER_ID)!),
-                                                    transition:
-                                                        Transition.leftToRight,
-                                                    duration: const Duration(
-                                                      milliseconds: 500,
-                                                    ),
+                                                        postid: postController
+                                                            .userArticles[index]
+                                                            .postId);
+                                                if (result[CODE] == '2000') {
+                                                  // await _reloadUserArticles();
+                                                  await _loadUserArticles(
+                                                      postController);
+                                                  context.loaderOverlay.hide();
+                                                  Get.snackbar(
+                                                    "Success!",
+                                                    "Article deleted successfully!",
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                    snackStyle:
+                                                        SnackStyle.FLOATING,
+                                                    colorText:
+                                                        snackbarColorText,
+                                                    backgroundColor:
+                                                        snackbarBackgroundColor,
+                                                  );
+                                                } else {
+                                                  Get.snackbar(
+                                                    "Failed!",
+                                                    "Failed to delete article!",
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                    snackStyle:
+                                                        SnackStyle.FLOATING,
+                                                    colorText:
+                                                        snackbarColorText,
+                                                    backgroundColor:
+                                                        snackbarBackgroundColor,
                                                   );
                                                 }
-                                              },
-                                              icon: Icon(
-                                                FontAwesomeIcons.bars,
-                                                color: Colors.yellow,
-                                                size: 15.sp,
-                                              ),
+                                              } else if (value == 1) {
+                                                Get.to(
+                                                  () => UpdateArticlePage(
+                                                      post: postController
+                                                          .userArticles[index],
+                                                      token: _sharedPreferences!
+                                                              .getString(
+                                                                  BEARER_TOKEN) ??
+                                                          'null',
+                                                      userid:
+                                                          _sharedPreferences!
+                                                              .getInt(
+                                                                  USER_ID)!),
+                                                  transition:
+                                                      Transition.leftToRight,
+                                                  duration: const Duration(
+                                                    milliseconds: 500,
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            icon: Icon(
+                                              FontAwesomeIcons.bars,
+                                              color: Colors.yellow,
+                                              size: 15.sp,
                                             ),
-                                            leading: Text(
-                                              '${index + 1}.',
-                                              style: TextStyle(
-                                                fontSize: 15.sp,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                          ),
+                                          leading: Text(
+                                            '${index + 1}.',
+                                            style: TextStyle(
+                                              fontSize: 15.sp,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
-                                      );
-                                    },
-                                    separatorBuilder: ((context, index) {
-                                      return Container(
-                                        margin: EdgeInsets.symmetric(
-                                          horizontal: width * 0.3,
-                                        ),
-                                        height: 2,
-                                        color: Colors.white,
-                                      );
-                                    }),
-                                    itemCount:
-                                        postController.userArticles.length)),
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: ((context, index) {
+                                    return Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: width * 0.3,
+                                      ),
+                                      height: 2,
+                                      color: Colors.white,
+                                    );
+                                  }),
+                                  itemCount:
+                                      postController.userArticles.length),
+                            ),
                           ),
                         ),
                       );

@@ -16,13 +16,29 @@ class PhotoPreview extends StatelessWidget {
         child: Center(
           child: Hero(
             tag: 'imageHero',
-            child: CachedNetworkImage(
-              imageUrl:
-                  'https://imagedbspringboot.blob.core.windows.net/imagecontainer/$image',
-              placeholder: (context, url) =>
-                  Image.asset('images/category_default.jpg'),
-              errorWidget: (context, url, error) =>
-                  Image.asset('images/category_default.jpg'),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.8),
+                    spreadRadius: 3,
+                    blurRadius: 10,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      'https://blogimagesa.blob.core.windows.net/imagecontainer/$image',
+                  placeholder: (context, url) =>
+                      Image.asset('images/placeholder_image.jpg'),
+                  errorWidget: (context, url, error) =>
+                      Image.asset('images/placeholder_image.jpg'),
+                ),
+              ),
             ),
           ),
         ),
