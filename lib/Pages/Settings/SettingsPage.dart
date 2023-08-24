@@ -59,12 +59,12 @@ class _SettingsPageState extends State<SettingsPage>
           child: SettingsList(
             lightTheme: const SettingsThemeData(
               settingsListBackground: scaffoldColor,
-              settingsSectionBackground: Color.fromARGB(255, 52, 52, 52),
-              dividerColor: Colors.white,
-              titleTextColor: Colors.white,
-              settingsTileTextColor: Colors.yellow,
-              tileDescriptionTextColor: Colors.amberAccent,
-              leadingIconsColor: Colors.orangeAccent,
+              settingsSectionBackground: Color.fromARGB(255, 226, 225, 225),
+              dividerColor: Colors.black,
+              titleTextColor: Colors.red,
+              settingsTileTextColor: Colors.blue,
+              tileDescriptionTextColor: Color.fromARGB(255, 122, 80, 16),
+              leadingIconsColor: Color.fromARGB(255, 206, 62, 37),
             ),
             sections: [
               SettingsSection(

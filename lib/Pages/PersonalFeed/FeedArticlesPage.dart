@@ -202,8 +202,8 @@ class _FeedArticlesPageState extends State<FeedArticlesPage> {
                                                     Container(
                                                   width: double.infinity,
                                                   height: 150,
-                                                  child:
-                                                      const DataLoadingIndicator(),
+                                                  child: Image.asset(
+                                                      'images/placeholder_image.jpg'),
                                                 ),
                                                 errorWidget: (context, url,
                                                         error) =>

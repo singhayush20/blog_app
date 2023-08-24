@@ -368,15 +368,14 @@ class _ExploreViewArticleState extends State<ExploreViewArticle> {
                             ),
                           ],
                         )
-                      else
+                      else if (_comments != null && _comments!.isEmpty == true)
                         Container(
                           alignment: Alignment.center,
                           child: Text(
                             'No Comments',
                             style: TextStyle(
                               fontSize: 15.sp,
-                              color:
-                                  Colors.black, // Change to match your design
+                              color: Colors.black,
                               fontWeight: FontWeight.w700,
                             ),
                           ),

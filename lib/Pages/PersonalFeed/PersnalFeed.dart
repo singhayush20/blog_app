@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:blog_app/Pages/PersonalFeed/CategoryTile.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +15,22 @@ class PersonalFeed extends StatefulWidget {
 }
 
 class _PersonalFeedState extends State<PersonalFeed> {
+  late DateTime _currentDateTime;
+
   @override
   void initState() {
     super.initState();
+    _currentDateTime = DateTime.now();
+    _startTimerToUpdateDateTime(); // Start the timer
+  }
+
+  // Timer to update date and time every minute
+  void _startTimerToUpdateDateTime() {
+    Timer.periodic(const Duration(minutes: 1), (timer) {
+      setState(() {
+        _currentDateTime = DateTime.now();
+      });
+    });
   }
 
   @override
@@ -48,6 +63,33 @@ class _PersonalFeedState extends State<PersonalFeed> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
+                      // Welcome and Date Widget
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Welcome Back. Get started with your favourite topics.',
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              DateFormat('EEEE, MMMM d')
+                                  .format(_currentDateTime),
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.blueAccent,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Container(
                         margin: EdgeInsets.symmetric(
                           horizontal: width * 0.05,
