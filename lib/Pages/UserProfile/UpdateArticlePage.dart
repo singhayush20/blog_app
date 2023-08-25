@@ -44,8 +44,6 @@ class _UpdateArticlePageState extends State<UpdateArticlePage> {
 
   @override
   Widget build(BuildContext context) {
-    //Inject image controller
-    // Get.lazyPut(() => ImageController());
     final height = MediaQuery.of(context).size.height -
         _appBar.preferredSize.height -
         MediaQuery.of(context).padding.top -
@@ -81,88 +79,93 @@ class _UpdateArticlePageState extends State<UpdateArticlePage> {
                       Container(
                         height: height * 0.4,
                         width: width,
-                        color: Colors.black,
+                        color:
+                            Colors.white, // Use your desired background color
                         child: Stack(
                           children: [
-                            (_uploadButtonClicked == true)
-                                ? Container(
-                                    alignment: Alignment.center,
-                                    child: imageController.pickedFile != null
-                                        ? Image.file(
-                                            File(imageController
-                                                .pickedFile!.path),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Column(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  top: 4,
-                                                ),
-                                                height: height * 0.2,
-                                                child: Image.asset(
-                                                  'images/category_default.jpg',
-                                                ),
+                            Container(
+                              alignment: Alignment.center,
+                              child: (_uploadButtonClicked == true)
+                                  ? imageController.pickedFile != null
+                                      ? Image.file(
+                                          File(
+                                              imageController.pickedFile!.path),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              height: height * 0.2,
+                                              child: Image.asset(
+                                                'images/pick_file.jpg',
                                               ),
-                                              Text(
-                                                'Your image appears here',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20.sp,
-                                                ),
+                                            ),
+                                            Text(
+                                              'Your image appears here',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20.sp,
+                                                color: Colors
+                                                    .black, // Adjust text color
                                               ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: TextButton(
-                                                  child: Text(
-                                                    'Select an Image',
-                                                    style: TextStyle(
-                                                      fontSize: 15.sp,
-                                                      decoration: TextDecoration
-                                                          .underline,
-                                                    ),
+                                            ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              child: TextButton(
+                                                child: Text(
+                                                  'Select an Image',
+                                                  style: TextStyle(
+                                                    fontSize: 15.sp,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    color: Colors
+                                                        .blueAccent, // Adjust text color
                                                   ),
-                                                  onPressed: () {
-                                                    imageController.pickImage();
-                                                  },
                                                 ),
+                                                onPressed: () {
+                                                  imageController.pickImage();
+                                                },
                                               ),
-                                            ],
+                                            ),
+                                          ],
+                                        )
+                                  : GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return PhotoPreview(
+                                                  image: widget.post.image);
+                                            },
                                           ),
-                                  )
-                                : GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return PhotoPreview(
-                                                image: widget.post.image);
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    child: Center(
+                                        );
+                                      },
                                       child: Hero(
                                         tag: 'imageHero',
                                         child: CachedNetworkImage(
                                           imageUrl:
-                                              'https://imagedbspringboot.blob.core.windows.net/imagecontainer/${widget.post.image}',
+                                              'https://blogimagesa.blob.core.windows.net/imagecontainer/${widget.post.image}',
                                           placeholder: (context, url) => Center(
                                             child: Container(
                                               height: 50,
                                               width: 50,
-                                              child: DataLoadingIndicator(),
+                                              child: Image.asset(
+                                                'images/placeholder_image.jpg',
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                           errorWidget: (context, url, error) =>
                                               Image.asset(
-                                                  'images/category_default.jpg'),
-                                          fit: BoxFit.scaleDown,
+                                                  'images/placeholder_image.jpg'),
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
-                                  ),
+                            ),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: IconButton(
@@ -177,10 +180,10 @@ class _UpdateArticlePageState extends State<UpdateArticlePage> {
                                 },
                                 icon: Icon(
                                   (_uploadButtonClicked == true)
-                                      ? FontAwesomeIcons.xmark
+                                      ? FontAwesomeIcons.times // Use close icon
                                       : FontAwesomeIcons.upload,
                                   size: 15.sp,
-                                  color: Colors.yellowAccent,
+                                  color: Colors.red, // Adjust icon color
                                 ),
                               ),
                             ),
@@ -188,16 +191,31 @@ class _UpdateArticlePageState extends State<UpdateArticlePage> {
                         ),
                       ),
                       Divider(
-                        color: Colors.white,
+                        color: Colors.black,
+                        height: 1, // Adjust the height of the divider
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: width * 0.02,
                         ),
-                        child: PostTextField(
-                          textController: _titleController,
-                          hintText: "Enter your title here...",
-                          labelText: "Title",
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Title",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue, // Adjust title text color
+                              ),
+                            ),
+                            SizedBox(height: height * 0.01), // Adjust spacing
+                            PostTextField(
+                              textController: _titleController,
+                              hintText: "Enter your title here...",
+                              labelText: "",
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
@@ -207,10 +225,24 @@ class _UpdateArticlePageState extends State<UpdateArticlePage> {
                         padding: EdgeInsets.symmetric(
                           horizontal: width * 0.02,
                         ),
-                        child: PostTextField(
-                          textController: _contentController,
-                          hintText: "Enter your content here...",
-                          labelText: "Content",
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Content",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue, // Adjust title text color
+                              ),
+                            ),
+                            SizedBox(height: height * 0.01), // Adjust spacing
+                            PostTextField(
+                              textController: _contentController,
+                              hintText: "Enter your content here...",
+                              labelText: "",
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(

@@ -32,7 +32,7 @@ class _CategoryTileState extends State<CategoryTile> {
           ),
           child: InkWell(
             onTap: () {
-              log('Opening category ${widget.subscribedCategory.categoryName} ');
+              log('Opening category ${widget.subscribedCategory.categoryName}');
               Get.to(
                 () => FeedArticlesPage(category: widget.subscribedCategory),
                 transition: Transition.fade,
@@ -48,12 +48,17 @@ class _CategoryTileState extends State<CategoryTile> {
               elevation: 5,
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Colors.black, width: 4, style: BorderStyle.solid),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(20),
                   ),
-                  color: const Color.fromARGB(255, 160, 30, 30),
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color.fromARGB(255, 160, 30, 30),
+                      Colors.redAccent,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                 ),
                 alignment: Alignment.center,
                 child: LayoutBuilder(
@@ -63,46 +68,46 @@ class _CategoryTileState extends State<CategoryTile> {
                       children: [
                         Container(
                           height: size.maxHeight * 0.7,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(
-                                  20,
-                                ),
-                                topRight: Radius.circular(
-                                  20,
-                                ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(
+                                20,
+                              ),
+                              topRight: Radius.circular(
+                                20,
                               ),
                             ),
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(
-                                  20,
-                                ),
-                                topRight: Radius.circular(
-                                  20,
-                                ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(
+                                20,
                               ),
-                              child: Image.asset(
-                                'images/blog_image.jpeg',
-                                fit: BoxFit.cover,
+                              topRight: Radius.circular(
+                                20,
                               ),
+                            ),
+                            child: Image.asset(
+                              'images/blog_image.jpeg',
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
                         Container(
                           alignment: Alignment.center,
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 5,
+                            horizontal: 10,
                           ),
                           height: size.maxHeight * 0.3,
-                          child: FittedBox(
+                          child: AnimatedDefaultTextStyle(
+                            duration: const Duration(milliseconds: 300),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              color: Colors.white,
+                              fontSize: constraints.maxWidth * 0.05,
+                            ),
                             child: Text(
                               widget.subscribedCategory.categoryName,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white,
-                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),

@@ -58,10 +58,9 @@ class _ViewArticleState extends State<ViewArticle> {
         physics: const AlwaysScrollableScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: width * 0.01,
+            horizontal: width * 0.03,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
                 height: height * 0.02,
@@ -69,75 +68,116 @@ class _ViewArticleState extends State<ViewArticle> {
               Container(
                 child: Text(
                   widget.post.title,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Colors.lightBlue,
+                      ),
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return PhotoPreview(image: widget.post.image);
-                      },
-                    ),
-                  );
-                },
-                child: Hero(
-                  tag: 'imageHero',
-                  child: Container(
-                    height: height * 0.4,
-                    color: Colors.black,
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          'https://imagedbspringboot.blob.core.windows.net/imagecontainer/${widget.post.image}',
-                      placeholder: (context, url) => Center(
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          child: const DataLoadingIndicator(),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return PhotoPreview(image: widget.post.image);
+                        },
+                      ),
+                    );
+                  },
+                  child: Hero(
+                    tag: 'imageHero',
+                    child: Container(
+                      height: height * 0.4,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            15), // Adjust the value as needed
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 239, 43, 43),
+                          width: 3,
+                        ),
+                        boxShadow: [
+                          const BoxShadow(
+                            color: Colors.red,
+                            spreadRadius: 3,
+                            blurRadius: 8,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                            12), // Should match the outer decoration
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              'https://blogimagesa.blob.core.windows.net/imagecontainer/${widget.post.image}',
+                          placeholder: (context, url) => Center(
+                            child: Container(
+                              child: Image.asset(
+                                'images/placeholder_image.jpg',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Image.asset('images/placeholder_image.jpg'),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      errorWidget: (context, url, error) =>
-                          Image.asset('images/category_default.jpg'),
-                      fit: BoxFit.scaleDown,
+                    ),
+                  )),
+              Container(
+                alignment: Alignment.centerLeft,
+                color: Colors.blue, // Change to your desired background color
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Added on: ${_dateFormatter.format(widget.post.addDate)}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white, // Change to your desired text color
+                      fontSize: 12.sp,
                     ),
                   ),
                 ),
               ),
               Container(
-                color: const Color.fromARGB(255, 8, 66, 194),
-                child: Text(
-                  'Added on: ${_dateFormatter.format(widget.post.addDate)}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    color: const Color.fromARGB(219, 242, 239, 239),
-                    fontSize: 12.sp,
-                  ),
+                decoration: BoxDecoration(
+                  color:
+                      Colors.white, // Change to your desired background color
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
-              ),
-              Container(
-                decoration: articleBoxDecoration,
                 alignment: Alignment.topLeft,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 4,
-                  vertical: 2,
-                ),
+                padding: const EdgeInsets.all(8),
                 child: Text(
                   widget.post.content,
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        color:
+                            Colors.black, // Change to your desired text color
+                      ),
                 ),
+              ),
+              SizedBox(
+                height: height * 0.05,
               ),
               Container(
                 height: height * 0.05,
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
                 child: TextButton(
                   child: Text(
-                    'Load Comments',
+                    'Comments',
                     style: TextStyle(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.w700,
                       decoration: TextDecoration.underline,
+                      color: Colors.red,
                     ),
                   ),
                   onPressed: () async {
@@ -160,25 +200,26 @@ class _ViewArticleState extends State<ViewArticle> {
                       _comments!.isNotEmpty &&
                       _loadingStatus != LoadingStatus.LOADING)
                   ? Column(children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Comments',
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
                       ListView.separated(
                         shrinkWrap: true,
-                        itemBuilder: ((context, index) {
+                        itemBuilder: (context, index) {
                           return Container(
-                            margin: EdgeInsets.symmetric(
-                              vertical: height * 0.01,
+                            margin:
+                                EdgeInsets.symmetric(vertical: height * 0.01),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
                             ),
-                            decoration: listTileDecoration,
                             child: ListTile(
+                              contentPadding: const EdgeInsets.all(12),
                               title: Text(
                                 _comments![index].content,
                                 style: TextStyle(
@@ -188,33 +229,36 @@ class _ViewArticleState extends State<ViewArticle> {
                                 ),
                               ),
                               subtitle: Text(
-                                _comments![index].user.firstName +
-                                    " " +
-                                    _comments![index].user.lastName,
+                                '${_comments![index].user.firstName} ${_comments![index].user.lastName}',
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.green,
                                 ),
                               ),
-                              leading: Text(
-                                '${index + 1}.',
-                                style: TextStyle(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                              leading: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.indigo,
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  '${index + 1}',
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
                           );
-                        }),
+                        },
                         separatorBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.symmetric(
-                              horizontal: width * 0.3,
-                            ),
-                            height: 2,
-                            color: Colors.white,
+                          return const SizedBox(
+                            height: 5,
                           );
                         },
                         itemCount: _comments!.length,
@@ -233,6 +277,7 @@ class _ViewArticleState extends State<ViewArticle> {
                                 'No Comments',
                                 style: TextStyle(
                                   fontSize: 15.sp,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),

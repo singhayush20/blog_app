@@ -133,7 +133,7 @@ class _MyArticlesPageState extends State<MyArticlesPage> {
                                                       _sharedPreferences!),
                                               transition: Transition.topLevel,
                                               duration: const Duration(
-                                                milliseconds: 1000,
+                                                milliseconds: 500,
                                               ),
                                             );
                                           },

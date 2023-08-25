@@ -14,6 +14,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -68,10 +69,11 @@ class _SettingsPageState extends State<SettingsPage>
             ),
             sections: [
               SettingsSection(
-                // titlePadding: EdgeInsets.all(20),
-                title: const Text(
-                  'App Settings',
-                  style: TextStyle(),
+                title: Text(
+                  'Actions',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                  ),
                 ),
                 tiles: [
                   SettingsTile(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:blog_app/Pages/PersonalFeed/CategoryTile.dart';
 import 'package:blog_app/provider/CategoryProvider.dart';
@@ -16,7 +17,7 @@ class PersonalFeed extends StatefulWidget {
 
 class _PersonalFeedState extends State<PersonalFeed> {
   late DateTime _currentDateTime;
-
+  late Timer _timer;
   @override
   void initState() {
     super.initState();
@@ -26,7 +27,7 @@ class _PersonalFeedState extends State<PersonalFeed> {
 
   // Timer to update date and time every minute
   void _startTimerToUpdateDateTime() {
-    Timer.periodic(const Duration(minutes: 1), (timer) {
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
       setState(() {
         _currentDateTime = DateTime.now();
       });
@@ -35,6 +36,10 @@ class _PersonalFeedState extends State<PersonalFeed> {
 
   @override
   void dispose() {
+    if (_timer != null && _timer.isActive) {
+      _timer.cancel();
+      log('Timer cancelled!');
+    }
     super.dispose();
   }
 

@@ -117,18 +117,12 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                             //Image
                             Container(
-                              height: height * 0.2,
+                              height: height * 0.4,
                               alignment: Alignment.center,
-                              child: FittedBox(
-                                child: CircleAvatar(
-                                  radius: 500,
-                                  backgroundColor:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  child: ClipOval(
-                                    child: Image.asset(
-                                        'images/DefaultProfileImage.jpg'),
-                                  ),
-                                ),
+                              color: scaffoldColor,
+                              child: ClipRect(
+                                child: Image.asset('images/profile_image.jpg',
+                                    fit: BoxFit.cover),
                               ),
                             ),
                             SizedBox(
